@@ -1,0 +1,113 @@
+[project]
+name = "typehints_pg"
+version = "0.0.1"
+description = "typehints_pg"
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Luiz Otávio" }]
+requires-python = ">=3.13"
+dependencies = [
+    "rich>=14.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/luizomf/typehints_python_playground"
+Documentation = "https://github.com/luizomf/typehints_python_playground"
+Repository = "https://github.com/luizomf/typehints_python_playground.git"
+Issues = "https://github.com/luizomf/typehints_python_playground/issues"
+
+[project.optional-dependencies]
+dev = ["ruff", "pyright", "pytest", "pytest-xdist"]
+
+[project.scripts]
+typehints_pg = "typehints_pg.main:run"
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+fix = true
+show-fixes = true
+indent-width = 4
+exclude = ["venv", ".venv", "env", ".env", "node_modules", "__pycache__"]
+
+[tool.ruff.lint]
+select = [
+  "ASYNC",
+  "A",
+  "ANN",
+  "B",
+  "BLE",
+  "C4",
+  "C90",
+  "COM",
+  "E",
+  "EM",
+  "ERA",
+  "EXE",
+  "F",
+  "FBT",
+  "FIX",
+  "I",
+  "ICN",
+  "ISC",
+  "Q",
+  "RET",
+  "RSE",
+  "S",
+  "SIM",
+  "SLF",
+  "T10",
+  "T20",
+  "TC",
+  "TD",
+  "TRY",
+  "UP",
+  "W",
+  "YTT",
+  "RUF",
+  "N",
+]
+ignore = ["T201", "COM812"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["ANN201", "S101"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.ruff.lint.isort]
+known-first-party = ["typehints_pg"]
+
+[tool.pyright]
+typeCheckingMode = "strict"
+pythonVersion = "3.13"
+include = [".", 'tests']
+exclude = [
+  "**/venv",
+  "**/.venv",
+  "**/env",
+  "**/.env",
+  "**/node_modules",
+  "**/__pycache__",
+]
+venv = ".venv"
+venvPath = "."
+executionEnvironments = [{ root = "." }]
+
+[tool.pytest.ini_options]
+addopts = "-s --color=yes --tb=short"
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools]
+
+package-dir = { "" = "." }
