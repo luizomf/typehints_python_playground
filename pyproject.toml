@@ -6,9 +6,7 @@ readme = "README.md"
 license = "MIT"
 authors = [{ name = "Luiz Otávio" }]
 requires-python = ">=3.13"
-dependencies = [
-    "rich>=14.1.0",
-]
+dependencies = ["rich>=14.1.0"]
 
 [project.urls]
 Homepage = "https://github.com/luizomf/typehints_python_playground"
@@ -20,7 +18,7 @@ Issues = "https://github.com/luizomf/typehints_python_playground/issues"
 dev = ["ruff", "pyright", "pytest", "pytest-xdist"]
 
 [project.scripts]
-typehints_pg = "typehints_pg.main:run"
+typehints_pg = "main:run"
 
 [tool.ruff]
 line-length = 88
@@ -31,43 +29,12 @@ indent-width = 4
 exclude = ["venv", ".venv", "env", ".env", "node_modules", "__pycache__"]
 
 [tool.ruff.lint]
-select = [
-  "ASYNC",
-  "A",
-  "ANN",
-  "B",
-  "BLE",
-  "C4",
-  "C90",
-  "COM",
-  "E",
-  "EM",
-  "ERA",
-  "EXE",
-  "F",
-  "FBT",
-  "FIX",
-  "I",
-  "ICN",
-  "ISC",
-  "Q",
-  "RET",
-  "RSE",
-  "S",
-  "SIM",
-  "SLF",
-  "T10",
-  "T20",
-  "TC",
-  "TD",
-  "TRY",
-  "UP",
-  "W",
-  "YTT",
-  "RUF",
-  "N",
-]
-ignore = ["T201", "COM812"]
+select = ["ALL"]
+preview = true
+ignore = ['D', 'CPY001', 'T201', 'FURB118']
+fixable = ["ALL"]
+unfixable = ['D']
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = ["ANN201", "S101"]
