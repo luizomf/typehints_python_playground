@@ -17,7 +17,7 @@
 # Mas ao anotar, você ganha mais controle e impede alterações de tipo futuras.
 #
 
-# Tipos básicos
+# Tipos básicos (explícito e implícito)
 
 
 nome = "Luiz Otávio"
@@ -35,7 +35,7 @@ CONSTANTE = "valor constante"
 # Coleções
 lista_numeros = [1, 2, 3]
 tupla_dois_valores = ("Valor", 234)
-tuple_varios = "a", "b", "c", "..."
+tupla_varios = "a", "b", "c", "..."
 conjunto = {1, 2, 3, 4}
 conjunto_imutavel = frozenset([2, 3, 4, 5])
 dicionario = {"chave": "valor", "chave2": "valor2"}

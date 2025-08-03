@@ -6,10 +6,7 @@ readme = "README.md"
 license = "MIT"
 authors = [{ name = "Luiz Otávio" }]
 requires-python = ">=3.13"
-dependencies = [
-    "mypy>=1.17.1",
-    "rich>=14.1.0",
-]
+dependencies = ["mypy>=1.17.1", "rich>=14.1.0"]
 
 [project.urls]
 Homepage = "https://github.com/luizomf/typehints_python_playground"
@@ -34,7 +31,7 @@ exclude = ["venv", ".venv", "env", ".env", "node_modules", "__pycache__"]
 [tool.ruff.lint]
 select = ["ALL"]
 preview = true
-ignore = ['D', 'CPY001', 'T201', 'FURB118']
+ignore = ['D', 'CPY001', 'T201', 'FURB118', 'UP028']
 fixable = ["ALL"]
 unfixable = ['D']
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
