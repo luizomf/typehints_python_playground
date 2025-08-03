@@ -1,65 +1,33 @@
-from collections.abc import Callable
-from typing import Final, Literal, Protocol, overload
-
-CONSTANTE = "Seu valor será deve ser esse"
-constante: Final = "valor"  # Literal["valor"]
-constante2: Literal["valor"] = "valor"  # constante implícita
-
-# You always should select de widest possible type
-# for example: Sequence[str] is wider than List[str]
-# You can use # type: ignore to completely supress erros
-# With pyright you can use # pyright: ignore or # pyright: basic to change behaviour
-
-
-@overload
-def do_sum(x: int, y: int) -> int: ...
-@overload
-def do_sum(x: float, y: float) -> float: ...
-def do_sum(x: float, y: float) -> float:
-    return x * y
-
-
-abc = do_sum(1, 2)
-
-
-class Func[**P, R](Protocol):
-    __name__: str
-
-    def __call__(self, *args: P.args, **kwargs: P.kwargs) -> R: ...
-
-
-def decor[**P, R](
-    *,
-    verbose: bool = True,
-) -> Callable[[Func[P, R]], Callable[P, R]]:
-    def params(
-        cb: Func[P, R],
-    ) -> Callable[P, R]:
-        def inner(*args: P.args, **kwargs: P.kwargs) -> R:
-            if verbose:
-                print(f"Function: {cb.__name__!r} decorated")
-            return cb(*args, **kwargs)
-
-        return inner
-
-    return params
-
-
-def add(x: float, y: float) -> float:
-    return x + y
-
-
-@decor(verbose=True)
-def add3(x: float, y: float) -> float:
-    return x + y
-
-
-add2 = decor(verbose=True)(add)
-
-result1 = add(1, 2)
-result2 = add2(1, 2)
-result3 = add3(1, 2)
-
-print(f"{result1= }")
-print(f"{result2= }")
-print(f"{result3= }")
+#
+# Type Hints no Python (o básico) - Aula 1
+#
+# Vamos começar do mais BÁSICO até o mais AVANÇADO (só depende de você).
+#
+# Ao longo dessa playlist, vamos usar Type annotations, que é a sintaxe oficial.
+# Mas o termo popular é "Type hints", inclusive na própria doc do Python.
+#
+# O que são Type Hints?
+#
+# São "dicas" (hints) de tipo que você adiciona no seu código.
+# Elas não mudam como o Python roda seu código, ou seja, o interpretador ignora
+# completamente. Mas elas servem pra coisas MUITO úteis, tipo:
+# - Permitir que ferramentas como Mypy ou Pyright encontrem erros antes de rodar
+# - Ativar autocompletar inteligente e mostrar docs nos editores
+# - Ajudar você mesmo a entender melhor o seu código
+# - Evitar bugs bobos (ex: passar int onde era str, etc...)
+# - Melhorar a legibilidade do código, como se fosse uma documentação automática
+#
+# Hoje em dia, praticamente todo projeto Python moderno usa Type Hints.
+# Portanto, considere como uma boa prática.
+#
+# Existem vários Type Checkers disponíveis: mypy, pyright, pyre, pytype, etc.
+# Vou usar o Pyright por alguns motivos bem simples:
+# - É o que eu uso no Neovim, Zed e VS Code;
+# - É o que vem por padrão no VS Code (via extensão Pylance);
+# - E é o que está incluso no nosso "Ambiente Python 2025".
+#
+# Glossário relacionado:
+# - Type hint: Termo geral para qualquer dica de tipo adicionada ao código.
+# - Type hinting: A ação de adicionar essas dicas de tipo.
+# - Annotation: Qualquer anotação extra no código Python (não só de tipo).
+# - Type annotation: Uma annotation usada especificamente para tipos no Python.
