@@ -1,5 +1,29 @@
-from collections.abc import Callable
+from __future__ import annotations
+
+from collections.abc import Callable, Iterable, Iterator
 from typing import Final, Literal, Protocol, overload
+
+
+class IntList:
+    def __init__(self, value: int, next: IntList | None) -> None:
+        self.value = value
+        self.next = next
+
+    def __iter__(self) -> Iterator[int]:
+        current = self
+        while current:
+            yield current.value
+            current = current.next
+
+
+def print_numbered(items: Iterable[int]) -> None:
+    for n, x in enumerate(items):
+        print(n + 1, x)
+
+
+x = IntList(3, IntList(5, None))
+print_numbered(x)  # OK
+print_numbered([4, 5])  # Also OK
 
 CONSTANTE = "Seu valor será deve ser esse"
 constante: Final = "valor"  # Literal["valor"]

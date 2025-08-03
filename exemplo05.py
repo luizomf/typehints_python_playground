@@ -6,21 +6,25 @@
 # - TYPE_CHEKCKING - só na tipagem, não em runtime
 # - Union - quando você precisa de mais de um tipo
 # - Optional - Quando pode ou não existir um valor
-# - Sequence - Quando é suprota dunder len e getitem
-# - Iterable - Qualquer iterável (que vc usa com for)
-# - Iterator - Um iterator que sabe iterar o iterável
+# - Sequence[T] - Quando é suprota dunder len e getitem
+# - Iterable[T] - Qualquer iterável (que você usa com for, tem iter)
+# - Iterator[T] - Um iterator que sabe iterar o iterável (tem dunder iter e next)
+# - Sized - Tem dunder len (len)
+# - Container[T] - Tem dunder contains (in e not in)
+# - Collection[T] - Tem dunder len, iter e contains
+#
+# Você pode ver todos em:
+# https://docs.python.org/3/library/collections.abc.html
 #
 
-from collections.abc import Generator
 
-
-def generator(x: int = 20) -> Generator[int]:
+def generator(x=20):
     for i in range(x):
         yield i
 
 
-generate: Generator[int] = generator(20)
-print(list(generate))
+generate = generator(20)
+# print(list(generate))
 
 
 def to_str(value):

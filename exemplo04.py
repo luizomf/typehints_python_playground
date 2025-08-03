@@ -6,6 +6,7 @@
 # Quando for necessário usar o tipo de uma classe sem ela estar definida, use
 # __future__ ou coloque entre aspas.
 #
+from __future__ import annotations
 
 
 def print_endereco(endereco):
@@ -13,6 +14,8 @@ def print_endereco(endereco):
 
 
 class Endereco:
+    _cache = {}
+
     def __init__(self, rua, numero):
         self.rua = rua
         self.numero = numero
@@ -20,6 +23,9 @@ class Endereco:
     @property
     def endereco_completo(self):
         return f"{self.rua} {self.numero}"
+
+    def mudar_rua(self, rua):
+        self.rua = rua
 
     def __repr__(self):
         cls_name = self.__class__.__name__
