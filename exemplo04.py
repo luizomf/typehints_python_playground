@@ -1,52 +1,48 @@
 #
-# Classes
+# O que é um "Callable" em Python?
+# De forma simples, "callable" é qualquer coisa que pode ser "chamada", ou
+# seja, executada usando parênteses `()`.
 #
-# Sua classe É um tipo por si só.
-# É necessário tipar todos os parâmetros e o retorno de métodos de classe.
-# Quando for necessário usar o tipo de uma classe sem ela estar definida, use
-# __future__ ou coloque entre aspas.
+# Os exemplos mais comuns são:
+#   - Funções (que criamos com `def`)
+#   - Métodos (funções dentro de classes)
+#   - As próprias Classes (para criar instâncias `MinhaClasse()`)
+#   - Objetos que implementam o método especial `__call__`
 #
-from __future__ import annotations
-
-
-def print_endereco(endereco):
-    print(endereco.endereco_completo)
-
-
-class Endereco:
-    _cache = {}
-
-    def __init__(self, rua, numero):
-        self.rua = rua
-        self.numero = numero
-
-    @property
-    def endereco_completo(self):
-        return f"{self.rua} {self.numero}"
-
-    def mudar_rua(self, rua):
-        self.rua = rua
-
-    def __repr__(self):
-        cls_name = self.__class__.__name__
-        return f"{cls_name}({self.endereco_completo})"
-
-
-# @dataclass
-# class Pessoa:
-#     nome:
-#     sobrenome:
-#     idade:
-#     endereco:
-#     genero = ""
+# Descrevendo Assinaturas com `typing.Callable`
 #
-#     @property
-#     def endereco_completo(self):
-#         return self.endereco.endereco_completo
+# Além de tipar os parâmetros e o retorno de uma função, às vezes precisamos
+# dizer que uma variável ou um parâmetro é, ele mesmo, "do tipo função".
 #
+# Isso é muito comum em cenários mais avançados, como em decoradores ou em
+# funções que recebem outras funções como argumento (conhecidas como
+# "Higher-Order Functions" ou "HOF").
 #
-# endereco = Endereco("Rua das flores", 22)
-# pessoa = Pessoa("Otávio", "Miranda", 18, endereco)
+# Para esses casos, usamos o tipo especial `Callable` do módulo `collections.abc`.
+# Ele nos permite criar um "contrato" ou uma "etiqueta" que descreve
+# exatamente qual tipo de função esperamos receber.
 #
-# print(pessoa)
-# print(pessoa.endereco_completo)
+# Agora, vamos ver tudo isso na prática!
+#
+
+
+def with_callback(
+    x,
+    y,
+    callback,
+) -> int:
+    result = x + y
+    callback(f"{result = }")
+    return x + y
+
+
+with_callback(2, 2, print)
+
+
+def with_args(*args):
+    print(*args)
+
+
+def with_kwargs(*args, **kwargs):
+    print("Args:", *args)
+    print("Kwargs:", kwargs)  # Desempacotar aqui vai dar problema

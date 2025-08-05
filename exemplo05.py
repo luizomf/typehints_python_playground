@@ -1,82 +1,52 @@
 #
-# Tipos mais flexíveis e úteis
+# Classes
 #
-# Union, Optional, TYPE_CHEKCKING, Sequence, Iterable, Iterator
+# Sua classe É um tipo por si só.
+# É necessário tipar todos os parâmetros e o retorno de métodos de classe.
+# Quando for necessário usar o tipo de uma classe sem ela estar definida, use
+# __future__ ou coloque entre aspas.
 #
-# - TYPE_CHEKCKING - só na tipagem, não em runtime
-# - Union - quando você precisa de mais de um tipo
-# - Optional - Quando pode ou não existir um valor
-# - Sequence[T] - Quando é suprota dunder len e getitem
-# - Iterable[T] - Qualquer iterável (que você usa com for, tem iter)
-# - Iterator[T] - Um iterator que sabe iterar o iterável (tem dunder iter e next)
-# - Sized - Tem dunder len (len)
-# - Container[T] - Tem dunder contains (in e not in)
-# - Collection[T] - Tem dunder len, iter e contains
+from __future__ import annotations
+
+
+def print_endereco(endereco):
+    print(endereco.endereco_completo)
+
+
+class Endereco:
+    _cache = {}
+
+    def __init__(self, rua, numero):
+        self.rua = rua
+        self.numero = numero
+
+    @property
+    def endereco_completo(self):
+        return f"{self.rua} {self.numero}"
+
+    def mudar_rua(self, rua):
+        self.rua = rua
+
+    def __repr__(self):
+        cls_name = self.__class__.__name__
+        return f"{cls_name}({self.endereco_completo})"
+
+
+# @dataclass
+# class Pessoa:
+#     nome:
+#     sobrenome:
+#     idade:
+#     endereco:
+#     genero = ""
 #
-# Você pode ver todos em:
-# https://docs.python.org/3/library/collections.abc.html
+#     @property
+#     def endereco_completo(self):
+#         return self.endereco.endereco_completo
 #
-
-
-def generator(x=20):
-    for i in range(x):
-        yield i
-
-
-generate = generator(20)
-# print(list(generate))
-
-
-def to_str(value):
-    print("\nto_str")
-    return str(value)
-
-
-# valor = to_str(123)
-# print(valor, type(valor))
-
-
-def greet(name=None):
-    print("\ngreet")
-    if name is None:
-        return "Olá, visitante"
-    return f"Olá, {name}"
-
-
-# print(greet("Luiz"))
-# print(greet())
-
-
-def show_items(items):
-    items_type_name = items.__class__.__name__
-    print(f"\nshow_items {items_type_name!r}", end=" ")
-
-    for item in items:
-        print(item, end=" ")
-
-    print()
-
-
-# show_items(["a", "b", "c"])
-# show_items(("x", "y"))
-# show_items({"z", "w"})
-# show_items("xyz")
-
-# generator = (letter for letter in "abcd")
-# show_items(generator)
-
-
-def print_dict(dados):
-    print("\nprint_dict")
-
-    for key in dados:
-        valor = dados.get(key, "")
-        print(key, valor)
-
-
-pessoa = {
-    "nome": "Luiz Otávio",
-    "sobrenome": "Miranda",
-}
-
-# print_dict(pessoa)
+#
+# endereco = Endereco("Rua das flores", 22)
+# pessoa = Pessoa("Otávio", "Miranda", 18, endereco)
+#
+# print(pessoa)
+# print(pessoa.endereco_completo)

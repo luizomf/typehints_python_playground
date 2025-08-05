@@ -6,7 +6,9 @@ readme = "README.md"
 license = "MIT"
 authors = [{ name = "Luiz Otávio" }]
 requires-python = ">=3.13"
-dependencies = ["mypy>=1.17.1", "rich>=14.1.0"]
+dependencies = [
+    "rich>=14.1.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/luizomf/typehints_python_playground"
@@ -51,12 +53,11 @@ known-first-party = ["typehints_pg"]
 typeCheckingMode = "strict"
 pythonVersion = "3.13"
 ignore = []
-include = []
+include = ['.']
 exclude = ["**/.venv"]
 venv = ".venv"
 venvPath = "."
 executionEnvironments = [{ root = "." }]
-useLibraryCodeForTypes = true
 
 [tool.pytest.ini_options]
 addopts = "-s --color=yes --tb=short"
