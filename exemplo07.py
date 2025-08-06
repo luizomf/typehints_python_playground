@@ -1,82 +1,64 @@
 #
-# Tipos mais flexíveis e úteis
+# Mas isso pode ser um grande problema
 #
-# Union, Optional, TYPE_CHEKCKING, Sequence, Iterable, Iterator
+# Ao analisar nosso código sobre `Animal`, você já parou pra pensar que
+# nem todo animal é igual? Um cachorro pode latir, mas um gato?
 #
-# - TYPE_CHEKCKING - só na tipagem, não em runtime
-# - Union - quando você precisa de mais de um tipo
-# - Optional - Quando pode ou não existir um valor
-# - Sequence[T] - Quando é suprota dunder len e getitem
-# - Iterable[T] - Qualquer iterável (que você usa com for, tem iter)
-# - Iterator[T] - Um iterator que sabe iterar o iterável (tem dunder iter e next)
-# - Sized - Tem dunder len (len)
-# - Container[T] - Tem dunder contains (in e not in)
-# - Collection[T] - Tem dunder len, iter e contains
+# Pra resolver isso, podemos deixar as coisas mais específicas usando herança.
+# Assim, um cachorro continua sendo um `Animal`, mas pode fazer um som próprio.
+# O mesmo vale pro gato.
 #
-# Você pode ver todos em:
-# https://docs.python.org/3/library/collections.abc.html
+# OBS.: Essa não é uma analogia perfeita, um peixe também é um animal, mas
+# não faz som nenhum. A ideia aqui é só didática.
 #
+# Esse tipo de relação entre tipos é chamado de subtipagem nominal
+# (ou "nominal subtyping").
+#
+# Regra importante:
+# Se B é um subtipo de A, então B É UM A.
+# Porém, o contrário não é verdadeiro:
+# A NÃO É um subtipo de B.
+#
+# Isso acontece porque os subtipos são mais específicos que os tipos.
+# Portanto, não seria seguro usar A onde é esperado um B.
+
+from exemplo05 import Animal
+from exemplo06 import get_animal_name
+from utils import cyan_print, sep_print
 
 
-def generator(x=20):
-    for i in range(x):
-        yield i
+class Dog(Animal):
+    def make_sound(self) -> None:
+        cyan_print(f"{self.name!r} faz au au")
 
 
-generate = generator(20)
-# print(list(generate))
+class Cat(Animal):
+    def make_sound(self) -> None:
+        cyan_print(f"{self.name!r} faz miau")
 
 
-def to_str(value):
-    print("\nto_str")
-    return str(value)
+class Car:
+    name: str = "Car"
 
 
-# valor = to_str(123)
-# print(valor, type(valor))
+if __name__ == "__main__":
+    # Para os type checkers:
+    dog = Dog("Dog")  # dog É UM Dog que é um subtipo de Animal
+    cat = Cat("Cat")  # cat É UM Cat que é um subtipo de Animal
+    car = Car()  # Car? Humm?
 
+    sep_print()
+    # Nossa função aceita Dot e Cat, porque Dog e Cat são subtipos de Animal
+    get_animal_name(dog)
+    get_animal_name(cat)
+    get_animal_name(car)  # O Python não liga, mas o Type Checker vai gritar
 
-def greet(name=None):
-    print("\ngreet")
-    if name is None:
-        return "Olá, visitante"
-    return f"Olá, {name}"
+    dog.make_sound()
+    cat.make_sound()
+    car.make_sound()  # De novo, Python roda, type checker grita
 
+    sep_print()
 
-# print(greet("Luiz"))
-# print(greet())
-
-
-def show_items(items):
-    items_type_name = items.__class__.__name__
-    print(f"\nshow_items {items_type_name!r}", end=" ")
-
-    for item in items:
-        print(item, end=" ")
-
-    print()
-
-
-# show_items(["a", "b", "c"])
-# show_items(("x", "y"))
-# show_items({"z", "w"})
-# show_items("xyz")
-
-# generator = (letter for letter in "abcd")
-# show_items(generator)
-
-
-def print_dict(dados):
-    print("\nprint_dict")
-
-    for key in dados:
-        valor = dados.get(key, "")
-        print(key, valor)
-
-
-pessoa = {
-    "nome": "Luiz Otávio",
-    "sobrenome": "Miranda",
-}
-
-# print_dict(pessoa)
+    # PROVA: A não é subtipo de B
+    dog2: Dog
+    dog2 = Animal("Dog")  # Type "Animal" is not assignable to declared type "Dog"

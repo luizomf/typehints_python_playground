@@ -1,3 +1,4 @@
+# ruff: noqa: B903
 #
 # Classes - Vamos relembrar (Vai ser muito importante)
 #
@@ -24,19 +25,32 @@ class Animal:
         # Eu quero que todo `animal` tenha um `name` na inicialização
         self.name = name
 
-    def make_sound(self) -> None:
-        raise NotImplementedError
+
+# Criamos o molde, que tal criar animais?
+dog = Animal("Dog")  # dog É UM Animal
+cat = Animal("Cat")  # cat É UM Animal
+
+# Todos os animais agora tem um `name`
+sep_print()
+cyan_print(f"{dog.name = !r}")  # Dog
+cyan_print(f"{cat.name = !r}")  # Cat
+
+#
+# Para Type Checkers (Código não executado):
+#
+# Classes criam tipos. Assim como criamos `Animal` porque não encontramos um
+# `Animal` pronto no Python, para o Type Checker, ao criar um `Animal`, você
+# acabou de criar um novo tipo na linguagem chamado `Animal`. Todas as intâncias
+# de animal são DO TIPO `Animal`. Se eu criar uma função que precisa receber um
+# `Animal` (do exemplo anterior), `dog` ou `cat` vão servir.
 
 
-if __name__ == "__main__":
-    # Criamos o molde, que tal criar animais?
-    dog = Animal("Dog")
-    cat = Animal("Cat")
-
+def get_animal_name(animal: Animal) -> None:
+    cyan_print(f"'get_animal_name' | Classe: {type(animal).__name__}")
+    cyan_print(f"'get_animal_name' | {animal.name = !r}")
     sep_print()
 
-    # Todos os animais agora tem um `name`
-    cyan_print(f"{dog.name = !r}")  # Dog
-    cyan_print(f"{cat.name = !r}")  # Cat
 
-    sep_print()
+sep_print()
+get_animal_name(dog)  # Dog
+get_animal_name(cat)  # Cat

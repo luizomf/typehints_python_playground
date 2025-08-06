@@ -1,82 +1,31 @@
 #
-# Tipos mais flexíveis e úteis
+# Para Type Checkers (Código não executado):
 #
-# Union, Optional, TYPE_CHEKCKING, Sequence, Iterable, Iterator
-#
-# - TYPE_CHEKCKING - só na tipagem, não em runtime
-# - Union - quando você precisa de mais de um tipo
-# - Optional - Quando pode ou não existir um valor
-# - Sequence[T] - Quando é suprota dunder len e getitem
-# - Iterable[T] - Qualquer iterável (que você usa com for, tem iter)
-# - Iterator[T] - Um iterator que sabe iterar o iterável (tem dunder iter e next)
-# - Sized - Tem dunder len (len)
-# - Container[T] - Tem dunder contains (in e not in)
-# - Collection[T] - Tem dunder len, iter e contains
-#
-# Você pode ver todos em:
-# https://docs.python.org/3/library/collections.abc.html
-#
+# Classes criam tipos. Assim como criamos `Animal` porque não encontramos um
+# `Animal` pronto no Python, para o Type Checker, ao criar um `Animal`, você
+# acabou de criar um novo tipo na linguagem chamado `Animal`. Esse tipo de
+# tipagem é chamado de "Tipagem nominal" ou "Nominal typing".
+# Todas as intâncias de animal são DO TIPO `Animal`.
+# Se eu criar uma função que precisa receber um `Animal` (do exemplo anterior),
+# `dog` ou `cat` vão servir.
 
 
-def generator(x=20):
-    for i in range(x):
-        yield i
+from exemplo05 import Animal
+from utils import cyan_print, sep_print
 
 
-generate = generator(20)
-# print(list(generate))
+def get_animal_name(animal: Animal) -> None:
+    cyan_print(f"'get_animal_name' | Classe: {type(animal).__name__}")
+    cyan_print(f"'get_animal_name' | {animal.name = !r}")
+    sep_print()
 
 
-def to_str(value):
-    print("\nto_str")
-    return str(value)
+if __name__ == "__main__":
+    # Para os type checkers:
+    dog = Animal("Dog")  # dog É UM Animal
+    cat = Animal("Cat")  # cat É UM Animal
 
-
-# valor = to_str(123)
-# print(valor, type(valor))
-
-
-def greet(name=None):
-    print("\ngreet")
-    if name is None:
-        return "Olá, visitante"
-    return f"Olá, {name}"
-
-
-# print(greet("Luiz"))
-# print(greet())
-
-
-def show_items(items):
-    items_type_name = items.__class__.__name__
-    print(f"\nshow_items {items_type_name!r}", end=" ")
-
-    for item in items:
-        print(item, end=" ")
-
-    print()
-
-
-# show_items(["a", "b", "c"])
-# show_items(("x", "y"))
-# show_items({"z", "w"})
-# show_items("xyz")
-
-# generator = (letter for letter in "abcd")
-# show_items(generator)
-
-
-def print_dict(dados):
-    print("\nprint_dict")
-
-    for key in dados:
-        valor = dados.get(key, "")
-        print(key, valor)
-
-
-pessoa = {
-    "nome": "Luiz Otávio",
-    "sobrenome": "Miranda",
-}
-
-# print_dict(pessoa)
+    sep_print()
+    # Então abaixo função aceitaria qual tipo?
+    get_animal_name(dog)  # Dog
+    get_animal_name(cat)  # Cat
