@@ -124,3 +124,13 @@ if __name__ == "__main__":
     print_address(person3.address)
 
     sep_print()
+
+    # APAGAR ABAIXO
+
+    def change_person(person: Person) -> None:
+        person.address.street = "ABC"
+
+    sep_print()
+    change_person(person3)
+    cyan_print(person3.firstname, person4.lastname)
+    print_address(person3.address)
