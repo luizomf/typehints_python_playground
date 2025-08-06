@@ -8,45 +8,119 @@
 #
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, ClassVar, Self
 
-def print_endereco(endereco):
-    print(endereco.endereco_completo)
+from utils import cyan_print, sep_print
+
+if TYPE_CHECKING:
+    from collections.abc import MutableMapping
+
+from dataclasses import dataclass
 
 
-class Endereco:
-    _cache = {}
+def print_address(address: Address) -> None:
+    cyan_print(f"{address.__class__.__name__!r}: {address.full_address}")
 
-    def __init__(self, rua, numero):
-        self.rua = rua
-        self.numero = numero
+
+@dataclass
+class Person:
+    firstname: str
+    lastname: str
+    age: int
+    address: Address
+    phrase: str = ""
 
     @property
-    def endereco_completo(self):
-        return f"{self.rua} {self.numero}"
+    def full_address(self) -> str:
+        return self.address.full_address
 
-    def mudar_rua(self, rua):
-        self.rua = rua
 
-    def __repr__(self):
+class Address:
+    # Obs: a complexidade dessa classe é inútil. Mas vai dar um bom exemplo para
+    # os nossos tipos.
+    #
+    # ClassVar -> atributo da classe que não deve ser definido na instância
+    # MuttableMapping -> Um elemento que tem a estrutura de dict e é mutável
+    # Self é a instância da própria classe.
+    # O "_" indica uso interno (convenção Python).
+    _cache: ClassVar[MutableMapping[str, Self]] = {}
+
+    # __new__ é o método responsável por criar a instância da classe no Python.
+    # Usamos Self como retorno para garantir a tipagem correta nas subclasses.
+    def __new__(cls, street: str, number: int) -> Self:
+        # Maneira tosca de gerar um identificador para o endereço
+        identity = f"{street} {number}".lower().replace(r" ", "").strip()
+
+        if identity in cls._cache:
+            # Conhecemos os endereço, vamos retornar do cache
+            # e não vamos gerar uma nova instância.
+            cyan_print(f"[black on cyan]OLD:[/] {identity!r}")
+            return cls._cache[identity]
+
+        # Nunca vi esse endereço, vamos criar uma nova instância
+        cyan_print(f"[black on green]NEW:[/] {identity!r}")
+
+        # Geramos a instância da classe, adicionamos no cache e retornamos
+        instance = super().__new__(cls)
+        cls._cache[identity] = instance
+        return instance
+
+    def __init__(self, street: str, number: int) -> None:
+        # Impede a reexecução do __init__ em chamadas futuras nessa instância
+        # em específico.
+        if not hasattr(self, "_no_more_inits_"):
+            self._no_more_inits_ = True
+            self.street = street
+            self.number = number
+
+    @property
+    def full_address(self) -> str:
+        return f"{self.street} {self.number}"
+
+    def set_street(self, street: str) -> None:
+        self.street = street
+
+    def __repr__(self) -> str:
         cls_name = self.__class__.__name__
-        return f"{cls_name}({self.endereco_completo})"
+        return f"{cls_name}({self.full_address})"
 
 
-# @dataclass
-# class Pessoa:
-#     nome:
-#     sobrenome:
-#     idade:
-#     endereco:
-#     genero = ""
-#
-#     @property
-#     def endereco_completo(self):
-#         return self.endereco.endereco_completo
-#
-#
-# endereco = Endereco("Rua das flores", 22)
-# pessoa = Pessoa("Otávio", "Miranda", 18, endereco)
-#
-# print(pessoa)
-# print(pessoa.endereco_completo)
+class MySubAddress(Address):
+    pass
+
+
+if __name__ == "__main__":
+    sep_print()
+
+    # Vou simular que duas pessoas moram em `address1`
+    address1 = Address("Rua das flores", 22)
+    person1 = Person("Otávio", "Miranda", 18, address1)
+
+    address2 = Address("Avenida Brasil", 943)
+    person2 = Person("Luiz", "Otávio", 19, address2)
+
+    address3 = MySubAddress("Alameda das flores", 480)
+    person3 = Person("Maria", "Helena", 20, address3)
+
+    # Alguém criou um endereço existente.
+    # As pessoas devem morar na mesma residência (ou alguém errou algo)
+    address4 = Address("Rua das flores", 22)
+    person4 = Person("Letícia", "Barbosa", 21, address4)
+
+    # Alterar o endereço pela pessoa 4, afeta o endereço da pessoa 1
+    person4.address.number = 42
+
+    # Só prints para visualizarmos o que aconteceu
+    sep_print()
+    cyan_print(person1.firstname, person1.lastname)
+    print_address(person1.address)
+
+    sep_print()
+    cyan_print(person4.firstname, person4.lastname)
+    print_address(person4.address)
+
+    sep_print()
+    cyan_print(person3.firstname, person4.lastname)
+    print_address(person3.address)
+
+    sep_print()
