@@ -51,14 +51,16 @@ if __name__ == "__main__":
     # Nossa função aceita Dot e Cat, porque Dog e Cat são subtipos de Animal
     get_animal_name(dog)
     get_animal_name(cat)
-    get_animal_name(car)  # O Python não liga, mas o Type Checker vai gritar
+    # get_animal_name(car)  # O Python não liga, mas o Type Checker vai gritar
 
     dog.make_sound()
     cat.make_sound()
-    car.make_sound()  # De novo, Python roda, type checker grita
+    # car.make_sound()  # De novo, Python roda, type checker grita
 
     sep_print()
 
     # PROVA: A não é subtipo de B
     dog2: Dog
     dog2 = Animal("Dog")  # Type "Animal" is not assignable to declared type "Dog"
+
+    cyan_print()
