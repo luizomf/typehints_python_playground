@@ -14,32 +14,6 @@ https://realpython.com/python-type-checking/
 
 ## Notas
 
-Se `B` é subtipo de `A`, `B` é `A` (`B` is `A`). Mas `A` nunca por ser `B`,
-porque `B` pode ter coisas mais específicas que `A`.
-
-Analogia: um `Cachorro` é um subtipo de um `Animal`, mas um `Animal` não é um
-subtipo de `Cachorro`. O `Cachorro` pode latir, mas nem todo `Animal` pode
-latir.
-
-Subtipagem nominal é quando um tipo é subtipo de outro tipo via herança. A
-relação `é um` significa `Cachorro` é um `Animal`. Nesse caso, `Cachorro` herda
-de animal.
-
-Subtipagem estrutural é quando um tipo tem os atributos requeridos em um
-protocolo, mas podem não ter relação entre si.
-
-Um tipo `t1` é constistente com um tipo `t2` se `t1` for um subtipo de `t2`. O
-contrário não é verdadeiro.
-
-```python
-# Consider: Address and MySubAddress(Address)
-address: Address
-address = MySubAddress("a", 123)  # OK! MySubAddress is a subtype of Address
-
-sub_address: MySubAddress
-sub_address = Address("a", 123)  # Error! The inverse relation is not safe
-```
-
 `Any` pode ser considerado um tipo que aceita qualquer valor e assume ter
 qualquer atributo ou método. Ele é um tipo estrutural especial, usado para
 desativar temporariamente a verificação de tipos.
@@ -51,5 +25,68 @@ A diferença é que você pode passar um `Any` onde se espera um `int`, uma `str
 ou qualquer outro tipo, sem erro; mas não pode passar um `object` onde se espera
 um `int`, porque o `object` não garante os métodos e atributos do `int`.
 
-- Um genérico pode ter variância: ser covariant ou contravariant
-- Um genérico invariant é um container que aceita `T` e apenas `T`
+## Covariância e contravariância (Covariance e Contravariance)
+
+Este foi o
+[conteúdo mais intuitivo que encontrei](https://github.com/microsoft/pylance-release/wiki/Covariance-and-Contravariance)
+a respeito de covariância e contravariância em Python.
+
+Vamos usar os exemplos do conteúdo acima levemente modificados para testes:
+
+```python
+class Animal:
+    def is_alive(self) -> bool: ...
+
+
+class Dog(Animal):
+    def bark(self, sound: str) -> None: ...
+
+
+class Pitbull(Dog): ...
+
+
+class Box[T]:
+    def add(self, *items: T) -> None: ...
+```
+
+### Covariância
+
+Covariância geralmente indica que o tipo é seguro na saída (output), mas não
+seguro na entrada (input).
+
+Um exemplo de input e output seria um `Callable[[Input], Output]`, onde `Input`
+são os argumentos e o `Output` o retorno. Então a covariância ocorre no retorno.
+
+Se um tipo `Dog` é subtipo de `Animal`, então um tipo `Box[Dog]` é um subtipo de
+`Box[Animal]` (esse cenário é intuitivo).
+
+Se uma função tem que retornar `Box[Animal]`, então é aceitável retornar
+`Box[Dog]`.
+
+Covariância sobe na árvore de tipos, como em `Pitbull` -> `Dog` -> `Animal`.
+
+### Contravariância
+
+Contravariante geralmente indica que o tipo é seguro na entrada (input).
+
+Se um tipo `Dog` é um subtipo de `Animal`, então um tipo `Box[Animal]` é um
+subtipo de `Box[Dog]` (isso é muito contra intuitivo).
+
+Em Python isso ocorre com `Callable`, que é covariante no retorno e
+contravariante nos argumentos.
+
+A dica da PEP 483 é que você deve usar tipos mais abrangentes nos argumentos e
+mais específicos nos retornos.
+
+Ainda seguindo exemplos da PEP 483, `Callable[[A], None]` seria subtipo de
+`Callable[[B], None]`.
+
+Contravariancia desce na árvore de tipos, como em `Animal` -> `Dog` ->
+`Pitbull`.
+
+### Invariante
+
+Invariante significa que não varia. Nem covariante nem contravariante. Se o tipo
+é `T`, então só `T` é aceito. Esse foi bem mais simples.
+
+Geralmente, tipos mutáveis são invariantes.

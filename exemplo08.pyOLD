@@ -80,7 +80,7 @@ if __name__ == "__main__":
     address2 = Address("Avenida Brasil", 943)
     person2 = Person("Luiz", "Otávio", 19, address2)
 
-    address3 = MySubAddress("Alameda das flores", 480)
+    address3 = Address("Alameda das flores", 480)
     person3 = Person("Maria", "Helena", 20, address3)
 
     # Alguém criou um endereço existente.
@@ -105,4 +105,3 @@ if __name__ == "__main__":
     print_address(person3.address)
 
     sep_print()
-
