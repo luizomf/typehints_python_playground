@@ -1,0 +1,46 @@
+# Conteúdo para o YouTube
+
+## Título com bom SEO
+
+Type Hints em Classes com ABC, Dataclass, Self, ClassVar e mais - Aula 4
+
+## Descrição
+
+Na última aula começamos a falar sobre a tipagem nominal com as classes e herança (basicamente POO). Agora, é hora de consolidar esse conhecimento com coisas bem mais avançadas.
+
+Nesse vídeo, vamos tocar em tópicos bem mais avançados sobre tipagem e design de classes. Isso pode elevar (e muito) a qualidade do seu código. Tipo, nível profissional mesmo!!
+
+A gente vai aprender como usar ferramentas modernas do Python para criar classes que não são apenas estruturas de dados simples, mas componentes de software eficientes, seguros e legíveis. Vamos até usar um padrão de projeto do mundo real (um Singleton modificado para cache).
+
+Nessa aula da nossa playlist completa sobre tipagem no Python, você vai aprender o seguinte:
+
+- Tipagem de dataclasses para criar classes de dados limpas no Python.
+- Herança e composição com Classes Abstratas, ABC e abstractmethod
+- O Padrão de Projeto Singleton (usado como cache)
+- Os decoradores @override e @final para tornar sua herança explícita.
+- A diferença entre ClassVar com cls e variáveis de instância com self.
+- O poder do Self para uma tipagem em métodos que retornam a própria instância.
+- O novo TypeAlias com type para criar apelidos de tipos reutilizáveis.
+
+Se você quer ir além do básico da Orientação a Objetos e aprender a usar o sistema de tipos do Python para construir software de verdade, esta aula é o seu guia definitivo. Bora comigo porque ainda estamos apenas no começo da playlist...
+
+E lembre-se: Type Hint é igual a Type Annotation (tipagem no Python)
+
+Este vídeo é parte de uma playlist, essa é a QUARTA aula. Segue o link da
+playlist para acompanhar:
+https://www.youtube.com/playlist?list=PLbIBj8vQhvm04EuddtleOAoEmfU9vwQlN
+
+Link do repositório: 
+https://github.com/luizomf/typehints_python
+
+Conheça meus cursos em: 
+https://www.otaviomiranda.com.br/
+
+Capítulos 
+00:00:00 - Vamos criar classes mais avançadas?
+
+#Python #TypeHints #POO #Dataclasses #DesignPatterns
+
+## Tags
+
+python type hints, type hints python, python tipagem, tipagem de dados python, type annotations python, curso de python, python para iniciantes, programação python, o que são type hints, como usar type hints, mypy, pyright, python 2025, dicas de python, boas práticas python, código limpo python, python avançado, tutorial python, aula de python, desenvolvimento de software, qualidade de código, typing, Final, list, dict, tuple, set
