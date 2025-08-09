@@ -49,6 +49,35 @@ class Box[T]:
     def add(self, *items: T) -> None: ...
 ```
 
+### PEP 483
+
+Se um tipo `t2` é um subtipo de `t1`, então um construtor de um tipo genérico
+`GenType` é chamado de:
+
+- Covariante se `GenType[t2]` é um subtipo de `GenType[t1]` para todos os `t1` e
+  `t2`.
+- Contravariante se `GenType[t1]` é um subtipo de `GenType[t2]` para todos os
+  `t1` e `t2`.
+- Invariante se nenhuma das opções acima.
+
+O exemplo que usaram:
+
+```python
+def cov(x: float) -> float:
+    return 2*x
+
+def contra(x: float) -> float:
+    return -x
+
+def inv(x: float) -> float:
+    return x*x
+```
+
+Se `x1 < x2`, então sempre `cov(x1) < cov(x2)`, e `contra(x2) < contra(x1)`.
+
+Se `x1 é subtipo de x2`, então sempre `Cov[x1] é subtipo de Cov[x2]`
+(covariância), e `Contra[x2] é subtipo de Contra[x1]` (contravariância).
+
 ### Covariância
 
 Covariância geralmente indica que o tipo é seguro na saída (output), mas não
@@ -63,7 +92,7 @@ Se um tipo `Dog` é subtipo de `Animal`, então um tipo `Box[Dog]` é um subtipo
 Se uma função tem que retornar `Box[Animal]`, então é aceitável retornar
 `Box[Dog]`.
 
-Covariância sobe na árvore de tipos, como em `Pitbull` -> `Dog` -> `Animal`.
+Covariância sobe na árvore de tipos, como em `Animal` -> `Dog` -> `Pitbull`.
 
 ### Contravariância
 
@@ -81,7 +110,7 @@ mais específicos nos retornos.
 Ainda seguindo exemplos da PEP 483, `Callable[[A], None]` seria subtipo de
 `Callable[[B], None]`.
 
-Contravariancia desce na árvore de tipos, como em `Animal` -> `Dog` ->
+Contravariância desce na árvore de tipos, como em `Animal` -> `Dog` ->
 `Pitbull`.
 
 ### Invariante
