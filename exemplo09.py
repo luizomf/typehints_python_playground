@@ -1,41 +1,26 @@
 #
 # Hello World!
 #
-from dataclasses import dataclass
+class Animal: ...
 
 
-@dataclass
-class Animal:
-    name: str
+class Cat(Animal): ...
 
 
-class Dog(Animal): ...
+def wants_cats(cats: list[Cat]) -> None: ...
+def delivers_cats() -> list[Cat]: ...
+def delivers_animals() -> list[Animal]: ...
 
 
-class Pitbull(Dog): ...
+a: list[Animal] = []
+c: list[Cat] = []
 
+wants_cats(delivers_cats())
+wants_cats(delivers_animals())
 
-class Box[In, Out]:
-    def __init__(self) -> None: ...
-
-    def get(self, index: int) -> Out: ...
-
-    def add(self, items: In) -> None: ...
-
-
-def show_animals[In, Out](animals: Box[In, Out]) -> None:
-    print(animals.get(1))
-    print(animals.get(2))
-
-
-if __name__ == "__main__":
-    print()
-
-    a1, d1, p1 = Animal("a1"), Dog("d1"), Pitbull("p1")
-    box_of_animals = Box[int, Animal]()
-    box_of_dogs = Box[Animal, int]()
-
-    show_animals(box_of_animals)
-    show_animals(box_of_dogs)
-
-    print()
+# Isso é porque bool é um subtipo de int (0 e 1)
+# Covariância -> int -> bool
+boolean: int = 0
+boolean = False
+boolean = True
+boolean = "False"  # Error: Isso é subtipo de str (Literal["False"])

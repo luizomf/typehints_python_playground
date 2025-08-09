@@ -1,16 +1,27 @@
-# typehists_pg
+# Estudo de Type Hints
 
-PEPs para ler:
+PEPs para reler (a fontes das informações):
 
-PEP 484 - Type Hints: O início de tudo. https://peps.python.org/pep-0484/  
-PEP 544 - Protocols: Introduz a tipagem estrutural.
-https://peps.python.org/pep-0544/  
-PEP 612 - Parameter Specification Variables: A introdução do ParamSpec e
-Concatenate. https://peps.python.org/pep-0612/
+- PEP 483 - The Theory of Type Hints - [link](https://peps.python.org/pep-0483/)
+- PEP 484 - Type Hints - [link](https://peps.python.org/pep-0484/)
+- PEP 544 - Protocols (Estrutural) [link](https://peps.python.org/pep-0544/)
+- PEP 612 - Parameter Spec [link](https://peps.python.org/pep-0612/)
+- PEP 695 - Type Parameter Syntax [link](https://peps.python.org/pep-0695/)
 
-https://typing.python.org/en/latest/index.html  
-https://mypy.readthedocs.io/en/stable/kinds_of_types.html  
-https://realpython.com/python-type-checking/
+Documentações interessantes (pode ajudar com a didática):
+
+- [typing doc](https://docs.python.org/3/library/typing.html)
+- [Collections ABCs doc](https://docs.python.org/3/library/typing.html)
+- [Índice de typing](https://typing.python.org/en/latest/index.html)
+- [Mypy doc](https://mypy.readthedocs.io/en/stable/kinds_of_types.html)
+- [Wiki Pylance](https://github.com/microsoft/pylance-release/wiki/Covariance-and-Contravariance)
+
+Não importantes, mas me ajudam a entender como as pessoas ensinam isso:
+
+- [Polimorfismo paramétrico](https://pt.wikipedia.org/wiki/Polimorfismo_param%C3%A9trico)
+- [Teoria dos tipos](https://pt.wikipedia.org/wiki/Teoria_dos_tipos)
+- [Variance](https://www.youtube.com/watch?v=FdFBYUQCuHQ&t=77s&ab_channel=ChristopherOkhravi)
+- [Extremamente básico](https://realpython.com/python-type-checking/)
 
 ## Notas
 
@@ -51,6 +62,9 @@ class Box[T]:
 
 ### PEP 483
 
+vib - seleciona o que está entre parênteses. \
+vip - seleciona o parágrafo.
+
 Se um tipo `t2` é um subtipo de `t1`, então um construtor de um tipo genérico
 `GenType` é chamado de:
 
@@ -77,6 +91,33 @@ Se `x1 < x2`, então sempre `cov(x1) < cov(x2)`, e `contra(x2) < contra(x1)`.
 
 Se `x1 é subtipo de x2`, então sempre `Cov[x1] é subtipo de Cov[x2]`
 (covariância), e `Contra[x2] é subtipo de Contra[x1]` (contravariância).
+
+### Sobre `Callable`
+
+- Se o tipo `T` só aparece em retorno → tende a ser covariante.
+- Se `T` só aparece em parâmetro de entrada, tende a ser contravariante.
+- Se aparece nos dois lados (ou em posições "mistas") → fica invariante
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Animal: ...
+class Dog(Animal): ...
+class Pitbull(Dog): ...
+
+class Producer[T]:
+    def get(self) -> T: ...  # T só em retorno => covariante
+    # nada de put(T) aqui, pra não “poluir” a variância
+
+def wants_animals(p: Producer[Animal]) -> None: ...
+
+dogs: Producer[Dog]
+pits: Producer[Pitbull]
+
+wants_animals(dogs)   # OK (Producer[Dog] <: Producer[Animal])
+wants_animals(pits)   # OK (Producer[Pitbull] <: Producer[Animal])
+```
 
 ### Covariância
 

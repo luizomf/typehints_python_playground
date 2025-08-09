@@ -26,11 +26,10 @@
 #
 
 
-def with_callback(
-    x,
-    y,
-    callback,
-) -> int:
+from collections.abc import Callable
+
+
+def with_callback(x: float, y: float, callback: Callable[[str], None]) -> float:
     result = x + y
     callback(f"{result = }")
     return x + y
