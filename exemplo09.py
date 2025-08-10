@@ -1,7 +1,9 @@
 #
 # Genéricos padrão em Collections ABC
 #
-# Doc: https://docs.python.org/3/library/collections.abc.html
+# Doc:
+# https://docs.python.org/3/library/collections.abc.html
+# https://docs.python.org/3/library/stdtypes.html#standard-generic-classes
 #
 # Como vimos antes, podemos usar as coleções padrão do Python para tipagem. Ou
 # seja: `list[T]`, `dict[K, V]`, `tuple[T, ...]`, etc...

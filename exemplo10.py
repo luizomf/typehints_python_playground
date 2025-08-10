@@ -1,53 +1,55 @@
 #
-# Genéricos padrão em Collections ABC
+# Covariância e contravariância em Genéricos padrão
 #
 # Doc: https://docs.python.org/3/library/collections.abc.html
 #
-# Abstract Base Classes (ABCs), são classes abstratas que implementam alguns
-# métodos abstratos e te dão outros gratuitamente (mixins). Isso significa que
-# você pode implementar suas próprias coleções como preferir.
+# Muitos genéricos são "collections", ou seja, podem ter algum tipo que vem de
+# fora, como vimos em: `list[T]`, `tuple[T]`, `Iterable[T]` e outros.
+# Então, como poderíamos saber se `C[T2]` também é um subtipo de `C[T1]`?
+# Para distinguir isso precisamos das características da "collection" e de como
+# ela será usada.
+# Aqui entra em ação a variância: covariância, contravariância e invariância.
 #
-# Variância:
-# Valores imutáveis são covariantes (posso retornar algo mais específico)
+# Observação: variância pode ser escolhida pelo desenvolvedor ou inferida
+# automaticamente. Voltaremos nesse assunto em aulas futuras, mas aqui estamos
+# falando das collections existentes em collections.abc.
 #
-from __future__ import annotations
-
-from collections.abc import Sequence
-from typing import overload, override
-
-
-class ReadOnlyList[T](Sequence[T]):
-    def __init__(self, *args: T) -> None:
-        super().__init__()
-        self._data = args
-
-    @overload
-    def __getitem__(self, key: int) -> T: ...
-    @overload
-    def __getitem__(self, key: slice) -> ReadOnlyList[T]: ...
-    @override
-    def __getitem__(self, key: int | slice) -> T | ReadOnlyList[T]:
-        # Ao meu ver, estamos caindo nesse "problema"
-        # https://peps.python.org/pep-0673/#use-in-generic-classes
-        if isinstance(key, float | int):
-            return self._data[key]
-        return ReadOnlyList(*self._data[key])
-
-    def __len__(self) -> int:
-        return len(self._data)
-
-    def __repr__(self) -> str:
-        values = ", ".join(f"{i}={v!r}" for i, v in enumerate(self._data))
-        return f"{self.__class__.__name__}({values})"
+# `C`=Collection ### `T`=Tipo ### `Tn`=Tipo enumerado ### `<:`=é subtipo de.
+#
+# Considerando `T2 <: T1`, o que acontece com `C` de acordo com a variância?
+#
+# Se `C` é `covariant`: a hierarquia é mantida, `C[T2]` é subtipo de `C[T1]`. \
+# É intuitivo: `T2` <: `T1` então `C[T2]` <: `C[T1]`. \
+# Geralmente aparece em retornos e tipos imutáveis (outputs).
+#
 
 
-f2 = ReadOnlyList(1, 2, 3, "a", "b")
-f3 = f2[1:2]
+# Vamos ver um exemplo simples:
+# - `tuple` como collection `C[T]`
+# - Por padrão, `tuple` é imutável, portanto covariante (CO é o intuitivo)
+# - Para `T2`, podemos usar o `bool`, porque no Python `bool` é subtipo de `int`
+# - Para `T1`, podemos usar então o supertipo `int`.
+# Então temos exatamente o exemplo: `bool <: int` e `tuple[bool] <: tuple[int]`
+#
+# TypeAlias
+type C[T] = tuple[T, ...]  # Tupla com um ou mais Ts
 
-l1 = ReadOnlyList(1, 2, 3)
-print(l1[0])
-print(l1[0:2])
+# Código
+integer_box: C[int] = 0, 1, 1, 0  # C[T1]
+boolean_box: C[bool] = False, True, True, False  # C[T2]
 
-l1 = ReadOnlyList("ABC", 1, 22, "DEF", "GHI")
-print(l1[0])
-print(l1[0:2])
+# Se é a collection é covariante, posso usar o subtipo no lugar do supertipo
+# integer_box = boolean_box  # Isso não gera erros
+
+
+def get_integers() -> C[int]:
+    return True, True, False, False  # Isso também funciona normalmente
+
+
+# Por conta disso:
+a, b, c, d = get_integers()
+# Se eu usar o retorno como int, funciona:
+print(a + b + c + d)  # 2
+# Se eu usar o retorno como bool funciona:
+is_admin, is_logged, *_ = get_integers()
+print(f"{is_admin = }, {is_logged = }")
