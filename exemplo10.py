@@ -31,25 +31,16 @@
 # - Para `T1`, podemos usar então o supertipo `int`.
 # Então temos exatamente o exemplo: `bool <: int` e `tuple[bool] <: tuple[int]`
 #
-# TypeAlias
-type C[T] = tuple[T, ...]  # Tupla com um ou mais Ts
+type C[T] = tuple[T, ...]
 
-# Código
-integer_box: C[int] = 0, 1, 1, 0  # C[T1]
-boolean_box: C[bool] = False, True, True, False  # C[T2]
+integers: C[int] = 1, 0, 1, 0
+booleans: C[bool] = True, False, True, False
 
-# Se é a collection é covariante, posso usar o subtipo no lugar do supertipo
-# integer_box = boolean_box  # Isso não gera erros
+# booleans = integers # Não funciona
+# integers = booleans
 
 
-def get_integers() -> C[int]:
-    return True, True, False, False  # Isso também funciona normalmente
+def wants_integers(integers: tuple[int, ...]) -> None: ...
 
 
-# Por conta disso:
-a, b, c, d = get_integers()
-# Se eu usar o retorno como int, funciona:
-print(a + b + c + d)  # 2
-# Se eu usar o retorno como bool funciona:
-is_admin, is_logged, *_ = get_integers()
-print(f"{is_admin = }, {is_logged = }")
+wants_integers(booleans)

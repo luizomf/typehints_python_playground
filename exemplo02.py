@@ -32,7 +32,7 @@ data: bytes = b"whatever"
 
 
 # Constantes
-# Essa constante não costuma ser reatribuída, então a tipagem é redundante.
+# Essa constante não costuma ser atribuída novamente, então a tipagem é redundante.
 # O próprio valor já deixa claro que é uma string.
 CONSTANTE = "valor constante"
 

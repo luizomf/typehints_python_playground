@@ -3,7 +3,7 @@
 #
 # Doc: https://docs.python.org/3/library/collections.abc.html
 #
-# invariant: os tipos precisam ser idênticos; não existe invariância de subtipagem aqui.
+# invariant: os tipos precisam ser idênticos; não existe variância de subtipagem aqui.
 # Regra prática: quando o tipo aparece em posições de ENTRADA e SAÍDA (mutáveis),
 # o checker não pode nem co- nem contravariar com segurança, sobre apenas invariância.
 #

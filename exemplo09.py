@@ -2,6 +2,7 @@
 # Genéricos padrão em Collections ABC
 #
 # Doc:
+# Vídeo sobre protocolos: https://www.youtube.com/watch?v=8xnIkjROj_o
 # https://docs.python.org/3/library/collections.abc.html
 # https://docs.python.org/3/library/stdtypes.html#standard-generic-classes
 #
@@ -24,30 +25,27 @@
 # que vai usar a função saberá os métodos que pode usar nessa lista sem quebrar
 # o programa.
 #
-
-
 from collections.abc import Iterable
 
+from utils import cyan_print, sep_print
 
-# Antes: def concat(items: list[str]) -> str:
+
 def concat(items: Iterable[str]) -> str:
     return "".join(items)
 
 
-items_list = ["a", "b", "c"]
-items_str = "abc"
-items_tuple = "a", "b", "c"
-items_set = {"a", "b", "c"}
-items_dict = {"a": None, "b": None, "c": None}
+letters_list = ["a", "b", "c"]
+letters_set = {"a", "b", "c"}
+letters_str = "abc"
+letters_tuple = "a", "b", "c"
+letters_dict = {"a": None, "b": False, "c": 123}
 
-list_result = concat(items_list)  # só isso era aceitável
-str_result = concat(items_str)  # Antes: Não aceitava
-tuple_result = concat(items_tuple)  # Antes: Não aceitava
-set_result = concat(items_set)  # Antes: Não aceitava
-dict_result = concat(items_dict)  # Antes: Não aceitava
+sep_print()
 
-print(f"{list_result = !r}")
-print(f"{str_result = !r}")
-print(f"{tuple_result = !r}")
-print(f"{set_result = !r}")
-print(f"{dict_result = !r}")
+cyan_print(f"{concat(letters_list) = !r}")
+cyan_print(f"{concat(letters_set) = !r}")
+cyan_print(f"{concat(letters_str) = !r}")
+cyan_print(f"{concat(letters_tuple) = !r}")
+cyan_print(f"{concat(letters_dict) = !r}")
+
+sep_print()
