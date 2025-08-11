@@ -1,53 +1,56 @@
 #
-# Genéricos padrão em Collections ABC
+# ReadOnlyList
 #
-# Doc: https://docs.python.org/3/library/collections.abc.html
-#
-# Abstract Base Classes (ABCs), são classes abstratas que implementam alguns
-# métodos abstratos e te dão outros gratuitamente (mixins). Isso significa que
-# você pode implementar suas próprias coleções como preferir.
-#
-# Variância:
-# Valores imutáveis são covariantes (posso retornar algo mais específico)
-#
-from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Iterator, Sequence
 from typing import overload, override
 
 
-class ReadOnlyList[T](Sequence[T]):
-    def __init__(self, *args: T) -> None:
-        super().__init__()
-        self._data = args
+class ReadOnlyList[ROValue](Sequence[ROValue]):
+    def __init__(self, *args: ROValue) -> None:
+        self._data: dict[int, ROValue] = {}
+        self._index = 0
+        self._next_index = 0
+        self._add_initial_values(*args)
+
+    def _add_initial_values(self, *args: ROValue) -> None:
+        for arg in args:
+            self._data[self._index] = arg
+            self._index += 1
 
     @overload
-    def __getitem__(self, key: int) -> T: ...
+    def __getitem__(self, index: int) -> ROValue: ...
     @overload
-    def __getitem__(self, key: slice) -> ReadOnlyList[T]: ...
+    def __getitem__(self, index: slice) -> Sequence[ROValue]: ...
     @override
-    def __getitem__(self, key: int | slice) -> T | ReadOnlyList[T]:
-        # Ao meu ver, estamos caindo nesse "problema"
-        # https://peps.python.org/pep-0673/#use-in-generic-classes
-        if isinstance(key, float | int):
-            return self._data[key]
-        return ReadOnlyList(*self._data[key])
+    def __getitem__(self, index: int | slice) -> ROValue | Sequence[ROValue]:
+        if isinstance(index, slice):
+            data_slice = list(self._data.values())[index]
+            return ReadOnlyList(*data_slice)
+        return self._data[index]
 
     def __len__(self) -> int:
-        return len(self._data)
+        return self._index
 
     def __repr__(self) -> str:
-        values = ", ".join(f"{i}={v!r}" for i, v in enumerate(self._data))
-        return f"{self.__class__.__name__}({values})"
+        cls_name = type(self).__name__
+        attrs_str = ", ".join([f"{v!r}" for v in self._data.values()])
+        return f"{cls_name}({attrs_str})"
+
+    def __iter__(self) -> Iterator[ROValue]:
+        return self
+
+    def __next__(self) -> ROValue:
+        if not self._data or self._next_index >= self._index:
+            self._next_index = 0
+            raise StopIteration
+
+        value = self._data[self._next_index]
+        self._next_index += 1
+
+        return value
 
 
-f2 = ReadOnlyList(1, 2, 3, "a", "b")
-f3 = f2[1:2]
-
-l1 = ReadOnlyList(1, 2, 3)
-print(l1[0])
-print(l1[0:2])
-
-l1 = ReadOnlyList("ABC", 1, 22, "DEF", "GHI")
-print(l1[0])
-print(l1[0:2])
+if __name__ == "__main__":
+    list1 = ReadOnlyList("a", 0, 1, 2, 3, 4, 5, {"a", "b", "c"})
+    print(list1)
