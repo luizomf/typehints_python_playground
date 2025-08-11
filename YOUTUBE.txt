@@ -1,28 +1,22 @@
-Genéricos ABC, Covariância, Contravariância e Invariância no Python - Aula 5
+Na aula passada, aprendemos sobre a variância (covariância, contravariância e invariância). Agora, vamos dar o próximo passo e colocar a mão na massa: vamos aprender a criar nossas próprias classes de coleção implementando os protocolos do collections.abc. Ao terminar essa aula, você vai entender e saber implementar qualquer um Genérico ABC da biblioteca padrão do Python.
 
+Nesse vídeo, vamos usar o Sequence[T] como nosso guia. Você vai descobrir que, ao implementar apenas dois métodos mágicos (__getitem__ e __len__), o Python te dá de graça uma infinidade de outros comportamentos, como fatiamento (slicing), iteração, o operador in, a função reversed() e muito mais!
 
----
-
-
-Na última aula, falamos um pouco sobre o design de classes com tipagem avançada no Python. Agora, vamos resolver uma das questões mais importantes para escrever código flexível e robusto: como lidar com "coleções de tipos"?
-
-No vídeo de hoje, vamos aprender como usar e entender a documentação do collections.abc e entender um dos tópicos mais temidos e poderosos da teoria dos tipos: a Variância. Vamos entender de uma vez por todas o que são Covariância, Contravariância e Invariância, usando exemplos práticos e diretos, sem complicação. Eu vou dar o meu melhor com analogias para que você REALMENTE APRENDA isso.
-
-Vamos aplicar o Princípio da Robustez (Lei de Postel), onde você vai aprender por que anotar um parâmetro como list[T] nem sempre é a melhor ideia e como usar as abstrações corretas para tornar suas funções muito mais poderosas.
+Esta é uma aula fundamental para quem quer parar de apenas usar as coleções do Python e começar a entender como elas realmente funcionam por baixo dos panos.
 
 Nesta aula da nossa playlist completa sobre Type Hints no Python, você vai aprender:
 
-- A Lei de Postel: Por que devemos ser liberais no que aceitamos e conservadores no que retornamos.
-- Covariância: Entendendo como a hierarquia de tipos se comporta em coleções imutáveis como tuple.
-- Contravariância: O exemplo definitivo com Callable para entender por que a hierarquia de tipos se inverte em parâmetros.
-- Invariância: Por que coleções mutáveis como list e set são rígidas e como isso protege seu código de bugs sutis.
+- O que é o "contrato" de um Sequence e por que ele é a base para coleções ordenadas e imutáveis.
+- A usar @overload para tipar corretamente o __getitem__, que pode receber int ou slice.
+- Como tornar sua classe um iterador, implementando o protocolo de iteração (__iter__ e __next__).
+- A ver na prática todo o comportamento que sua classe "ganha de presente" ao herdar de Sequence.
 
-Se você quer parar de adivinhar qual tipo de coleção usar e finalmente entender a lógica por trás do sistema de tipos do Python, esta aula é o seu guia.
+Se você quer entender o Data Model do Python e ser capaz de criar seus próprios tipos de dados que se integram perfeitamente com a linguagem, esta aula foi feita para você.
 
 E lembre-se: Type Hint é igual a Type Annotation (tipagem no Python).
 
-Este vídeo é parte de uma playlist, essa é a QUINTA aula. Segue o link da playlist para acompanhar:
-https://www.youtube.com/playlist?list=PLbIBj8vQhvm04EuddtleOAoEmfU9vwQlN
+Este vídeo é parte de uma playlist, essa é a SEXTA aula. Segue o link da playlist para acompanhar:
+
 
 Link do repositório:
 https://github.com/luizomf/typehints_python
@@ -31,14 +25,8 @@ Conheça meus cursos em:
 https://www.otaviomiranda.com.br/
 
 Capítulos
-00:00:00 - Introdução
-
-#Python #TypeHints #Covariance #PythonBrasil #Programacao
+00:00:00 - Intro: Criando nossas próprias coleções!
 
 
 
----
-
-
-
-python covariancia, python contravariancia, python invariancia, type hints variancia, python collections.abc, python generics, programação genérica python, typing.Sequence, typing.Iterable, typing.Callable, variancia em python, o que é covariância, typevar python, curso de type hints, python avançado, tipos em python, tipagem estática python, Luiz Otávio Miranda, POO com tipos, lei de postel, princípio da robustez, código limpo python, tutorial de python, mypy, pyright
+#Python #TypeHints #POO #Collections #PythonBrasil
