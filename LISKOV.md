@@ -2,66 +2,95 @@
 
 ## A Definição Formal (Por Barbara Liskov)
 
-A definição original, proposta por Barbara Liskov em 1988, é um pouco mais
-acadêmica:
+A definição original, proposta por Barbara Liskov em 1988, é bem "acadêmica":
 
-> "What is wanted here is something like the following substitution property: If
-> for each object `o1` of type `S` there is an object `o2` of type `T` such that
-> for all programs `P` defined in terms of `T`, the behavior of `P` is unchanged
-> when `o1` is substituted for `o2`, then `S` is a subtype of `T`."
+> "What is wanted here is something like the following substitution property: If for each object
+> `o1` of type `S` there is an object `o2` of type `T` such that for all programs `P` defined in
+> terms of `T`, the behavior of `P` is unchanged when `o1` is substituted for `o2`, then `S` is a
+> subtype of `T`."
 
-**Nota:** pode ler quantas vezes quiser, tome seu tempo 🤣.
+**Tradução livre:** `S` é um subtipo de `T` **somente** se **qualquer programa** escrito para
+trabalhar com objetos do tipo `T` continuar funcionando **exatamente da mesma forma** quando
+receber um objeto do tipo `S`, sem o programa "perceber" a troca.
 
-O que eu entendo do que ela dizer é o seguinte:
+Ou seja: não basta só _bater a tipagem_. O **comportamento** também precisa ser compatível. Você
+pode ter um código 100% aceito pelo type checker e mesmo assim quebrar o LSP se violar o contrato
+que o tipo base estabeleceu.
 
-`S` é um subtipo de `T` somente se **qualquer programa** que foi escrito para
-funcionar com objetos do tipo `T` continue funcionando **exatamente da mesma
-forma** se você passar para ele um objeto do tipo `S`, sem que o programa nem
-"perceba" a troca.
+O ponto central é: **o cliente não pode ser surpreendido pelo comportamento do subtipo**.
 
-Ela está falando do **comportamento** dos objetos e não dos tipos. Você poderia
-escrever um programa com tipagem perfeita e ainda "quebrar" o LSP.
+---
 
-O programa não pode ser surpreendido pelo comportamento do subtipo.
+## Como identificar se o LSP está sendo respeitado
 
-## Vamos às regras
+Uma forma prática (e clássica) de avaliar isso é usando três regras: pré-condições, pós-condições
+e invariantes.
 
-Para que o comportamento não seja alterado, um "bom subtipo" (`S`) deve aderir a
-um contrato estabelecido pela sua superclasse (`T`). Esse contrato é definido
-por um conjunto de regras:
+Se qualquer uma delas for quebrada, o LSP também é.
 
-### Assinaturas dos Métodos:
+### Assinaturas dos Métodos
 
-- Os tipos dos parâmetros dos métodos no subtipo devem ser os mesmos ou mais
-  abstratos (contravariantes) que na superclasse.
-- O tipo de retorno no subtipo deve ser o mesmo ou mais específico (covariante)
-  que na superclasse.
-- O subtipo não pode lançar exceções que não sejam subtipos das exceções
-  lançadas pela superclasse.
+- Os tipos dos parâmetros no subtipo devem ser **iguais ou mais genéricos** (contravariantes) do
+  que no tipo base.
+- O tipo de retorno deve ser **igual ou mais específico** (covariante).
+- O subtipo não pode lançar exceções que não sejam subtipos das lançadas pela superclasse.
 
-### Pré-condições (o que a função exige para rodar):
+Em Python, o type checker ajuda aqui: `Callable` já é contravariante nos argumentos e covariante
+nos retornos.
 
-- **Regra:** Uma pré-condição de um método no subtipo não pode ser mais forte
-  (mais restritiva) que a da superclasse.
-- **Tradução:** O filho não pode ser mais exigente que o pai. Se o método do pai
-  aceita qualquer número (`int`), o método do filho não pode passar a exigir
-  apenas números positivos.
+---
 
-### Pós-condições (O que a função promete entregar no final):
+### Pré-condições (o que a função exige para rodar)
 
-- **A Regra:** Uma pós-condição de um método no subtipo não pode ser mais fraca
-  que a da superclasse.
-- **Tradução:** O filho tem que cumprir todas as promessas do pai, e pode até
-  prometer mais, mas nunca menos.
+- **Regra:** O subtipo **não pode** ser mais restritivo do que o tipo base.
+- **Tradução:** Se o pai aceita "qualquer número inteiro", o filho não pode exigir "apenas
+  inteiros positivos".
 
-### Invariantes (As verdades que devem ser sempre mantidas pela classe):
+Se o subtipo coloca mais obstáculos antes de executar, o cliente que antes funcionava com o tipo
+base pode falhar.
 
-- **A Regra:** Os invariantes da superclasse devem ser preservados pelo subtipo.
-- **Tradução:** As regras internas e o estado consistente da classe pai não
-  podem ser quebrados pelo filho.
-- **Conexão com o Exemplo:** **É exatamente aqui que o `Square` falha!** O
-  "invariante" de `Rectangle` (uma de suas verdades internas) é que sua largura
-  e altura são propriedades independentes. A classe `Square`, para manter seu
-  próprio invariante ("os lados devem ser sempre iguais"), quebra o invariante
-  da sua superclasse. E é essa quebra de invariante que surpreende a função
-  `use_rectangle`.
+---
+
+### Pós-condições (o que a função promete entregar)
+
+- **Regra:** O subtipo **não pode** enfraquecer as promessas do tipo base.
+- **Tradução:** Se o pai promete "retornar sempre um número positivo", o filho não pode devolver
+  números negativos.
+
+Você pode **prometer mais** que o pai, mas nunca menos.
+
+---
+
+### Invariantes (verdades que sempre se mantêm)
+
+- **Regra:** O subtipo precisa preservar todos os invariantes do tipo base.
+- **Tradução:** As regras internas e o estado consistente do pai não podem ser quebrados pelo
+  filho.
+
+Exemplo: use o arquivo `liskov.py` para acompanhar.
+
+`Square` herdando de `Rectangle`. O invariante do retângulo é que largura e altura são
+independentes. O quadrado, para manter seu próprio invariante ("lados iguais"), quebra o do pai, e
+aí qualquer código que espera alterar só a largura de um retângulo se surpreende.
+
+---
+
+## Por que isso importa?
+
+O LSP é fácil de quebrar sem perceber. Não precisa fazer herança "do mal" nem mudar completamente
+a lógica: basta alterar um detalhe e o contrato do tipo base já era.
+
+Exemplo: use o arquivo `liskov2.py` para acompanhar.
+
+`MediaPlayer`, a classe base promete que, se você chamar `increase_volume()` `max_volume` vezes, o
+volume vai chegar ao máximo. No `FancyMediaPlayer`, a intenção era só "proteger os ouvidos" e
+limitar o volume, mas isso:
+
+- Colocou **pré-condição mais restritiva** (não aumenta após 90 em vez de 100).
+- Entregou **pós-condição mais fraca** (não chega no valor prometido).
+- Quebrou **invariante** (o `max_volume` deixou de ser realmente o volume máximo atingível).
+
+Resultado: qualquer função que use a API do tipo base (`MediaPlayer`) e conte com esse contrato
+pode falhar, mesmo que a tipagem esteja perfeita.
+
+---

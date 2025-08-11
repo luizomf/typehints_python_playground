@@ -1,86 +1,73 @@
 #
 # O princípio da substituição de Liskov
 #
-#
-from utils import cyan_print, green_print, sep_print
 
 
 class Rectangle:
-    def __init__(self, width: float, height: float) -> None:
-        self._width: float = width
-        self._height: float = height
+    def __init__(self, width: int, height: int) -> None:
+        self._width: int = width
+        self._height: int = height
 
     @property
-    def width(self) -> float:
+    def width(self) -> int:
         return self._width
 
     @width.setter
-    def width(self, width: float) -> None:
+    def width(self, width: int) -> None:
         self._width = width
 
     @property
-    def height(self) -> float:
+    def height(self) -> int:
         return self._height
 
     @height.setter
-    def height(self, height: float) -> None:
+    def height(self, height: int) -> None:
         self._height = height
 
     @property
-    def area(self) -> float:
+    def area(self) -> int:
         return self._width * self._height
 
 
 class Square(Rectangle):
-    def __init__(self, width: float) -> None:
-        self._width: float = width
-        super().__init__(self.width, self.width)
-        # Mudou o comportamento e uma invariante super
+    def __init__(self, width: int) -> None:
+        super().__init__(width, width)
 
     @property
-    def width(self) -> float:
+    def width(self) -> int:
         return self._width
 
     @width.setter
-    def width(self, width: float) -> None:
+    def width(self, width: int) -> None:
         self._width = width
         self._height = width
-        # Mudou o comportamento de novo
 
     @property
-    def height(self) -> float:
+    def height(self) -> int:
         return self._height
 
     @height.setter
-    def height(self, height: float) -> None:
+    def height(self, height: int) -> None:
         self._height = height
         self._width = height
-        # Mudou o comportamento mais uma vez
 
 
-def use_rectangle(rectangle: Rectangle) -> None:
-    sep_print()
-    cyan_print(f"w={rectangle.width}, h={rectangle.height}, a={rectangle.area}")
+def use_rectangle(r: Rectangle) -> None:
+    new_width = 20
+    new_heigh = 40
+    new_area = new_width * new_heigh
 
-    new_width = 10
-    new_height = 5
-    new_area = new_width * new_height
+    r.width = new_width
+    r.height = new_heigh
 
-    rectangle.width = new_width
-    rectangle.height = new_height
+    assert r.area == new_area, "Por algum motivo, a área tá errada"
 
-    cyan_print(f"w={rectangle.width}, h={rectangle.height}, a={rectangle.area}")
-
-    assert rectangle.area == new_area, "Deu ruim"
-
-    green_print("✅ TEST PASSED")
+    print("\n✅ TEST PASSED \n")
 
 
 if __name__ == "__main__":
-    rectangle = Rectangle(20, 20)
-    square = Square(20)
+    r = Rectangle(10, 5)
+    s = Square(10)
 
-    use_rectangle(rectangle)
-    use_rectangle(square)
-
-    sep_print()
+    use_rectangle(r)
+    use_rectangle(s)

@@ -1,6 +1,14 @@
 #
 # O princípio da substituição de Liskov
 #
+# MediaPlayer -> Super classe
+# Atributos:
+# - Privados: current_volume, max_volume, min_volume
+# - Propriedades de leitura: volume,max_volume, min_volume
+# Métodos:
+# - increase_volume: aumentar volume até o máximo.
+# - decrease_volume: diminuir volume até o mínimo.
+#
 
 
 from typing import Final, override
@@ -10,7 +18,6 @@ class MediaPlayer:
     def __init__(self) -> None:
         self._current_volume: int = 0  # Private, não toque
         self._max_volume: Final[int] = 100  # Está claro que isso é "invariante".
-        self._min_volume: Final[int] = 0  # Também invariante.
 
     @property  # read
     def volume(self) -> int:
