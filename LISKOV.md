@@ -1,101 +1,164 @@
 # O Princípio da Substituição de Liskov (LSP)
 
-## A Definição Formal (Por Barbara Liskov)
+## A Definição Formal (Barbara Liskov, 1988)
 
-A definição original, proposta por Barbara Liskov em 1988, é bem "acadêmica":
+Em 1988, Barbara Liskov formalizou o princípio de forma bastante acadêmica:
 
 > "What is wanted here is something like the following substitution property: If for each object
 > `o1` of type `S` there is an object `o2` of type `T` such that for all programs `P` defined in
 > terms of `T`, the behavior of `P` is unchanged when `o1` is substituted for `o2`, then `S` is a
 > subtype of `T`."
 
+Tradução literal:
+
 > "O que se quer aqui é algo como a seguinte propriedade de substituição: se, para cada objeto
 > `o1` do tipo `S`, existe um objeto `o2` do tipo `T`, de forma que, para todos os programas `P`
 > definidos em termos de `T`, o comportamento de `P` permanece inalterado quando `o1` é
 > substituído por `o2`, então `S` é um subtipo de `T`."
 
-**Tradução livre:** `S` é um subtipo de `T` **somente** se **qualquer programa** escrito para
-trabalhar com objetos do tipo `T` continuar funcionando **exatamente da mesma forma** quando
-receber um objeto do tipo `S`, sem o programa "perceber" a troca.
+**Tradução livre:** `S` é subtipo de `T` **somente** se **qualquer programa** escrito para
+funcionar com objetos do tipo `T` continuar operando **exatamente da mesma forma** quando receber
+um objeto do tipo `S`, sem "perceber" a troca.
 
-Ou seja: não basta só _bater a tipagem_. O **comportamento** também precisa ser compatível. Você
-pode ter um código 100% aceito pelo type checker e mesmo assim quebrar o LSP se violar o contrato
-que o tipo base estabeleceu.
-
-O ponto central é: **o cliente não pode ser surpreendido pelo comportamento do subtipo**.
+O ponto central: **não basta a tipagem bater, o comportamento também precisa ser compatível**.
+Você pode ter um código perfeito para o type checker e mesmo assim quebrar o LSP se violar o
+contrato do tipo base.
 
 ---
 
-## Como identificar se o LSP está sendo respeitado
+## Como verificar se o LSP está sendo respeitado
 
-Uma forma prática (e clássica) de avaliar isso é usando três regras: pré-condições, pós-condições
-e invariantes.
-
-Se qualquer uma delas for quebrada, o LSP também é.
-
-### Assinaturas dos Métodos
-
-- Os tipos dos parâmetros no subtipo devem ser **iguais ou mais genéricos** (contravariantes) do
-  que no tipo base.
-- O tipo de retorno deve ser **igual ou mais específico** (covariante).
-- O subtipo não pode lançar exceções que não sejam subtipos das lançadas pela superclasse.
-
-Em Python, o type checker ajuda aqui: `Callable` já é contravariante nos argumentos e covariante
-nos retornos.
+Um checklist clássico é baseado em três pontos: **pré-condições**, **pós-condições** e
+**invariantes**. Se qualquer um for quebrado, o LSP também é.
 
 ---
 
-### Pré-condições (o que a função exige para rodar)
+### Assinaturas de métodos
 
-- **Regra:** O subtipo **não pode** ser mais restritivo do que o tipo base.
-- **Tradução:** Se o pai aceita "qualquer número inteiro", o filho não pode exigir "apenas
-  inteiros positivos".
+- **Parâmetros:** No subtipo, devem ser **iguais ou mais genéricos** (**contravariantes**).
+- **Retorno:** No subtipo, devem ser **iguais ou mais específicos** (**covariantes**).
+- **Exceções:** O subtipo não deve lançar exceções que não sejam subtipos das lançadas pela
+  superclasse.
 
-Se o subtipo coloca mais obstáculos antes de executar, o cliente que antes funcionava com o tipo
-base pode falhar.
+_Em Python, o `Callable` já é contravariante nos argumentos e covariante nos retornos._
 
 ---
 
-### Pós-condições (o que a função promete entregar)
+#### Lembrete rápido sobre variância:
 
-- **Regra:** O subtipo **não pode** enfraquecer as promessas do tipo base.
-- **Tradução:** Se o pai promete "retornar sempre um número positivo", o filho não pode devolver
-  números negativos.
+```text
+Covariância (saídas / retornos):
+S <: T
+Container[S] <: Container[T]
 
-Você pode **prometer mais** que o pai, mas nunca menos.
+Contravariância (entradas / parâmetros):
+S <: T
+Container[T] <: Container[S]
+
+Invariância:
+S <: T
+Container[S] != Container[T]
+```
+
+---
+
+### Pré-condições
+
+Pré-condições estão relacionadas aos parâmetros de entrada (ou inputs).
+
+- **Regra:** O subtipo **não pode** ser mais restritivo que o tipo base.
+- **Exemplo:** Se a classe pai aceita "qualquer inteiro", o filho não pode exigir "apenas inteiros
+  positivos".
+
+Por quê? Se o subtipo colocar mais barreiras, código que antes funcionava com o tipo base pode
+falhar. Isso pode acontece mesmo que a tipagem bata perfeitamente.
+
+```python
+# Tipagem perfeita
+class SizedProtocol:
+    def __len__(self) -> int:
+        return len(self._data)
+
+class BadSized(SizedProtocol):
+    def __len__(self) -> int:
+        return len(self._data) - 1 # sutil, mas em algum momento vai dar -1
+
+
+bad_sized = BadSized()
+size = len(bad_sized) # -1
+```
+
+---
+
+### Pós-condições (o que o método promete entregar)
+
+- **Regra:** O subtipo **não pode** entregar menos do que o tipo base prometeu.
+- **Exemplo:** Se o pai promete "retornar sempre um número positivo", o filho não pode retornar
+  negativos.
+
+Observação: Você pode **prometer mais** que o pai, mas nunca menos.
+
+```python
+class Base:
+    def get_positive_int(self) -> int:
+        return 42  # Sempre positivo
+
+class Sub(Base):
+    def get_positive_int(self) -> int:
+        return -1  # 🚫 Quebrou a promessa
+
+b: Base = Sub()
+print(b.get_positive_int())  # Cliente espera positivo, recebe negativo
+```
 
 ---
 
 ### Invariantes (verdades que sempre se mantêm)
 
-- **Regra:** O subtipo precisa preservar todos os invariantes do tipo base.
-- **Tradução:** As regras internas e o estado consistente do pai não podem ser quebrados pelo
-  filho.
+**Regra:** O subtipo deve manter todos os invariantes do tipo base.
 
-Exemplo: use o arquivo `liskov.py` para acompanhar.
+**Exemplo:**
 
-`Square` herdando de `Rectangle`. O invariante do retângulo é que largura e altura são
-independentes. O quadrado, para manter seu próprio invariante ("lados iguais"), quebra o do pai, e
-aí qualquer código que espera alterar só a largura de um retângulo se surpreende.
+- Tipo base (`BankAccount`): valor da conta não fica negativo.
+- Subtipo (`OverdraftAccount`): fica negativo.
+
+Resultado: o subtipo quebrou a invariante do tipo base.
+
+```python
+class BankAccount:
+    def __init__(self) -> None:
+        self.balance = 0.0
+
+class OverdraftAccount(BankAccount):
+    def __init__(self) -> None:
+        super().__init__()
+        self.balance = -100.0  # 🚫 invariante quebrado
+```
 
 ---
 
 ## Por que isso importa?
 
-O LSP é fácil de quebrar sem perceber. Não precisa fazer herança "do mal" nem mudar completamente
-a lógica: basta alterar um detalhe e o contrato do tipo base já era.
+O LSP é fácil de quebrar sem perceber. Não é preciso "herança do mal", um simples detalhe já
+quebra o contrato.
 
-Exemplo: use o arquivo `liskov2.py` para acompanhar.
+Exemplo: [`liskov2.py`](liskov2.py)
 
-`MediaPlayer`, a classe base promete que, se você chamar `increase_volume()` `max_volume` vezes, o
-volume vai chegar ao máximo. No `FancyMediaPlayer`, a intenção era só "proteger os ouvidos" e
-limitar o volume, mas isso:
+```python
+class MediaPlayer:
+    max_volume = 100
 
-- Colocou **pré-condição mais restritiva** (não aumenta após 90 em vez de 100).
-- Entregou **pós-condição mais fraca** (não chega no valor prometido).
-- Quebrou **invariante** (o `max_volume` deixou de ser realmente o volume máximo atingível).
+class FancyMediaPlayer(MediaPlayer):
+    # Limita volume a 90 "para proteger os ouvidos"
+```
 
-Resultado: qualquer função que use a API do tipo base (`MediaPlayer`) e conte com esse contrato
-pode falhar, mesmo que a tipagem esteja perfeita.
+Problemas:
+
+1. **Pré-condição mais restritiva:** não aumenta acima de 90.
+2. **Pós-condição mais fraca:** não atinge o máximo prometido (100).
+3. **Invariante quebrado:** `max_volume` deixa de ser realmente o volume máximo atingível.
+
+Resultado: código que confiava no contrato do `MediaPlayer` pode falhar, mesmo que a tipagem
+esteja correta.
 
 ---

@@ -11,7 +11,7 @@ from utils import cyan_print, sep_print
 
 class MySized:
     def __len__(self) -> int:
-        return 42
+        return -1
 
 
 def get_size(container: Sized) -> int:
