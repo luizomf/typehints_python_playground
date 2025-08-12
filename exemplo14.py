@@ -5,38 +5,19 @@
 #
 # Pré-condições: O subtipo não pode ser mais restritivo que o tipo base.
 # Contravariância = C[A] <: C[B]
-# Pós-condições: O subtipo não pode entregar menos do que o tipo base prometeu.
+# Pós-condições: O subtipo não pode enfraquecer as condições do tipo base.
 # Covariância = C[B] <: C[A]
 # Invariantes: O subtipo deve manter todos os invariantes do tipo base.
 # Invariância = C[A] != C[B]
 #
-from utils import sep_print
+from collections.abc import Collection, MutableSequence, Sequence
+from typing import override
 
 
-class Rectangle:
-    def __init__(self, width: int, height: int) -> None:
-        self.width = width
-        self.height = height
-
-    @property
-    def area(self) -> int:
-        return self.width * self.height
+class Base:
+    def execute(self, param: Sequence[int]) -> Sequence[int]: ...
 
 
-class Square(Rectangle):
-    def __init__(self, width: int) -> None:
-        super().__init__(width, width)
-
-
-def use_rectangle(r: Rectangle) -> None:
-    print(r.width, r.height, r.area)
-
-
-if __name__ == "__main__":
-    rectangle = Rectangle(20, 10)
-    square = Square(10)
-
-    use_rectangle(rectangle)
-    use_rectangle(square)
-
-    sep_print()
+class SubType(Base):
+    @override
+    def execute(self, param: Collection[int]) -> MutableSequence[int]: ...

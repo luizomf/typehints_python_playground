@@ -1,22 +1,36 @@
-Na aula passada, aprendemos sobre a variância (covariância, contravariância e invariância). Agora, vamos dar o próximo passo e colocar a mão na massa: vamos aprender a criar nossas próprias classes de coleção implementando os protocolos do collections.abc. Ao terminar essa aula, você vai entender e saber implementar qualquer um Genérico ABC da biblioteca padrão do Python.
+#-------------------------------------------------------------------------------
+# Este arquivo é TXT puro
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# Título
+#-------------------------------------------------------------------------------
 
-Nesse vídeo, vamos usar o Sequence[T] como nosso guia. Você vai descobrir que, ao implementar apenas dois métodos mágicos (__getitem__ e __len__), o Python te dá de graça uma infinidade de outros comportamentos, como fatiamento (slicing), iteração, o operador in, a função reversed() e muito mais!
+Entenda o Princípio da Substituição de Liskov (LSP) - Aula 7
 
-Esta é uma aula fundamental para quem quer parar de apenas usar as coleções do Python e começar a entender como elas realmente funcionam por baixo dos panos.
+#-------------------------------------------------------------------------------
+# Descrição
+#-------------------------------------------------------------------------------
+
+Se você já programou por algum tempo, provavelmente já se deparou com algum bug que parecia sem sentido? A tipagem estava perfeita, o código passava no Type Checker, mas a lógica do programa falhava de forma sutil e inesperada? Muitas vezes, a causa raiz é uma quebra de contrato silenciosa entre uma classe "pai" e uma classe "filha", ou uma Abstração e um Subtipo.
+
+Nesse vídeo, vamos aprender e entender um dos pilares do bom design de software: o Princípio da Substituição de Liskov (LSP), o "L" do acrônimo SOLID. Vamos traduzir a definição acadêmica para o dia a dia e entender como a herança em Python é muito mais sobre comportamento do que sobre tipagem.
+
+Esta é uma aula essencial para quem quer parar de criar hierarquias de classes frágeis e começar a construir abstrações robustas, confiáveis e verdadeiramente extensíveis.
 
 Nesta aula da nossa playlist completa sobre Type Hints no Python, você vai aprender:
 
-- O que é o "contrato" de um Sequence e por que ele é a base para coleções ordenadas e imutáveis.
-- A usar @overload para tipar corretamente o __getitem__, que pode receber int ou slice.
-- Como tornar sua classe um iterador, implementando o protocolo de iteração (__iter__ e __next__).
-- A ver na prática todo o comportamento que sua classe "ganha de presente" ao herdar de Sequence.
+- O que é o Princípio da Substituição de Liskov e por que ele é crucial para a Orientação a Objetos.
+- As 3 regras de contrato que uma subclasse deve seguir: Pré-condições, Pós-condições e Invariantes.
+- Como a tipagem pode estar 100% correta, mas o LSP ainda pode ser violado.
+- A analisar exemplos práticos e sutis de quebras de LSP que acontecem em projetos reais.
+- Como o LSP te ajuda a escrever um código mais limpo, seguro e fácil de manter.
 
-Se você quer entender o Data Model do Python e ser capaz de criar seus próprios tipos de dados que se integram perfeitamente com a linguagem, esta aula foi feita para você.
+Se você quer entender a fundo os princípios SOLID e escrever um código orientado a objetos que resista ao teste do tempo, esta aula é para você.
 
 E lembre-se: Type Hint é igual a Type Annotation (tipagem no Python).
 
-Este vídeo é parte de uma playlist, essa é a SEXTA aula. Segue o link da playlist para acompanhar:
-
+Este vídeo é parte de uma playlist, essa é a SÉTIMA aula. Segue o link da playlist para acompanhar:
+https://youtu.be/8xnIkjROj_o?si=ZayOULdLoMF74Iwg
 
 Link do repositório:
 https://github.com/luizomf/typehints_python
@@ -25,8 +39,31 @@ Conheça meus cursos em:
 https://www.otaviomiranda.com.br/
 
 Capítulos
-00:00:00 - Intro: Criando nossas próprias coleções!
+00:00:00 - O Bug Perfeito: Quando a Tipagem Certa não é o Suficiente
+00:00:00 - O que é o Princípio da Substituição de Liskov (LSP)?
+00:00:00 - A Definição Formal vs. a Tradução Prática
+00:00:00 - Regra 1: Pré-condições (O Filho não pode ser mais Exigente)
+00:00:00 - Exemplo Prático de Quebra de Pré-condição
+00:00:00 - Regra 2: Pós-condições (O Filho não pode Prometer Menos)
+00:00:00 - Exemplo Prático de Quebra de Pós-condição
+00:00:00 - Regra 3: Invariantes (As Verdades da Classe Pai)
+00:00:00 - Exemplo Prático de Quebra de Invariante (Herança Quebrada)
+00:00:00 - Por que o LSP é tão importante? Conclusão.
 
+#Python #SOLID #LSP #POO #PythonBrasil
 
+#-------------------------------------------------------------------------------
+# Até 5 hashtags
+#-------------------------------------------------------------------------------
 
-#Python #TypeHints #POO #Collections #PythonBrasil
+#Python #SOLID #LSP #POO #PythonBrasil
+
+#-------------------------------------------------------------------------------
+# Tags invisíveis do Youtube separadas por vírgula (máx. 500 caracteres)
+#-------------------------------------------------------------------------------
+
+princípio da substituição de liskov,liskov substitution principle,LSP python,SOLID python,o que é LSP,herança python,polimorfismo de subtipo,boas práticas POO,design patterns python,código limpo python,arquitetura de software,violação de lsp,precondições lsp,pós-condições lsp,invariantes lsp,programação orientada a objetos,type hints,python avançado,curso de python,Luiz Otávio Miranda,orientação a objetos,SOLID L,princípios SOLID,erros de herança
+
+#-------------------------------------------------------------------------------
+# Fim
+#-------------------------------------------------------------------------------
