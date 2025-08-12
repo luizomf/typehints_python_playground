@@ -9,6 +9,11 @@ A definição original, proposta por Barbara Liskov em 1988, é bem "acadêmica"
 > terms of `T`, the behavior of `P` is unchanged when `o1` is substituted for `o2`, then `S` is a
 > subtype of `T`."
 
+> "O que se quer aqui é algo como a seguinte propriedade de substituição: se, para cada objeto
+> `o1` do tipo `S`, existe um objeto `o2` do tipo `T`, de forma que, para todos os programas `P`
+> definidos em termos de `T`, o comportamento de `P` permanece inalterado quando `o1` é
+> substituído por `o2`, então `S` é um subtipo de `T`."
+
 **Tradução livre:** `S` é um subtipo de `T` **somente** se **qualquer programa** escrito para
 trabalhar com objetos do tipo `T` continuar funcionando **exatamente da mesma forma** quando
 receber um objeto do tipo `S`, sem o programa "perceber" a troca.
