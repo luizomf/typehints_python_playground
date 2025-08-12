@@ -1,55 +1,37 @@
 #
-# Testing
-# Any, Optional
+# a
 #
 
 
-from collections.abc import Hashable, Mapping, Sized
+class DatabaseConfig:
+    def __init__(self, dns: str) -> None:
+        self._dns = dns
 
-from utils import cyan_print, sep_print
-
-
-class MySized:
-    def __len__(self) -> int:
-        return -1
-
-
-def get_size(container: Sized) -> int:
-    return len(container)
+    @property
+    def dsn(self) -> str:
+        return self._dns
 
 
-s1 = 1, 2, 3
-s2 = [1, 2, 3]
-s3 = MySized()
+class MySqlDatabaseConfig(DatabaseConfig):
+    def __init__(self, host: str, user: str, password: str, db: str) -> None:
+        # Não tem DSN, vai tentar usar os dados abaixo
+        self.host = host
+        self.user = user
+        self.password = password
+        self.db = db
 
-print(get_size(s1))
-print(get_size(s2))
-print(get_size(s3))
-
-
-def invert_mapping[K, V](mapping: Mapping[K, V]) -> Mapping[V, K]:
-    new_mapping: Mapping[V, K] = {}
-
-    for key, value in mapping.items():
-        if not isinstance(value, Hashable):
-            msg = f"{value!r} is not hashable"
-            raise TypeError(msg)
-
-        new_mapping[value] = key
-
-    return new_mapping
+        # Exemplo clássico onde o dev forçou "É um" paga "pegar"
+        # Métodos já definidos na classe base
+        super().__init__("")  # Só para inicializar corretamente
 
 
-d1 = {
-    "a": 1,
-    "b": (1, 2),
-}
-d2 = invert_mapping(d1)
+def connect(cfg: DatabaseConfig) -> None:
+    # Cliente depende da invariante DatabaseConfig.url
+    print("Connecting to:", cfg.dsn)
 
-sep_print()
+    # ❌ Mas está vazia, ou quebra abaixo ou segue pra quebrar adiante
+    # driver.connect(cfg.url)
 
 
-cyan_print(d1)
-cyan_print(d2)
-
-sep_print()
+cfg_bad = MySqlDatabaseConfig(host="", user="root", password="", db="app")
+connect(cfg_bad)  # ❌ imprime url vazia; se já não tiver quebrado antes
