@@ -1,5 +1,5 @@
 #
-# TypeVar é o modelo anterior
+# TypeVar e funções genéricas no Python moderno - Aula 8
 #
 # Usaremos a nova sintaxe definida pela PEP 695 (Python >=3.12)
 # https://docs.python.org/3/whatsnew/3.12.html#pep-695-type-parameter-syntax
@@ -37,3 +37,42 @@
 # 7. Default Type (TypeVar com tipo padrão)
 # Se um tipo não for informado inicialmente, temos um tipo padrão `str`
 # _Z = TypeVar("_Z", default=str)  # novo [Z = str]
+
+
+from collections.abc import Iterable, Sequence
+from typing import TypeVar
+
+from utils import cyan_print, sep_print
+
+_T = TypeVar("_T")  # Modo antigo (não misturar com o novo)
+
+
+def filter_by_type(items: Iterable[object], type_: type[_T]) -> list[_T]:
+    return [item for item in items if isinstance(item, type_)]
+
+
+def reverse_in_groups(items: Sequence[_T], *, group_size: int = 2) -> list[_T]:
+    # [expressão for externo if opcional for interno if opcional ...]
+    return [
+        group
+        for index in range(0, len(items), group_size)
+        for group in reversed(items[index : index + group_size])
+    ]
+
+
+if __name__ == "__main__":
+    mixed1 = ["a", "b", 1, 2, 3, {10, 20}]
+
+    sep_print()
+
+    cyan_print(reverse_in_groups(mixed1, group_size=2))
+
+    sep_print()
+
+    strings = filter_by_type(mixed1, str)
+    integers = filter_by_type(mixed1, int)
+
+    # cyan_print(strings)
+    # cyan_print(integers)
+
+    sep_print()

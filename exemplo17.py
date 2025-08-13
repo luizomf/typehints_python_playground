@@ -1,8 +1,13 @@
 #
-# TypeVar, parâmetro de tipos e Generics
+# TypeVar e funções genéricas no Python moderno - Aula 8
 #
 # Usaremos a nova sintaxe definida pela PEP 695 (Python >=3.12)
 # https://docs.python.org/3/whatsnew/3.12.html#pep-695-type-parameter-syntax
+
+# Por este motivo:
+# https://docs.python.org/3/library/typing.html#typing.TypeVar
+# The preferred way to construct a type variable is via the dedicated syntax for
+# generic functions, generic classes, and generic type aliases
 #
 # Definições:
 # `class Person[T]: ...` - O `T` significa "type parameter" ou "type variable"
@@ -11,10 +16,6 @@
 # Type variable (TypeVar) é um parâmetro de tipo que atua como um símbolo para
 # um tipo ainda não conhecido. Seu valor será substituído por um tipo concreto
 # durante a verificação estática ou inferência de tipos.
-#
-# Atualmente podemos usar os colchetes para definir uma TypeVar implicitamente.
-# Com isso, não é mais necessário importar TypeVar e/ou Generic para definir um
-# genérico parametrizado.
 #
 # DOC: NÃO MISTURAR A VERSÃO NOVA COM A VERSÃO ANTIGA NOS SEUS TIPOS.
 #
@@ -48,6 +49,7 @@ if __name__ == "__main__":
 
     strings = filter_by_type(mixed1, str)
     integers = filter_by_type(mixed1, int)
+    sets = filter_by_type(mixed1, set)
 
     # cyan_print(strings)
     # cyan_print(integers)

@@ -1,5 +1,5 @@
 #
-# Mais exemplo de parâmetros de tipo
+# TypeVar e funções genéricas no Python moderno - Aula 8
 #
 # Usaremos a nova sintaxe definida pela PEP 695 (Python >=3.12)
 # https://docs.python.org/3/whatsnew/3.12.html#pep-695-type-parameter-syntax
@@ -28,7 +28,7 @@ from utils import cyan_print, sep_print
 # identificador rápido do conteúdo de algumas estruturas de dados como
 # dict e set.
 # O hash nunca deve mudar, por isso os valores para a chave precisam ser imutáveis.
-def invert_mapping[K: str, V: Hashable](
+def invert_mapping[K, V: Hashable](
     mapping: MutableMapping[K, V],
 ) -> MutableMapping[V, K]:
     return {v: k for k, v in mapping.items()}
@@ -38,12 +38,14 @@ if __name__ == "__main__":
     sep_print()
 
     dict1 = {
-        "a": "1",
-        "b": "2",
-        "c": (1, 2),
+        "a": 1,
+        "b": 2,
+        (1, 2): 3,
     }
-    inverted1 = invert_mapping(dict1)
+    invert = invert_mapping(dict1)
+    revert = invert_mapping(invert)
 
-    cyan_print(inverted1)
+    cyan_print(invert)
+    cyan_print(revert)
 
     sep_print()
