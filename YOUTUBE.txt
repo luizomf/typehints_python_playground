@@ -1,36 +1,40 @@
 #-------------------------------------------------------------------------------
-# Este arquivo é TXT puro
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-# Título
+Este arquivo é TXT puro
 #-------------------------------------------------------------------------------
 
-Entenda o Princípio da Substituição de Liskov (LSP) - Aula 7
-
 #-------------------------------------------------------------------------------
-# Descrição
+Título
 #-------------------------------------------------------------------------------
 
-Se você já programou por algum tempo, provavelmente já se deparou com algum bug que parecia sem sentido? A tipagem estava perfeita, o código passava no Type Checker, mas a lógica do programa falhava de forma sutil e inesperada? Muitas vezes, a causa raiz é uma quebra de contrato silenciosa entre uma classe "pai" e uma classe "filha", ou uma Abstração e um Subtipo.
+TypeVar e Funções Genéricas no Python 3.13 (Nova Sintaxe, PEP 695) - Aula 8
 
-Nesse vídeo, vamos aprender e entender um dos pilares do bom design de software: o Princípio da Substituição de Liskov (LSP), o "L" do acrônimo SOLID. Vamos traduzir a definição acadêmica para o dia a dia e entender como a herança em Python é muito mais sobre comportamento do que sobre tipagem.
+#-------------------------------------------------------------------------------
+Descrição
+#-------------------------------------------------------------------------------
 
-Esta é uma aula essencial para quem quer parar de criar hierarquias de classes frágeis e começar a construir abstrações robustas, confiáveis e verdadeiramente extensíveis.
+Finalmente chegou a hora dela: a aclamada, a linda, a maravilhosa.... A nova sintaxe do Python para TypeVar (Type Variables) e Genéricos... E olha que é novo mesmo hein, do Python 3.13 para frente, sem importar nada, só colchete e T. Obs.: Isso iniciou no Python 3.12, só pra constar.
+
+Neste vídeo, vamos aprender a nova sintaxe de parâmetros de tipo (TypeVars) para Funções Genéricas (Generic Functions). Vamos comparar o jeito "antigo" (com TypeVar[_T]) com o "novo" jeito, mais direto e intuitivo. Você vai aprender a criar funções flexíveis, como uma que inverte qualquer dicionário, e entender as regras de restrição de tipos (bounds e constraints).
+
+Esta é uma aula prática para quem quer dominar a criação de componentes de software reutilizáveis e com tipagem robusta no Python moderno.
 
 Nesta aula da nossa playlist completa sobre Type Hints no Python, você vai aprender:
 
-- O que é o Princípio da Substituição de Liskov e por que ele é crucial para a Orientação a Objetos.
-- As 3 regras de contrato que uma subclasse deve seguir: Pré-condições, Pós-condições e Invariantes.
-- Como a tipagem pode estar 100% correta, mas o LSP ainda pode ser violado.
-- A analisar exemplos práticos e sutis de quebras de LSP que acontecem em projetos reais.
-- Como o LSP te ajuda a escrever um código mais limpo, seguro e fácil de manter.
+- O que é uma Type Variable (TypeVar) e como ela cria "vínculos" de tipo.
+- A nova sintaxe da PEP 695 para criar funções e classes genéricas (def func[T]: ...).
+- A diferença entre a sintaxe antiga (typing.TypeVar) e a nova, e quando cada uma deve ser usada.
+- Como criar restrições de tipo (bounds e constraints) com a nova sintaxe.
+- A importância do Hashable para criar funções genéricas seguras que manipulam dicionários.
+- Como os diferentes type checkers (Pyright vs. Mypy) podem interpretar casos de borda.
+- E mais um monte de coisa, como sempre...
 
-Se você quer entender a fundo os princípios SOLID e escrever um código orientado a objetos que resista ao teste do tempo, esta aula é para você.
+Se você quer escrever código Python que seja ao mesmo tempo flexível e seguro, dominando a arte da programação genérica, esta aula é para você.
 
 E lembre-se: Type Hint é igual a Type Annotation (tipagem no Python).
 
-Este vídeo é parte de uma playlist, essa é a SÉTIMA aula. Segue o link da playlist para acompanhar:
+Este vídeo é parte de uma playlist, essa é a OITAVA aula. Segue o link da playlist para acompanhar:
 https://youtu.be/8xnIkjROj_o?si=ZayOULdLoMF74Iwg
+
 
 Link do repositório:
 https://github.com/luizomf/typehints_python
@@ -39,31 +43,28 @@ Conheça meus cursos em:
 https://www.otaviomiranda.com.br/
 
 Capítulos
-00:00:00 - O Bug Perfeito: Quando a Tipagem Certa não é o Suficiente
-00:00:00 - O que é o Princípio da Substituição de Liskov (LSP)?
-00:00:00 - A Definição Formal vs. a Tradução Prática
-00:00:00 - Regra 1: Pré-condições (O Filho não pode ser mais Exigente)
-00:00:00 - Exemplo Prático de Quebra de Pré-condição
-00:00:00 - Regra 2: Pós-condições (O Filho não pode Prometer Menos)
-00:00:00 - Exemplo Prático de Quebra de Pós-condição
-00:00:00 - Regra 3: Invariantes (As Verdades da Classe Pai)
-00:00:00 - Exemplo Prático de Quebra de Invariante (Herança Quebrada)
-00:00:00 - Por que o LSP é tão importante? Conclusão.
-
-#Python #SOLID #LSP #POO #PythonBrasil
+00:00:00 - A Nova Forma de Criar Funções Genéricas em Python
+00:00:00 - O que é uma Type Variable (TypeVar)?
+00:00:00 - Sintaxe Antiga vs. Nova (PEP 695): Uma Comparação
+00:00:00 - Criando uma Função Genérica: filter_by_type
+00:00:00 - Exemplo Prático: Invertendo um Dicionário Genérico (invert_mapping)
+00:00:00 - A Importância do Hashable para Chaves de Dicionário
+00:00:00 - Restringindo Tipos: Bounds vs. Constraints
+00:00:00 - A "Pegadinha" dos Type Checkers: Pyright vs. Mypy
+00:00:00 - Conclusão: Quando usar a Sintaxe Nova ou a Antiga?
 
 #-------------------------------------------------------------------------------
-# Até 5 hashtags
+Até 5 hashtags
 #-------------------------------------------------------------------------------
 
-#Python #SOLID #LSP #POO #PythonBrasil
+#Python #TypeHints #Generics #Python3 #PEP695
 
 #-------------------------------------------------------------------------------
-# Tags invisíveis do Youtube separadas por vírgula (máx. 500 caracteres)
+Tags invisíveis do Youtube separadas por vírgula (máx. 500 caracteres)
 #-------------------------------------------------------------------------------
 
-princípio da substituição de liskov,liskov substitution principle,LSP python,SOLID python,o que é LSP,herança python,polimorfismo de subtipo,boas práticas POO,design patterns python,código limpo python,arquitetura de software,violação de lsp,precondições lsp,pós-condições lsp,invariantes lsp,programação orientada a objetos,type hints,python avançado,curso de python,Luiz Otávio Miranda,orientação a objetos,SOLID L,princípios SOLID,erros de herança
+python typevar,python generics,PEP 695,python 3.12 typing,funções genéricas python,classes genéricas python,python type parameters,typing.TypeVar,type hints avançado,python bound typevar,python constraints typevar,python hashable,curso de type hints,tutorial python moderno,novidades python 3.12,programação genérica,código limpo python,arquitetura de software,Luiz Otávio Miranda,Pyright vs Mypy,tipagem estática,python moderno,python tutorial
 
 #-------------------------------------------------------------------------------
-# Fim
+Fim
 #-------------------------------------------------------------------------------
