@@ -19,9 +19,7 @@
 # DOC: NÃO MISTURAR A VERSÃO NOVA COM A VERSÃO ANTIGA NOS SEUS TIPOS.
 #
 
-import string
 from collections.abc import Hashable, MutableMapping
-from secrets import SystemRandom
 
 from utils import cyan_print, sep_print
 
@@ -36,66 +34,7 @@ def invert_mapping[K: str, V: Hashable](
     return {v: k for k, v in mapping.items()}
 
 
-def generate_password(
-    *,
-    unwanted_chars: str = "\"'\\@/",
-    lower_qtd: int = 3,
-    upper_qtd: int = 3,
-    digits_qtd: int = 3,
-    punctuation_qtd: int = 3,
-) -> str:
-    """
-    Simple password generator
-
-    Parameters:
-        unwanted_chars (str): a string with characters that should not be added
-        lower_qtd (int): quantity of lower case letters
-        upper_qtd (int): quantity of upper case letters
-        digits_qtd (int): quantity of digits letters
-        punctuation_qtd (int): quantity of punctuation characters letters
-
-    Returns:
-        str: a string with the generated password
-    """
-    rand = SystemRandom()
-
-    sum_of_props = sum((lower_qtd, upper_qtd, digits_qtd, punctuation_qtd))
-
-    safe_chars = string.digits + string.ascii_letters
-    lowers = rand.choices(string.ascii_lowercase, k=lower_qtd)
-    uppers = rand.choices(string.ascii_uppercase, k=upper_qtd)
-    digits = rand.choices(string.digits, k=digits_qtd)
-    punctuation = rand.choices(string.punctuation, k=punctuation_qtd)
-    extras = "".join(rand.choices(safe_chars, k=len(unwanted_chars)))
-
-    list_password = [*lowers, *uppers, *digits, *punctuation]
-
-    string_password = "".join(
-        [
-            c
-            if c not in unwanted_chars
-            else f"{extras[rand.randint(0, len(extras) - 1)]}"
-            for c in list_password
-        ],
-    )
-
-    missing = sum_of_props - len(string_password)
-    string_password = list(
-        string_password if missing <= 0 else string_password + extras[:missing],
-    )
-    rand.shuffle(string_password)
-
-    return "".join(string_password)
-
-
 if __name__ == "__main__":
-    password = generate_password(
-        lower_qtd=3,
-        upper_qtd=3,
-        digits_qtd=3,
-        punctuation_qtd=3,
-    )
-
     sep_print()
 
     dict1 = {
