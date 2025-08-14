@@ -1,0 +1,230 @@
+Logging no Python - Curso do básico ao avançado - Aula 1
+
+Estou MUITO feliz em lançar o primeiro vídeo de uma série GRATUITA e COMPLETA sobre o módulo logging do Python! Se você quer dominar a geração de logs em suas aplicações, este é o lugar certo.
+
+Nesta Aula 1, vamos mergulhar nos fundamentos: o que é um log, qual o papel do Logger, como funcionam os Handlers (para onde seu log vai), os Formatters (como ele aparece) e o importante LogRecord (a informação que viaja).
+
+Mas prepare-se, porque esta jornada vai MUITO ALÉM do básico! Ao longo da série, você vai aprender:
+
+- Configuração avançada com basicConfig e dictConfig.
+- Como usar arquivos de configuração externos (JSON, YAML).
+- Logs estruturados em JSON para facilitar a análise.
+- Deixar seus logs no terminal BEM MAIS BONITOS com a biblioteca rich.
+- Queue de logs, e muito mais
+
+---
+
+Entendendo os Componentes do Módulo Logging do Python - Aula 2
+
+Nessa aula, vamos desmistificar os principais termos e conceitos por trás do sistema de logging do Python. Você vai entender o que são os seguintes termos: Log, Logger, Logging, Handler, Formatter, Filter, LogRecord e mais. 
+
+Assim, começamos a entender melhor como funciona o logging no Python e como cada uma dessas coisas se encaixam no seu código.
+
+Lembre-se que estou postando UMA AULA POR DIA! Então não esquece de me seguir para receber esses vídeos todo santo dia.
+
+Vamos juntos dominar o logging em Python!
+
+---
+
+Entenda o level (nível de severidade) do Logging no Python - Aula 3
+
+Nessa aula, vamos aprender como funciona o  level (nível de severidade) do Logging no Python. Você entenderá que um logger pode funcionar tanto como emissor como receptor de um LogRecord. Com isso, podemos filtrar o level do log e do Logger para filtro. Os níveis de severidade padrão do logging no Python são: DEBUG, INFO, WARNING, ERROR e CRITICAL.
+
+Nessa playlist estou postando UMA AULA POR DIA! Então, se você quer acompanhar as aulas, me segue aí e vamos juntos dominar o logging em Python!
+
+---
+
+Entenda a hierarquia dos Loggers no Logging do Python - Aula 4
+
+Nesse vídeo você vai aprender como funciona a hierarquia de Loggers aqui no módulo Logging do Python. Você também vai aprender a criar seu próprio Logger usando logging.getLogger e também a criar outros Loggers dentro da árvore de loggers abaixo do root logger.
+
+Estou postando UMA AULA POR DIA nessa playlist! Então, me segue para receber esses vídeos todo santo dia.
+
+Vamos juntos dominar o logging em Python!
+
+---
+
+FileHandler e StreamHandler: usando nossos próprios Handlers com Logging do Python - Aula 5
+
+Nessa aula, você vai aprender a trabalhar com dois handlers em um único logger. Ainda vamos usar basicConfig e o RootLogger com todos os nossos handlers, porém, agora vamos 
+usar o atributo "handlers" de basicConfig para definir mais de um handler para o RootLogger.
+
+Também vamos usar o nosso próprio logger tendo "root" como parent. Portanto, ainda não vamos adicionar handlers no nosso próprio logger. As emissões de LogRecord realizadas no nosso logger vão seguir a hierarquia de loggers (com propagate True) para usar os handlers do root logger.
+
+Bora aprender o módulo logging nesse curso do básico ao avançado. Se ainda não me segue, aproveita para não perder nenhuma aula nova. Estou postando essas aulas todos os dias até concluir a playlist.
+
+---
+
+Handler e Formatter + addHandler + Propagation no Logging do Python - Aula 6
+
+Nessa aula do curso de Logging em Python, você vai entender de vez por que não deve usar o root logger como logger principal da sua aplicação. Vamos explorar os conceitos de Handler e Formatter, aprender como usar logger.addHandler() para configurar seus próprios handlers, e ainda ver como evitar duplicação de logs ao lidar com loggers de bibliotecas de terceiros.
+
+Também vou te mostrar como configurar o logger da sua própria biblioteca Python, caso esteja criando algo que outras pessoas vão instalar e usar em seus projetos.
+
+Por fim, você vai aprender a controlar a propagação de logs (propagate), essencial quando você precisa de um logger isolado, que não envie mensagens para loggers pai na hierarquia.
+
+Esse é um conteúdo essencial se você quer dominar logs de verdade no Python.
+
+---
+
+dictConfig - como usar um dicionário para configurar o Logging do Python - Aula 7
+
+Até agora, em nosso curso de Python Logging, exploramos o basicConfig para configurar rapidamente nossos logs. Ele é prático para começar, mas para aplicações mais robustas e complexas, precisamos de uma ferramenta mais poderosa. Nesta Aula 7, damos um salto para o futuro do logging em Python: o dictConfig.
+
+Prepare-se para descobrir por que dictConfig é a forma mais moderna, flexível e organizada de gerenciar seus logs. Com ele, você pode definir toda a sua configuração de logging (handlers, formatters, loggers, e até mesmo QueueHandlers para performance assíncrona) em um único dicionário Python, que pode ser carregado de um arquivo JSON, YAML ou de qualquer outra fonte de dados. Isso não só simplifica a manutenção e o compartilhamento da sua configuração, mas também abre portas para cenários avançados que o basicConfig simplesmente não consegue lidar.
+
+Neste vídeo, você aprenderá passo a passo como migrar do basicConfig para o dictConfig, entendendo cada seção da configuração por dicionário. Desbloqueie o verdadeiro potencial do sistema de logging do Python e torne seus projetos mais profissionais, com logs configuráveis e escaláveis para qualquer ambiente! Não perca esta aula que vai transformar a forma como você gerencia os logs em suas aplicações Python.
+
+---
+
+RotatingFileHandler e RichHandler no Logging do Python - Aula 8
+
+Depois de dominar o dictConfig na aula anterior do Logging no Python, é hora de colocar a mão na massa e configurar os handlers essenciais para qualquer aplicação Python robusta. Nesta aula, vamos mergulhar fundo no RotatingFileHandler e no RichHandler, mostrando como integrá-los perfeitamente com sua configuração dictConfig.
+
+Aprenda a controlar o tamanho dos seus arquivos de log com o RotatingFileHandler, garantindo que seus logs não consumam todo o espaço em disco e sejam facilmente gerenciáveis, com rotação automática. Descubra também como usar o poderoso RichHandler para transformar a saída do seu console em logs coloridos, formatados e altamente legíveis, ideal para depuração e visualização instantânea de informações importantes.
+
+Vamos configurar tudo passo a passo dentro do seu dicionário dictConfig, demonstrando a flexibilidade e o poder dessa abordagem moderna de logging. Se você quer ter logs organizados em arquivos e, ao mesmo tempo, uma saída de console vibrante e funcional, esta aula é para você! Eleve o nível do seu logging em Python e otimize sua rotina de desenvolvimento.
+
+---
+
+Aprenda a criar Filter e Handler no Logging do Python - Aula 9
+
+Nesta Aula 9 do nosso curso completo de Logging em Python, vamos elevar o nível da sua organização de logs. Você vai aprender a criar Handlers e Filters customizados para ter controle total sobre onde e como suas mensagens de log são exibidas. Vamos configurar saídas diferentes para logs de DEBUG e INFO, e WARNING, ERROR e CRITICAL, garantindo que as informações certas cheguem ao destino certo: stdout ou stderr.
+
+Vamos ver o processo de construir sua própria classe MyRichHandler, que herda do popular rich.logging.RichHandler. Também entenderemos como contornar limitações do dictConfig (que será usado como JSON no futuro) para direcionar logs para stdout ou stderr de forma dinâmica, sem gambiarras.
+
+Além disso tudo, criaremos um filter chamado MaxLevelFilter para refinar ainda mais o controle, limitando os níveis de log que cada handler processa. Chega de logs críticos poluindo a saída padrão ou mensagens de depuração em arquivos de erro.
+
+Ao final desta aula prática, você terá o conhecimento e as ferramentas para implementar um sistema de logging robusto, eficiente e altamente configurável em seus projetos Python. Se você busca melhores práticas de logging, quer otimizar a depuração ou organizar saídas de erro, este vídeo é essencial para elevar a qualidade do seu código. Aprenda a criar um logger profissional com RichHandler e logging customizado para monitoramento de aplicações e tratamento de erros eficazes.
+
+---
+
+
+JSON e dictConfig: Configuração Profissional do Python Logging - Aula 10
+
+Na aula 10 do nosso curso de Logging em Python, vamos dar um passo de mestre na organização do nosso código, vamos aprender a separar completamente a configuração do sistema de logs da lógica da aplicação, movendo tudo para um
+arquivo JSON externo e separado (logging.json).
+
+Com a função de configuração dictConfig do módulo logging.config, vamos criar um sistema de configuração de logs robusto, flexível e muito fácil de manter, como é feito em projetos profissionais.
+
+Neste vídeo, você vai aprender na prática o seguinte:
+- Criar um arquivo logging.json completo, com formatadores, filtros e múltiplos handlers (para o console e para
+arquivos rotativos). É a mesma configuração da aula anterior.
+- Desenvolver uma função de setup (config_logging.py) que carrega e aplica essa configuração externa à sua
+aplicação.
+- Entender os benefícios de desacoplar a configuração da lógica do seu programa.
+- Ver o sistema funcionando na prática, direcionando logs para diferentes saídas com base no nível da mensagem.
+
+---
+
+Como criar um Formatter JSON do zero para Python Logging - Aula 11
+
+Na Aula 11 do nosso curso de Logging em Python, a gente vai além do básico e criamos do zero um JSONLogFormatter personalizado (Formatter em JSON), sem depender de bibliotecas prontas.
+
+Você vai aprender a gerar logs estruturados em formato JSON Lines, ideais para integração com ferramentas como ELK, Datadog e Splunk. Tudo isso com formatação elegante de exceções, suporte a fuso horário, e controle total sobre os dados que vão pro log.
+
+Nesta aula você vai ver:
+
+- Como criar sua própria classe que herda de logging.Formatter
+- Como escolher os campos exatos do LogRecord
+- Como lidar corretamente com timezones nos logs
+- Como exibir exceções (exc_info) em formato legível (sem virar uma bagunça no JSON)
+- Como adicionar campos extras e dinâmicos nos logs
+- O que é o formato JSON Lines e por que ele é usado em sistemas grandes
+- Como criar um parser simples de JSON Lines no Python
+- Como usar args e kwargs para campos extra no seu log
+- E mais (como sempre)
+
+Logs nesse formato serão bem mais fácil para parsing tanto por você mesmo quanto por ferramentas específicas para logs de sistemas robustos.
+
+Se você quer dar um ar profissional e moderno pro seu sistema, logs estruturados são um passo obrigatório. Bora deixar o print() no passado.
+
+---
+
+QueueHandler e QueueListener no Python Logging evita travar a aplicação ao enviar logs - Aula 12
+
+Sua aplicação pode ficar lenta ao usar logs de forma incorreta. Na aula 12 do nosso curso completo de Logging em Python, vamos falar sobre QueueHandler e QueueListener, que vem por padrão no Python e permitem emitir logs de forma assíncrona. Os logs ficam em uma fila (queue) até o listener (que roda em paralelo) terminar de emitir todos eles. Assim, seu código roda rápido, mesmo que os logs demorem para ser emitidos.
+
+Descubra por que o logging síncrono tradicional pode se tornar um gargalo e como mover todo o processamento de logs
+para uma thread separada, garantindo que sua aplicação principal continue executando de forma rápida e eficiente.
+
+O que você vai aprender:
+
+- A teoria por trás do logging assíncrono e por que ele é crucial.
+- Como configurar o QueueHandler e o QueueListener usando dictConfig a partir de um arquivo JSON.
+- A forma correta de iniciar e terminar o listener para que ele comece a processar os logs em background.
+- Como garantir que nenhum log seja perdido ao finalizar a aplicação, usando o módulo atexit para parar o listener
+de forma segura.
+
+Domine esta técnica e garanta que seus logs nunca mais sejam um problema de performance!
+
+---
+
+Função REUTILIZÁVEL para LOGGING com Python (configuração nível PROFISSIONAL) - Aula 13
+
+Na aula 13 do nosso curso completo de Logging em Python, começamos a criar a função definitiva para configurar o log da sua aplicação de forma reutilizável e profissional.
+
+Essa função vai:
+
++ Carregar o arquivo logging.json
++ Fazer o parse para dict do Python
++ Configurar o logger com dictConfig
++ Identificar o QueueHandler e iniciar o QueueListener automaticamente
++ Registrar o atexit para finalizar o listener com segurança
+
+Essa é uma daquelas funções que você vai copiar e colar em todo projeto sério. Por isso, vamos fazer tudo com calma e atenção aos detalhes. Teremos pelo menos duas aulas para finalizar essa estrutura.
+
+---
+
+Continuação da função final para o logging do Python - Aula 14
+
+Na aula 14 do nosso curso completo de Logging em Python, terminaremos de criar a nossa função final para configurar o log da sua aplicação de forma reutilizável e profissional.
+
+Agora vamos fazer o seguinte:
+
++ Mover variáveis em geral para serem internas do módulo
++ Montar uma lógica para recebermos o "level" em get_logger
++ Adicionar logs de debug ao longo do código
++ Alterar o arquivo logging.json para o dictConfig
++ Testar os cenários onde alteramos o nome do QueueHandler
++ E mais...
+
+---
+
+Entenda e configure variáveis de Ambiente com python-dotenv e logging no Python - Aula 15
+
+Na aula 15 do nosso curso completo de Logging em Python, vamos deixar nosso código ainda mais profissional ao remover todas as "magic strings" e mover essas configurações para um arquivo .env, usando a biblioteca python-dotenv.
+
+Você vai aprender o que são variáveis de ambiente, como elas funcionam, por que são importantes para segurança, organização, e flexibilidade do código, além de como integrá-las com sua aplicação Python real.
+
+Nesta aula vamos:
+
+* Usar a biblioteca python-dotenv para ler o .env
+* Substituir todas as strings fixas por variáveis de ambiente
+* Tornar o projeto mais dinâmico e fácil de configurar
+* Evitar alterações diretas no código para ajustes simples
+* Refatorar os caminhos e níveis de log de forma inteligente
+
+Esse tipo de configuração é fundamental em qualquer aplicação Python de verdade, seja ela backend, CLI, ou serviço de longo prazo.
+
+---
+
+Você não precisa configurar Logging no Python: Fiz pra você!!!
+
+No vídeo de hoje, você vai ver como nunca mais precisar configurar logs manualmente no Python. Eu criei o pylogkit através das aulas que te passei ao longo da playlist toda. Um pacote completo com tudo pronto: QueueHandler, RotatingFileHandler, RichHandler, JSON config, suporte a .env, e muito mais. É só instalar e usar. Vou te mostrar quais alterações fiz, quais foram os desafios para migrar isso para um pacote python, como configurar, etc.
+
+Eu também usei coisas que vimos em outros vídeos, como: Ambiente Python 2025 e Argparse. Com isso, criei uma ferramenta de linha de comando que cria o .env e o JSON de configuração para você não ter que fazer isso manualmente.
+
+Você vai aprender:
+
+- Como instalar e usar o pylogkit no seu projeto com apenas 1 comando
+- Como gerar automaticamente um .env e um logging.conf.json profissional
+- Como funciona a estrutura do projeto no Python
+- Por que isso é melhor do que ficar escrevendo config toda vez
+- Dicas e cuidados reais usados por projetos grandes em produção
+- Dicas de boas práticas ao criar logs, quais níveis usar, etc.
+
+Esse é o tipo de setup que você pode usar em qualquer projeto Python sério, seja backend, serviço, CLI ou automação.
+
+---
+

@@ -6,7 +6,10 @@ readme = "README.md"
 license = "MIT"
 authors = [{ name = "Luiz Otávio" }]
 requires-python = ">=3.13"
-dependencies = ["rich>=14.1.0"]
+dependencies = [
+    "pyautogui>=0.9.54",
+    "rich>=14.1.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/luizomf/typehints_python_playground"
