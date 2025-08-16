@@ -1,0 +1,327 @@
+Testes automatizados no Next.js com Vitest e Playwright (unit, integração e e2e)
+aula0500-c.mp4
+
+
+
+
+Configuração do Vitest (vitest.config.ts) para Next.js, React e TypeScript
+aula0501-c.mp4
+
+
+
+
+Vitest - primeiro teste unitário de uma função (Testes automatizados)
+aula0502-c.mp4
+
+
+
+
+Criando testes unitários de funções com o Vitest (sanitizeStr)
+aula0503-c.mp4
+
+
+
+
+Criando testes unitários de funções com o Vitest (validateTodoDescription)
+aula0504-c.mp4
+
+
+
+
+Criando testes unitários de funções com o Vitest (makeValidatedTodo)
+aula0505-c.mp4
+
+
+
+
+Mock com vi.spyOn no Vitest: como interceptar e modificar funções (Parte 1)
+aula0506-c.mp4
+
+
+
+
+Mock com vi.spyOn no Vitest: como interceptar e modificar funções (Parte 2)
+aula0507-c.mp4
+
+
+
+
+Como mockar retorno de função com vi.spyOn no Vitest (Parte 1)
+aula0508-c.mp4
+
+
+
+
+Como mockar retorno de função com vi.spyOn no Vitest (Parte 2)
+aula0509-c.mp4
+
+
+
+
+Entendendo as variáveis de ambiente .env.* para Next.js, Vitest, Drizzle, etc
+aula0510-c.mp4
+
+
+
+
+Configurando variáveis de baseadas no ambiente (.env): test, prod, dev, e2e
+aula0511-c.mp4
+
+
+
+
+Criando o schema do TODO para o Drizzle ORM (Tabela na base de dados)
+aula0512-c.mp4
+
+
+
+
+Configurando o drizzle-kit para cada ambiente .env separado
+aula0513-c.mp4
+
+
+
+
+Configurando o Drizzle ORM como Singleton para o sistema separando os ambientes
+aula0514-c.mp4
+
+
+
+
+Entendendo e criando o padrão de projeto repository com interfaces e Drizzle ORM
+aula0515-c.mp4
+
+
+
+
+Implementando o Repository Pattern com Drizzle ORM no TypeScript na prática
+aula0516-c.mp4
+
+
+
+
+Teste de integração do repository com Drizzle ORM - Primeiro teste do findAll
+aula0517-c.mp4
+
+
+
+
+Teste de integração do repository com Drizzle ORM - findAll + Helper
+aula0518-c.mp4
+
+
+
+
+Teste de integração do repository com Drizzle ORM - create e delete
+aula0519-c.mp4
+
+
+
+
+Teste do Caso de Uso Create com Clean Architecture (Usecase - Arquitetura limpa)
+(Prévia habilitada)
+aula0520-c.mp4
+
+
+
+
+Teste Unitário da Server Action e revalidatePath do Next.js com Vitest
+aula0521-c.mp4
+
+
+
+
+Teste de Integração do Caso de Uso para Exclusão do Todo com Arquitetura Limpa
+aula0522-c.mp4
+
+
+
+
+Teste Unitário da Server Action para Delete com revalidatePath do Next.js 15
+aula0523-c.mp4
+
+
+
+
+Entenda como funciona o Storybook para Next.js, Tailwind e React (Parte 1)
+aula0524-c.mp4
+
+
+
+
+Primeiro Component.stories.tsx + preview.tsx no Storybook (Parte 2)
+aula0525-c.mp4
+
+
+
+
+Subindo o storybook e criando outros stories com os scripts do package.json
+aula0526-c.mp4
+
+
+
+
+React Testing Library: Query Methods, render, screen e boas práticas
+aula0527-c.mp4
+
+
+
+
+Escrevendo o primeiro teste com a React Testing Library e Vitest no Next.js
+aula0528-c.mp4
+
+
+
+
+Testando as variants do botão com RTL, userEvent, vi.fn() e Vitest no Next.js
+aula0529-c.mp4
+
+
+
+
+Testando os sizes do botão com RTL, userEvent, vi.fn() e Vitest no Next.js
+aula0530-c.mp4
+
+
+
+
+Componente Input de texto para o Next.js + Configuração do Storybook (Parte 1)
+aula0531-c.mp4
+
+
+
+
+Componente Input de texto para o Next.js + Configuração do Storybook (Parte 2)
+aula0532-c.mp4
+
+
+
+
+Testes do Componente de InputText com RTL e Tailwind CSS (Parte 1)
+aula0533-c.mp4
+
+
+
+
+Testes do Componente de InputText com RTL e Tailwind CSS (Parte 2)
+aula0534-c.mp4
+
+
+
+
+Formulário com validação, transição, server action e mock no Storybook (Parte 1)
+aula0535-c.mp4
+
+
+
+
+Formulário com validação, transição, server action e mock no Storybook (Parte 2)
+aula0536-c.mp4
+
+
+
+
+Formulário com validação, transição, server action e mock no Storybook (Parte 3)
+aula0537-c.mp4
+
+
+
+
+Teste de integração de formulário em React com Server Action no Vitest (Parte 1)
+aula0538-c.mp4
+
+
+
+
+Teste de integração de formulário em React com Server Action no Vitest (Parte 2)
+aula0539-c.mp4
+
+
+
+
+Teste de integração de formulário em React com Server Action no Vitest (Parte 3)
+aula0540-c.mp4
+
+
+
+
+Criando o componente TodoLink e o Story do Storybook para o componente
+aula0541-c.mp4
+
+
+
+
+Testes do TodoList com Server Action Delete do Next.js em Mock no Vitest
+aula0542-c.mp4
+
+
+
+
+Testes de integração do server component do Next.js TodoContainer com Vitest
+aula0543-c.mp4
+
+
+
+
+Subindo o Next.js e desativando o cache com force-dynamic
+aula0544-c.mp4
+
+
+
+
+Instalando e configurando o Playwright para testes E2E no Next.js (Parte 1)
+aula0545-c.mp4
+
+
+
+
+Instalando e configurando o Playwright para testes E2E no Next.js (Parte 2)
+aula0546-c.mp4
+
+
+
+
+getByRole, beforeEach e afterAll no Playwright com Next.js
+
+Testes E2E para criação com form, input e button usando Playwright no Next.js
+
+Testando mudanças rápidas de estado na UI com o Playwright (Parte 1)
+aula0549-c.mp4
+
+
+
+
+Testando mudanças rápidas de estado na UI com o Playwright (Parte 2)
+aula0550-c.mp4
+
+
+
+
+Testando mudanças rápidas de estado na UI com o Playwright (Parte 3)
+aula0551-c.mp4
+
+
+
+
+Teste E2E de remoção de elementos da página com o Playwright
+aula0552-c.mp4
+
+
+
+
+Teste da desativação de elementos entre a chamadas assíncronas com Playwright
+aula0553-c.mp4
+
+
+
+
+Testes E2E para exibição e correção de erros na UI com Playwright
+(Prévia habilitada)
+aula0554-c.mp4
+
+
+
+
+Testes finais com Vitest e Playwright + Prettier e ESLint para Next.js
+aula0555-c.mp4
+
