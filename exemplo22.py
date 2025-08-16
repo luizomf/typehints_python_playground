@@ -26,13 +26,15 @@ from datetime import UTC, datetime, timedelta
 
 from utils import cyan_print, sep_print
 
+type StrOrFloat = str | float  # aqui explico sobre o novo TypeAlias (PEP 695)
 
-class Duration:
-    def __init__(self, value: str) -> None:
-        self._value: str = value
+
+class Duration[T: StrOrFloat]:
+    def __init__(self, value: T) -> None:
+        self._value: T = value
 
     @property
-    def value(self) -> str:
+    def value(self) -> T:
         return self._value
 
     def __repr__(self) -> str:
@@ -40,18 +42,20 @@ class Duration:
 
 
 @dataclass
-class VideoInfo:
+class VideoInfo[T: StrOrFloat]:
     name: str
-    duration: Duration
+    duration: Duration[T]
 
     @property
     def duration_time(self) -> str:
+        # Type Narrowing
         if isinstance(self.duration.value, int | float):
             return seconds_to_time(self.duration.value)
         return self.duration.value
 
 
 def seconds_to_time(seconds: float) -> str:
+    # Mais uma coisa para você aprender, converter segundos para horas
     delta = datetime(1, 1, 1, 0, 0, 0, tzinfo=UTC) + timedelta(seconds=seconds)
     return f"{delta:%H:%M:%S}"
 
@@ -59,13 +63,13 @@ def seconds_to_time(seconds: float) -> str:
 if __name__ == "__main__":
     sep_print()
 
-    # d1 = Duration(60) # Nope
+    d1 = Duration(60)  # ⚠️
     d2 = Duration("00:10:00")
 
-    # v1 = VideoInfo("aula1.mp4", d1) # Nope
+    v1 = VideoInfo("aula1.mp4", d1)  # ⚠️
     v2 = VideoInfo("aula2.mp4", d2)
 
-    # cyan_print(v1, v1.duration_time) # Nope
+    cyan_print(v1, v1.duration_time)  # ⚠️
     cyan_print(v2, v2.duration_time)
 
     sep_print()
