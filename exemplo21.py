@@ -17,20 +17,29 @@
 # ⚠️ Pontos de atenção
 
 
-from collections.abc import Hashable, Iterator, MutableMapping
+from collections.abc import Hashable, Iterable, Iterator, Mapping, MutableMapping
 
 from utils import cyan_print, sep_print
 
 
 class MyMutableDict[K: Hashable, V: Hashable](MutableMapping[K, V]):
-    def __init__(self, *args: tuple[K, V]) -> None:
-        self._data: dict[K, V] = dict(args)
+    def __init__(self, data: Mapping[K, V] | Iterable[tuple[K, V]]) -> None:
+        self._data: dict[K, V] = dict(data)
 
     # Não tem como inverter esse dicionário
     # Preciso retornar [int, str], mas minha classe aceita [str, int]
-    def inv(self) -> MutableMapping[V, K]:  # Esse retorno pode ser mais específico
-        inverted = {v: k for k, v in self._data.items()}
-        return MyMutableDict(*tuple(inverted.items()))
+    def inv(self) -> "MyMutableDict[V, K]":  # Esse retorno pode ser mais específico
+        inverted = ((v, k) for k, v in self._data.items())
+        return MyMutableDict(data=inverted)
+
+    def inv_strict(self) -> "MyMutableDict[V, K]":
+        inverted: MutableMapping[V, K] = {}
+        for k, v in self._data.items():
+            if v in inverted:
+                msg = f"Key={v!r} is not allowed because {v!r} is a key duplication."
+                raise ValueError(msg)
+            inverted[v] = k
+        return MyMutableDict(data=inverted)
 
     def __iter__(self) -> Iterator[K]:
         return iter(self._data)
@@ -54,23 +63,25 @@ class MyMutableDict[K: Hashable, V: Hashable](MutableMapping[K, V]):
 
 
 if __name__ == "__main__":
-    data1 = ("chave1", 1), ("chave2", 2)
+    data1 = ("chave1", 1), ("chave2", 2), ("chave3", 2)
     data2 = (1, "chave1"), (2, "chave2")
-    data3 = (1, [1, 2, 3]), (2, [4, 5, 6])  # ⚠️
+    # data3 = (1, (1, 2, 3)), (2, [4, 5, 6])  # ⚠️
 
-    my_dict1 = MyMutableDict(*data1)
-    my_dict2 = MyMutableDict(*data2)
-    my_dict3 = MyMutableDict(*data3)  # ⚠️
-
+    my_dict1 = MyMutableDict(data=data1)
+    my_dict2 = MyMutableDict(data=data2)
+    # my_dict3 = MyMutableDict(data=data3)  # ⚠️
     sep_print()
 
     cyan_print(my_dict1)
     cyan_print(my_dict1.inv())
+    cyan_print(my_dict1.inv_strict())
     cyan_print()
     cyan_print(my_dict2)
     cyan_print(my_dict2.inv())
+    cyan_print(my_dict2.inv_strict())
     cyan_print()
-    cyan_print(my_dict3)  # ⚠️
-    cyan_print(my_dict3.inv())  # ⚠️
+    # cyan_print(my_dict3)  # ⚠️
+    # cyan_print(my_dict3.inv())  # ⚠️
+    # cyan_print(my_dict3.inv_strict())
 
     sep_print()

@@ -1,6 +1,10 @@
 #
 # O problema da duração do vídeo (REAL)
 #
+# ⚠️ ATENÇÃO: tecnicamente eu não precisaria de nada disso que vou mostrar a seguir,
+# meu problema estava entre str e float apenas. Mas estou replicando o exemplo
+# com objetos para termos mais exemplos de tipagem.
+#
 # Estive montando um script para concatenar vários vídeos de uma playlist e um
 # único vídeo enorme.
 #
@@ -26,10 +30,10 @@ from datetime import UTC, datetime, timedelta
 
 from utils import cyan_print, sep_print
 
-type StrOrFloat = str | float  # aqui explico sobre o novo TypeAlias (PEP 695)
+type StrIntFloat = str | int | float
 
 
-class Duration[T: StrOrFloat]:
+class Duration[T: StrIntFloat]:
     def __init__(self, value: T) -> None:
         self._value: T = value
 
@@ -42,7 +46,7 @@ class Duration[T: StrOrFloat]:
 
 
 @dataclass
-class VideoInfo[T: StrOrFloat]:
+class VideoInfo[T: StrIntFloat]:
     name: str
     duration: Duration[T]
 
