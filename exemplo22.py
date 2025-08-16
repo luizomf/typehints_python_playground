@@ -1,11 +1,24 @@
 #
-# Classes Genéricas e TypeVar no Python 3.13 (Nova Sintaxe) - Aula 9
+# O problema da duração do vídeo (REAL)
 #
-# A tipagem de Classes Genéricas ou Generic Classes seguem o mesmo padrão das
-# funções genéricas que vimos na aula anterior. Defina um type parameter na
-# classe e automaticamente ela se tornará uma classe genérica com a nova sintaxe
-# da PEP 695 (>=3.12).
+# Estive montando um script para concatenar vários vídeos de uma playlist e um
+# único vídeo enorme.
 #
+# -> aula1.mp4 (120 segundos) aula2.mp4 (60 segundos) aula3.mp4 (120 segundos)
+# -> aulão.mp4 (300 segundos)
+#
+# Os problemas que encontrei é que eu precisava converter a duração do vídeo de
+# segundos para horas e de horas para segundos para criar os capítulos do YouTube.
+# Em resumo, precisava somar os segundos para pegar o timestamp correto de onde
+# uma aula terminava e outra começada, depois converter os segundos em horas
+# para gerar "HH:MM:SS - Título do capítulo" para o YouTube.
+#
+# -> aula1.mp4 (00:02:00) aula2.mp4 (00:01:00) aula3.mp4 (00:02:00)
+# -> aulão.mp4 (00:05:00)
+
+
+# O exemplo abaixo é só uma forma que encontrei de representar o problema para
+# solucionarmos a tipagem juntos.
 
 
 from dataclasses import dataclass
