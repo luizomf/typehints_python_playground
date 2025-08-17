@@ -1,3 +1,19 @@
+Você pode gerar o SEO do Youtube para mim seguindo o modelo ao final desse prompt? Os dados que estão ao final do texto são apenas um exemplo do formato que quero que você siga. Os dados da aula para qual vamos gerar o conteúdo estão nos códigos abaixo.
+
+--- 
+
+CÓDIGOS REAIS GRAVADOS NA AULA 9 A SEGUIR:
+
+---
+
+[CODIGO AQUI]
+
+---
+
+A PARTIR DAQUI É EXEMPLO DE COMO PRECISO DA RESPOSTA:
+
+---
+
 #-------------------------------------------------------------------------------
 Este arquivo é TXT puro
 #-------------------------------------------------------------------------------
@@ -6,35 +22,32 @@ Este arquivo é TXT puro
 Título
 #-------------------------------------------------------------------------------
 
-TypeVar e Funções Genéricas no Python 3.13 (Nova Sintaxe, PEP 695) - Aula 8
+Classes Genéricas e TypeVar no Python 3.13 - Aula 9
 
 #-------------------------------------------------------------------------------
 Descrição
 #-------------------------------------------------------------------------------
 
-Finalmente chegou a hora dela: a aclamada, a linda, a maravilhosa.... A nova sintaxe do Python para TypeVar (Type Variables) e Genéricos... E olha que é novo mesmo hein, do Python 3.13 para frente, sem importar nada, só colchete e T. Obs.: Isso iniciou no Python 3.12, só pra constar.
+Chegou a vez delas: as Classes Genéricas no Python moderno!
 
-Neste vídeo, vamos aprender a nova sintaxe de parâmetros de tipo (TypeVars) para Funções Genéricas (Generic Functions). Vamos comparar o jeito "antigo" (com TypeVar[_T]) com o "novo" jeito, mais direto e intuitivo. Você vai aprender a criar funções flexíveis, como uma que inverte qualquer dicionário, e entender as regras de restrição de tipos (bounds e constraints).
+Na aula passada (Aula 8) vimos como criar funções genéricas usando a nova sintaxe da PEP 695. Agora, vamos dar um passo além e aprender como transformar classes inteiras em genéricas com a mesma facilidade.
 
-Esta é uma aula prática para quem quer dominar a criação de componentes de software reutilizáveis e com tipagem robusta no Python moderno.
+Você vai ver como definir parâmetros de tipo (type parameters) diretamente na classe, sem precisar herdar de Generic ou importar TypeVar. Com isso, conseguimos criar estruturas reutilizáveis, como um MutableMapping que aceita qualquer chave e valor, além de métodos genéricos como inv() e inv_strict() para inverter chave e valor de forma segura (aceitando apenas algo hashable).
 
 Nesta aula da nossa playlist completa sobre Type Hints no Python, você vai aprender:
 
-- O que é uma Type Variable (TypeVar) e como ela cria "vínculos" de tipo.
-- A nova sintaxe da PEP 695 para criar funções e classes genéricas (def func[T]: ...).
-- A diferença entre a sintaxe antiga (typing.TypeVar) e a nova, e quando cada uma deve ser usada.
-- Como criar restrições de tipo (bounds e constraints) com a nova sintaxe.
-- A importância do Hashable para criar funções genéricas seguras que manipulam dicionários.
-- Como os diferentes type checkers (Pyright vs. Mypy) podem interpretar casos de borda.
-- E mais um monte de coisa, como sempre...
+- Como transformar classes comuns em Generic Classes com a nova sintaxe da PEP 695.
+- Criar métodos que trocam os parâmetros de tipo (ex.: inverter chaves e valores de um dicionário).
+- Diferença entre inv e inv_strict, e como lidar com valores duplicados.
+- O uso de Hashable para garantir segurança ao inverter mappings.
+- A importância de criar abstrações tipadas para dar semântica ao código (mesmo quando não é estritamente necessário).
 
-Se você quer escrever código Python que seja ao mesmo tempo flexível e seguro, dominando a arte da programação genérica, esta aula é para você.
+Essa é uma aula prática, pensada para você que quer escrever código Python flexível, reutilizável e robusto. 
 
-E lembre-se: Type Hint é igual a Type Annotation (tipagem no Python).
+E não esquece: Type Hint é a mesma coisa que Type Annotation no Python.
 
-Este vídeo é parte de uma playlist, essa é a OITAVA aula. Segue o link da playlist para acompanhar:
+Este vídeo é parte de uma playlist, essa é a NONA aula. Segue o link da playlist para acompanhar:
 https://youtu.be/8xnIkjROj_o?si=ZayOULdLoMF74Iwg
-
 
 Link do repositório:
 https://github.com/luizomf/typehints_python
@@ -43,15 +56,14 @@ Conheça meus cursos em:
 https://www.otaviomiranda.com.br/
 
 Capítulos
-00:00:00 - A Nova Forma de Criar Funções Genéricas em Python
-00:00:00 - O que é uma Type Variable (TypeVar)?
-00:00:00 - Sintaxe Antiga vs. Nova (PEP 695): Uma Comparação
-00:00:00 - Criando uma Função Genérica: filter_by_type
-00:00:00 - Exemplo Prático: Invertendo um Dicionário Genérico (invert_mapping)
-00:00:00 - A Importância do Hashable para Chaves de Dicionário
-00:00:00 - Restringindo Tipos: Bounds vs. Constraints
-00:00:00 - A "Pegadinha" dos Type Checkers: Pyright vs. Mypy
-00:00:00 - Conclusão: Quando usar a Sintaxe Nova ou a Antiga?
+00:00:00 - Introdução às Classes Genéricas no Python (PEP 695)
+00:01:45 - Criando nossa primeira Generic Class (MyMutableDict)
+00:10:30 - Implementando o método inv() para inverter chaves e valores
+00:18:50 - Criando a versão inv_strict() e tratando duplicações
+00:26:00 - Explorando Hashable e porque ele é importante aqui
+00:30:00 - Exemplo real: o problema da duração dos vídeos (Duration e VideoInfo)
+00:42:00 - Type Narrowing com isinstance e unions
+00:48:00 - Conclusão: quando vale a pena usar genéricos em classes?
 
 #-------------------------------------------------------------------------------
 Até 5 hashtags
@@ -63,7 +75,7 @@ Até 5 hashtags
 Tags invisíveis do Youtube separadas por vírgula (máx. 500 caracteres)
 #-------------------------------------------------------------------------------
 
-python typevar,python generics,PEP 695,python 3.12 typing,funções genéricas python,classes genéricas python,python type parameters,typing.TypeVar,type hints avançado,python bound typevar,python constraints typevar,python hashable,curso de type hints,tutorial python moderno,novidades python 3.12,programação genérica,código limpo python,arquitetura de software,Luiz Otávio Miranda,Pyright vs Mypy,tipagem estática,python moderno,python tutorial
+python classes genéricas,python generic class,PEP 695,python 3.13 typing,classes genéricas python,typevar em classes python,python type parameters,class generic python,python typing avançado,python hashable,mapping genérico python,inverter dicionário python,duração de vídeos python,curso de type hints,tutorial python moderno,novidades python 3.13,programação genérica,código limpo python,arquitetura de software,Luiz Otávio Miranda,tipagem estática,python tutorial
 
 #-------------------------------------------------------------------------------
 Fim

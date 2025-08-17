@@ -48,18 +48,16 @@ class Duration[T: StrIntFloat]:
 @dataclass
 class VideoInfo[T: StrIntFloat]:
     name: str
-    duration: Duration[T]
+    duration_seconds: Duration[T]
 
     @property
-    def duration_time(self) -> str:
-        # Type Narrowing
-        if isinstance(self.duration.value, int | float):
-            return seconds_to_time(self.duration.value)
-        return self.duration.value
+    def duration_time(self) -> str:  # precisamos corrigir
+        if isinstance(self.duration_seconds.value, int | float):
+            return seconds_to_time(self.duration_seconds.value)
+        return self.duration_seconds.value
 
 
 def seconds_to_time(seconds: float) -> str:
-    # Mais uma coisa para você aprender, converter segundos para horas
     delta = datetime(1, 1, 1, 0, 0, 0, tzinfo=UTC) + timedelta(seconds=seconds)
     return f"{delta:%H:%M:%S}"
 
@@ -75,5 +73,6 @@ if __name__ == "__main__":
 
     cyan_print(v1, v1.duration_time)  # ⚠️
     cyan_print(v2, v2.duration_time)
+    cyan_print(v2, v2.duration_seconds)
 
     sep_print()

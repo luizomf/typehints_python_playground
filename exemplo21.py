@@ -28,11 +28,12 @@ class MyMutableDict[K: Hashable, V: Hashable](MutableMapping[K, V]):
 
     # Não tem como inverter esse dicionário
     # Preciso retornar [int, str], mas minha classe aceita [str, int]
-    def inv(self) -> "MyMutableDict[V, K]":  # Esse retorno pode ser mais específico
+    def inv(self) -> MutableMapping[V, K]:  # Esse retorno pode ser restrito
         inverted = ((v, k) for k, v in self._data.items())
         return MyMutableDict(data=inverted)
 
-    def inv_strict(self) -> "MyMutableDict[V, K]":
+    # Mesma coisa, não tem como inverter [str, int] e [int, str]
+    def inv_strict(self) -> MutableMapping[V, K]:  # pode ser mais restrito
         inverted: MutableMapping[V, K] = {}
         for k, v in self._data.items():
             if v in inverted:
@@ -63,13 +64,25 @@ class MyMutableDict[K: Hashable, V: Hashable](MutableMapping[K, V]):
 
 
 if __name__ == "__main__":
-    data1 = ("chave1", 1), ("chave2", 2), ("chave3", 2)
+    data1 = ("chave1", 1), ("chave2", 2), ("chave3", 3)
+
+    # Esses dois dicts não daria para usar com meu mapping
     data2 = (1, "chave1"), (2, "chave2")
-    # data3 = (1, (1, 2, 3)), (2, [4, 5, 6])  # ⚠️
+    data3 = (1, (1, 2, 3)), (2, (4, 5, 6))  # ⚠️
 
     my_dict1 = MyMutableDict(data=data1)
+    my_dict1["NOVA_CHAVE"] = 4
+    my_dict1["chave2"] = 10000
+    del my_dict1["chave2"]
+
+    for item in my_dict1.items():
+        print(item)
+
+    cyan_print(my_dict1)
+    sep_print()
+
     my_dict2 = MyMutableDict(data=data2)
-    # my_dict3 = MyMutableDict(data=data3)  # ⚠️
+    my_dict3 = MyMutableDict(data=data3)  # ⚠️
     sep_print()
 
     cyan_print(my_dict1)
@@ -80,8 +93,8 @@ if __name__ == "__main__":
     cyan_print(my_dict2.inv())
     cyan_print(my_dict2.inv_strict())
     cyan_print()
-    # cyan_print(my_dict3)  # ⚠️
-    # cyan_print(my_dict3.inv())  # ⚠️
-    # cyan_print(my_dict3.inv_strict())
+    cyan_print(my_dict3)  # ⚠️
+    cyan_print(my_dict3.inv())  # ⚠️
+    cyan_print(my_dict3.inv_strict())
 
     sep_print()
