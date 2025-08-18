@@ -2,7 +2,7 @@ Você pode gerar o SEO do Youtube para mim seguindo o modelo ao final desse prom
 
 --- 
 
-CÓDIGOS REAIS GRAVADOS NA AULA 9 A SEGUIR:
+CÓDIGOS REAIS GRAVADOS NA AULA 11 A SEGUIR:
 
 ---
 
@@ -22,31 +22,34 @@ Este arquivo é TXT puro
 Título
 #-------------------------------------------------------------------------------
 
-Classes Genéricas e TypeVar no Python 3.13 - Aula 9
+Composição de Protocolos e o Interface Segregation Principle (SOLID) - Aula 11
 
 #-------------------------------------------------------------------------------
 Descrição
 #-------------------------------------------------------------------------------
 
-Chegou a vez delas: as Classes Genéricas no Python moderno!
+Nessa aula vamos dar um passo além no estudo de Type Hints com Python e vamos falar sobre a composição de  Protocols para criar contratos mais ricos a partir de interfaces simples, exatamente como blocos de LEGO. (Por composição, estou me referindo à herança múltipla em Protocol do Python).
 
-Na aula passada (Aula 8) vimos como criar funções genéricas usando a nova sintaxe da PEP 695. Agora, vamos dar um passo além e aprender como transformar classes inteiras em genéricas com a mesma facilidade.
+Esse é o ponto em que a teoria encontra o Interface Segregation Principle (ISP) do SOLID: em vez de uma interface gigante, criamos vários protocolos pequenos e específicos, depois unimos apenas os necessários. Assim, mantemos nosso código mais limpo, flexível e seguro para o type checker.
 
-Você vai ver como definir parâmetros de tipo (type parameters) diretamente na classe, sem precisar herdar de Generic ou importar TypeVar. Com isso, conseguimos criar estruturas reutilizáveis, como um MutableMapping que aceita qualquer chave e valor, além de métodos genéricos como inv() e inv_strict() para inverter chave e valor de forma segura (aceitando apenas algo hashable).
+Também vamos revisar as regrinhas importantes de Protocols:
 
-Nesta aula da nossa playlist completa sobre Type Hints no Python, você vai aprender:
+- Herdar de Protocol cria uma classe concreta (cumpre o contrato).
+- Herdar de Protocol + incluir Protocol cria um novo protocolo.
+- Protocols são voltados para comportamento, não para tipo.
+- @runtime_checkable permite isinstance/issubclass, mas só confere existência de métodos, não tipos.
+- Atributos em Protocols são invariantes, prefira @property read-only.
 
-- Como transformar classes comuns em Generic Classes com a nova sintaxe da PEP 695.
-- Criar métodos que trocam os parâmetros de tipo (ex.: inverter chaves e valores de um dicionário).
-- Diferença entre inv e inv_strict, e como lidar com valores duplicados.
-- O uso de Hashable para garantir segurança ao inverter mappings.
-- A importância de criar abstrações tipadas para dar semântica ao código (mesmo quando não é estritamente necessário).
+Além disso, vamos colocar a mão no código e criar um FileDataManager genérico, que lê e escreve dados transformados em diferentes tipos (int, list[int], dict[str,int]) sem depender de implementação específica.
+Nesta aula da playlist completa sobre Type Hints no Python, você vai aprender:
 
-Essa é uma aula prática, pensada para você que quer escrever código Python flexível, reutilizável e robusto. 
+- O que é composição de Protocols e por que isso facilita aplicar ISP.
+- Como criar Protocols genéricos (Protocol[T]) para contratos mais flexíveis.
+- Limitações de @runtime_checkable e por que ele não substitui ABC.
+- Como Protocols se conectam com os princípios do SOLID na prática.
+- Exemplo real de uso: um gerenciador de arquivos tipado só com Protocols.
 
-E não esquece: Type Hint é a mesma coisa que Type Annotation no Python.
-
-Este vídeo é parte de uma playlist, essa é a NONA aula. Segue o link da playlist para acompanhar:
+Este vídeo é parte de uma playlist, essa é a DÉCIMA PRIMEIRA aula. Segue o link da playlist para acompanhar:
 https://youtu.be/8xnIkjROj_o?si=ZayOULdLoMF74Iwg
 
 Link do repositório:
@@ -55,27 +58,31 @@ https://github.com/luizomf/typehints_python
 Conheça meus cursos em:
 https://www.otaviomiranda.com.br/
 
-Capítulos
-00:00:00 - Introdução às Classes Genéricas no Python (PEP 695)
-00:01:45 - Criando nossa primeira Generic Class (MyMutableDict)
-00:10:30 - Implementando o método inv() para inverter chaves e valores
-00:18:50 - Criando a versão inv_strict() e tratando duplicações
-00:26:00 - Explorando Hashable e porque ele é importante aqui
-00:30:00 - Exemplo real: o problema da duração dos vídeos (Duration e VideoInfo)
-00:42:00 - Type Narrowing com isinstance e unions
-00:48:00 - Conclusão: quando vale a pena usar genéricos em classes?
+Capítulos:
+00:00:00 - Composição de Protocols ou Herança Múltipla em protocolos
+00:02:34 - Regras para compor Protocols no Python
+00:07:40 - Sobre runtime_checkable e isinstance ou issubclass com Protocol
+00:08:50 - Os entenda TODOS os princípios do SOLID
+00:11:56 - Entenda os protocolos SupportsRead e SupportsWrite
+00:13:15 - Compondo outro Protocol unindo SupportsRead e SupportsWrite
+00:14:31 - Exemplo REAL de uso do novo Protocol Genérico SupportsReadWrite
+00:17:30 - Usando FileDataManager com uma função que precisa do Protocol
+00:18:35 - Testando nossa tipagem final no Python
+00:24:30 - E se eu HERDAR de um Protocol em classe concreta?
+
+#Python #TypeHints #Protocols #SOLID #Python3
 
 #-------------------------------------------------------------------------------
 Até 5 hashtags
 #-------------------------------------------------------------------------------
 
-#Python #TypeHints #Generics #Python3 #PEP695
+#Python #TypeHints #Protocols #SOLID #Python3
 
 #-------------------------------------------------------------------------------
 Tags invisíveis do Youtube separadas por vírgula (máx. 500 caracteres)
 #-------------------------------------------------------------------------------
 
-python classes genéricas,python generic class,PEP 695,python 3.13 typing,classes genéricas python,typevar em classes python,python type parameters,class generic python,python typing avançado,python hashable,mapping genérico python,inverter dicionário python,duração de vídeos python,curso de type hints,tutorial python moderno,novidades python 3.13,programação genérica,código limpo python,arquitetura de software,Luiz Otávio Miranda,tipagem estática,python tutorial
+python protocol,protocol python exemplo,protocol composition python,composição de protocolos python,interface segregation principle python,isp solid python,solid principles python,protocol python 3.13,python type hints avançado,tipagem estrutural python,duck typing python,abc vs protocol python,pep 544 python,python generics protocol,python typing protocol,python structural subtyping,typing python exemplos,Luiz Otávio Miranda
 
 #-------------------------------------------------------------------------------
 Fim

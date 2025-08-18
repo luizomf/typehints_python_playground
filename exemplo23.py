@@ -27,7 +27,8 @@
 # Obs.: se você já programou em Typescript, vai se sentir em casa, os
 # Protocols funcionam de forma bem parecida com as interfaces lá.
 #
-
+# https://typing.python.org/en/latest/reference/protocols.html#predefined-protocol-reference
+#
 from dataclasses import dataclass
 from typing import Protocol
 
@@ -35,9 +36,8 @@ from utils import cyan_print, sep_print
 
 
 class SupportsTalk(Protocol):
-    name: str  # este atributo será necessário
+    name: str
 
-    # este método também será necessário
     def talk(self, phrase: str) -> None: ...
 
 
