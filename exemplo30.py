@@ -1,5 +1,5 @@
 import re
-from datetime import UTC, datetime
+from datetime import _TzInfo, datetime
 from typing import Protocol, overload
 
 from utils import cyan_print, sep_print
@@ -73,45 +73,75 @@ def run_type_caster[T, R](value: T, type_caster: TypeCaster[T, R]) -> R:
     return type_caster(value=value)
 
 
+class Strptime(Protocol):
+    def __call__(self, date_string: str, format: str, /) -> datetime: ...
+
+
+class FromTimestamp(Protocol):
+    def __call__(self, timestamp: float, tz: _TzInfo | None = ...) -> datetime: ...
+
+
 class DateMaker(Protocol):
     @overload
-    def __call__(self, value: str, *, in_format: str | None = None) -> datetime: ...
+    def __call__(
+        self,
+        value: str,
+        *,
+        in_format: str | None = None,
+    ) -> Strptime: ...
     @overload
     def __call__(
         self,
         value: tuple[int, ...],
         *,
         in_format: None = None,
-    ) -> datetime: ...
+    ) -> type[datetime]: ...
     @overload
-    def __call__(self, value: float, *, in_format: None = None) -> datetime: ...
+    def __call__(
+        self,
+        value: float,
+        *,
+        in_format: None = None,
+    ) -> FromTimestamp: ...
 
 
 @overload
-def date_maker(value: str, in_format: str) -> datetime: ...
+def date_maker(
+    value: str,
+    *,
+    in_format: str | None = None,
+) -> Strptime: ...
 @overload
-def date_maker(value: tuple[int, ...], in_format: None = None) -> datetime: ...
+def date_maker(
+    value: tuple[int, ...],
+    *,
+    in_format: None = None,
+) -> type[datetime]: ...
 @overload
-def date_maker(value: float, in_format: None = None) -> datetime: ...
+def date_maker(
+    value: float,
+    *,
+    in_format: None = None,
+) -> FromTimestamp: ...
 def date_maker(
     value: str | tuple[int, ...] | float,
     in_format: str | None = None,
-) -> datetime:
+) -> Strptime | FromTimestamp | type[datetime]:
     if isinstance(value, str):
         if not in_format:
             msg = f"You must inform the date format for {value!r}"
             raise ValueError(msg)
 
-        return datetime.strptime(value, in_format)
+        return datetime.strptime
 
     if isinstance(value, tuple):
         if not value:
             msg = "Cannot create a date with empty tuple"
             raise ValueError(msg)
 
-        return datetime(*value, tzinfo=UTC)
+        return datetime
 
-    return datetime.fromtimestamp(value)
+    return datetime.fromtimestamp
 
 
 ################################################################################
@@ -121,10 +151,13 @@ def date_maker(
 
 if __name__ == "__main__":
     sep_print()
-    date1 = datetime(1, 1, 1)
-    date2 = datetime.strptime("2025-08", "%Y-%m")
 
-    date3 = datetime.fromtimestamp(1755696515.035976)
+    # o mesmo que datetime()
+    date1 = date_maker((1, 1, 1))
+    # o mesmo que datetime.strptime()
+    date2 = date_maker("2025-08", in_format="%Y-%m")
+    # o mesmo que datetime.fromtimestamp(1755696515.035976)
+    date3 = date_maker(1755696515.035976)
 
     cyan_print(f"{date1 = }")
     cyan_print(f"{date2 = }")
