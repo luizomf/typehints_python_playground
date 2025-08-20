@@ -7,13 +7,13 @@ license = "MIT"
 authors = [{ name = "Luiz Otávio" }]
 requires-python = ">=3.13"
 dependencies = [
-    "ffmpeg-python>=0.2.0",
-    "imagehash>=4.3.2",
-    "numpy>=2.3.2",
-    "opencv-python>=4.11.0.86",
-    "pillow>=11.3.0",
-    "pyautogui>=0.9.54",
-    "rich>=14.1.0",
+  "ffmpeg-python>=0.2.0",
+  "imagehash>=4.3.2",
+  "numpy>=2.3.2",
+  "opencv-python>=4.11.0.86",
+  "pillow>=11.3.0",
+  "pyautogui>=0.9.54",
+  "rich>=14.1.0",
 ]
 
 [project.urls]
@@ -50,6 +50,8 @@ ignore = [
   'FBT002',
   'FBT003',
   'S101',
+  'DOC201',
+  'DTZ',
 ]
 fixable = ["ALL"]
 unfixable = ['D']
