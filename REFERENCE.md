@@ -23,14 +23,13 @@ Já gravei isso:
 
 Montei essa ordem no chute, não sei se seria a melhor.
 
-- **ParamSpec & Concatenate**
-- **Callback Protocols + ParamSpec (avanço)**
-- **TypeGuard & TypeIs**
 - **NewType**
-- **Never & NoReturn**
+- **TypeGuard & TypeIs**
+- **ParamSpec & Concatenate**
 - **TypeVarTuple & Unpack**
-- **ReadOnly/Final/Override**
-- **LiteralString (bônus curto)**
+- **Callback Protocols + ParamSpec (avanço)**
+- **Never & NoReturn**
+- **Outras coisas específicas**
 
 ## 1) ParamSpec & Concatenate — Decorators que preservam assinatura
 
