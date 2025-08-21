@@ -1,5 +1,3 @@
-Você pode gerar o SEO do Youtube para mim seguindo o modelo ao final desse prompt? Os dados que estão ao final do texto são apenas um exemplo do formato que quero que você siga. Os dados da aula para qual vamos gerar o conteúdo estão nos códigos abaixo.
-
 --- 
 
 [CODIGO]
