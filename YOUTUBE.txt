@@ -2,76 +2,7 @@ Você pode gerar o SEO do Youtube para mim seguindo o modelo ao final desse prom
 
 --- 
 
-CÓDIGOS REAIS GRAVADOS NA AULA 12 A SEGUIR:
-
----
-
-#
-# Herança com protocolos (Só para constar no seu catálogo)
-#
-# ➡️ Vou falar rapidamente disso para já falarmos de Callback Protocols.
-#
-# Apesar de eu não gostar muito dos protocolos como classes abstratas, é
-# importante que você saiba que dá para fazer eles se comportarem de maneira
-# praticamente idêntica (com as ressalvas que já falei em aulas anteriores).
-#
-# Os benefícios que vejo nisso são:
-# - Você não precisa escrever seu código às cegas (a tipagem vai te ajudar)
-# - Você ganha qualquer implementação concreta do `Protocol`
-# - Você pode definir métodos abstratos que geram erros no runtime
-#
-# Obs.: temos praticamente uma ABC aqui sem os benefícios da tipagem que falamos
-# antes (isinstance, issubclass, etc...)
-#
-# Isso eu gravei em há 4 anos:
-# Template method: https://youtu.be/-nSOKE4f2gA?si=Ds1TBFhcU0iYS0U0
-#
-# Doc Python
-# https://typing.python.org/en/latest/spec/protocol.html#protocols
-#
-from abc import abstractmethod
-from typing import Protocol, final
-
-from utils import cyan_print, sep_print
-
-
-class TemplateMethod[A, B](Protocol):
-    @abstractmethod  # isso vai gerar erro em runtime
-    def step_a(self) -> A: ...
-    @abstractmethod
-    def step_b(self) -> B: ...
-
-    @final
-    def run(self) -> tuple[A, B]:
-        result_a = self.step_a()
-        result_b = self.step_b()
-
-        return result_a, result_b
-
-
-class MakePair[T](TemplateMethod[T, T]):
-    def __init__(self, a: T, b: T) -> None:
-        self.a = a
-        self.b = b
-
-    def step_a(self) -> T:
-        return self.a
-
-    def step_b(self) -> T:
-        return self.b
-
-
-if __name__ == "__main__":
-    sep_print()
-    pair_maker = MakePair("Joãozinho", "Maria")
-    pair = pair_maker.run()
-    cyan_print(pair, f"{pair[0]} {pair[1]}")
-    sep_print()
-
-    pair_maker = MakePair[tuple[int, int]]((1, 2), (3, 4))
-    pair_a, pair_b = pair_maker.run()
-    cyan_print(pair_a, pair_b, sum(pair_a + pair_b))
-    sep_print()
+[CODIGO]
 
 ---
 
@@ -87,34 +18,28 @@ Este arquivo é TXT puro
 Título
 #-------------------------------------------------------------------------------
 
-Composição de Protocolos e o Interface Segregation Principle (SOLID) - Aula 11
+Callback Protocols no Python: do básico ao avançado - Aula 13
 
 #-------------------------------------------------------------------------------
 Descrição
 #-------------------------------------------------------------------------------
 
-Nessa aula vamos dar um passo além no estudo de Type Hints com Python e vamos falar sobre a composição de  Protocols para criar contratos mais ricos a partir de interfaces simples, exatamente como blocos de LEGO. (Por composição, estou me referindo à herança múltipla em Protocol do Python).
+Chegou a hora de explorar os Callback Protocols, um recurso poderoso que leva a tipagem estática do Python para outro nível.
 
-Esse é o ponto em que a teoria encontra o Interface Segregation Principle (ISP) do SOLID: em vez de uma interface gigante, criamos vários protocolos pequenos e específicos, depois unimos apenas os necessários. Assim, mantemos nosso código mais limpo, flexível e seguro para o type checker.
+Você já conhece o Callable, mas ele tem limites: não consegue expressar nomes de parâmetros, argumentos keyword-only ou assinaturas muito complexas. É aí que entra o Callback Protocol: um contrato tipado via __call__ que te dá precisão absoluta sobre como funções e callbacks devem ser usados.
 
-Também vamos revisar as regrinhas importantes de Protocols:
+Nessa aula, vamos começar do simples e evoluir até casos bem avançados:
 
-- Herdar de Protocol cria uma classe concreta (cumpre o contrato).
-- Herdar de Protocol + incluir Protocol cria um novo protocolo.
-- Protocols são voltados para comportamento, não para tipo.
-- @runtime_checkable permite isinstance/issubclass, mas só confere existência de métodos, não tipos.
-- Atributos em Protocols são invariantes, prefira @property read-only.
+- Diferença entre Callable e Callback Protocol.
+- Como expressar argumentos keyword-only que Callable não consegue.
+- Uso de TypeVar para criar callbacks genéricos (com entradas e saídas dinâmicas).
+- Erros de tipagem comuns que o Pyright/Mypy pegam (nomes de parâmetros e tipos errados).
+- Como usar overloads em Callback Protocols para criar dispachers tipados, capazes de escolher funções diferentes dependendo dos argumentos.
+- Exemplo prático de um dispatcher para o datetime, que decide entre strptime, fromtimestamp ou o construtor de datetime baseado no tipo de entrada.
 
-Além disso, vamos colocar a mão no código e criar um FileDataManager genérico, que lê e escreve dados transformados em diferentes tipos (int, list[int], dict[str,int]) sem depender de implementação específica.
-Nesta aula da playlist completa sobre Type Hints no Python, você vai aprender:
+Essa aula é fundamental para você que quer dominar tipagem avançada e entender como callbacks podem ser modelados de forma explícita e segura.
 
-- O que é composição de Protocols e por que isso facilita aplicar ISP.
-- Como criar Protocols genéricos (Protocol[T]) para contratos mais flexíveis.
-- Limitações de @runtime_checkable e por que ele não substitui ABC.
-- Como Protocols se conectam com os princípios do SOLID na prática.
-- Exemplo real de uso: um gerenciador de arquivos tipado só com Protocols.
-
-Este vídeo é parte de uma playlist, essa é a DÉCIMA PRIMEIRA aula. Segue o link da playlist para acompanhar:
+Este vídeo é parte de uma playlist, essa é a DÉCIMA TERCEIRA aula. Segue o link da playlist para acompanhar:
 https://youtu.be/8xnIkjROj_o?si=ZayOULdLoMF74Iwg
 
 Link do repositório:
@@ -124,30 +49,27 @@ Conheça meus cursos em:
 https://www.otaviomiranda.com.br/
 
 Capítulos:
-00:00:00 - Composição de Protocols ou Herança Múltipla em protocolos
-00:02:34 - Regras para compor Protocols no Python
-00:07:40 - Sobre runtime_checkable e isinstance ou issubclass com Protocol
-00:08:50 - Os entenda TODOS os princípios do SOLID
-00:11:56 - Entenda os protocolos SupportsRead e SupportsWrite
-00:13:15 - Compondo outro Protocol unindo SupportsRead e SupportsWrite
-00:14:31 - Exemplo REAL de uso do novo Protocol Genérico SupportsReadWrite
-00:17:30 - Usando FileDataManager com uma função que precisa do Protocol
-00:18:35 - Testando nossa tipagem final no Python
-00:24:30 - E se eu HERDAR de um Protocol em classe concreta?
+00:00:00 - Introdução: por que Callable tem limites
+00:03:15 - Criando nosso primeiro Callback Protocol
+00:08:40 - Usando TypeVar para callbacks genéricos
+00:14:20 - Exemplos de erros de tipagem e runtime
+00:19:50 - Callback Protocol com overloads complexos
+00:28:00 - Exemplo real: um dispatcher tipado para o datetime
+00:34:15 - Conclusão: quando usar Callable e quando preferir Protocol
 
-#Python #TypeHints #Protocols #SOLID #Python3
+#Python #TypeHints #Callable #Protocols #Python3
 
 #-------------------------------------------------------------------------------
 Até 5 hashtags
 #-------------------------------------------------------------------------------
 
-#Python #TypeHints #Protocols #SOLID #Python3
+#Python #TypeHints #Callable #Protocols #Python3
 
 #-------------------------------------------------------------------------------
 Tags invisíveis do Youtube separadas por vírgula (máx. 500 caracteres)
 #-------------------------------------------------------------------------------
 
-python protocol,protocol python exemplo,protocol composition python,composição de protocolos python,interface segregation principle python,isp solid python,solid principles python,protocol python 3.13,python type hints avançado,tipagem estrutural python,duck typing python,abc vs protocol python,pep 544 python,python generics protocol,python typing protocol,python structural subtyping,typing python exemplos,Luiz Otávio Miranda
+python callable,callable python exemplo,python callback protocol,callback protocol python,protocol python 3.13,python typing avançado,tipagem estrutural python,python overload exemplo,dispatcher python,datetime python exemplo,typing protocol python,pep 544 python,python type hints,python generics protocol,callback typing python,python callable vs protocol,typing python exemplos,Luiz Otávio Miranda
 
 #-------------------------------------------------------------------------------
 Fim
