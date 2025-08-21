@@ -17,20 +17,20 @@ Já gravei isso:
 - Composição de Protocolos e o Interface Segregation Principle (SOLID) - Aula 11
 - Protocol x ABC + Padrão de projeto Template Method no Python - Aula 12
 - Callback Protocols no Python: do básico ao avançado - Aula 13
+- TypedDict - CHEGA de dicionários com tipagem fraca em Python - Aula 14
 
 ## O que ainda falta
 
 Montei essa ordem no chute, não sei se seria a melhor.
 
-1. **TypedDict + Required/NotRequired (+ReadOnly)**
-2. **ParamSpec & Concatenate**
-3. **Callback Protocols + ParamSpec (avanço)**
-4. **TypeGuard & TypeIs**
-5. **NewType**
-6. **Never & NoReturn**
-7. **TypeVarTuple & Unpack**
-8. **ReadOnly/Final/Override**
-9. **LiteralString (bônus curto)**
+- **ParamSpec & Concatenate**
+- **Callback Protocols + ParamSpec (avanço)**
+- **TypeGuard & TypeIs**
+- **NewType**
+- **Never & NoReturn**
+- **TypeVarTuple & Unpack**
+- **ReadOnly/Final/Override**
+- **LiteralString (bônus curto)**
 
 ## 1) ParamSpec & Concatenate — Decorators que preservam assinatura
 

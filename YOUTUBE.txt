@@ -1,3 +1,5 @@
+Você pode gerar o SEO do Youtube para mim seguindo o modelo ao final desse prompt? Os dados que estão ao final do texto são apenas um exemplo do formato que quero que você siga. Os dados da aula para qual vamos gerar o conteúdo estão nos códigos abaixo.
+
 --- 
 
 [CODIGO]
@@ -16,28 +18,27 @@ Este arquivo é TXT puro
 Título
 #-------------------------------------------------------------------------------
 
-Callback Protocols no Python: do básico ao avançado - Aula 13
+TypedDict: o FIM dos dicionários com tipagem fraca em Python? - Aula 14
 
 #-------------------------------------------------------------------------------
 Descrição
 #-------------------------------------------------------------------------------
 
-Chegou a hora de explorar os Callback Protocols, um recurso poderoso que leva a tipagem estática do Python para outro nível.
+Chega de usar dict como um container sem regras. Se você precisa de um mapeamento com chaves fixas e tipos de valores específicos, o TypedDict é a ferramenta definitiva para trazer segurança e clareza ao seu código Python.
 
-Você já conhece o Callable, mas ele tem limites: não consegue expressar nomes de parâmetros, argumentos keyword-only ou assinaturas muito complexas. É aí que entra o Callback Protocol: um contrato tipado via __call__ que te dá precisão absoluta sobre como funções e callbacks devem ser usados.
+Dicionários comuns (dict) são flexíveis, mas essa flexibilidade vem com um custo: quanto mais complexa a tipagem, mais combinações e incertezas surgem, abrindo a porta para bugs que só aparecem em runtime. O TypedDict resolve isso, permitindo que você defina um contrato claro para a estrutura dos seus dados.
 
-Nessa aula, vamos começar do simples e evoluir até casos bem avançados:
+Nessa aula, vamos aprender o TypedDict profundamente e explorar desde o básico até padrões avançados usados em outras linguagens como TypeScript:
 
-- Diferença entre Callable e Callback Protocol.
-- Como expressar argumentos keyword-only que Callable não consegue.
-- Uso de TypeVar para criar callbacks genéricos (com entradas e saídas dinâmicas).
-- Erros de tipagem comuns que o Pyright/Mypy pegam (nomes de parâmetros e tipos errados).
-- Como usar overloads em Callback Protocols para criar dispachers tipados, capazes de escolher funções diferentes dependendo dos argumentos.
-- Exemplo prático de um dispatcher para o datetime, que decide entre strptime, fromtimestamp ou o construtor de datetime baseado no tipo de entrada.
+- Por que dict falha ao modelar dados estruturados e como TypedDict resolve isso.
+- Controle fino de chaves com Required, NotRequired, ReadOnly e o parâmetro total.
+- A sintaxe funcional do TypedDict para lidar com chaves "inválidas" (com hífens, keywords do Python, etc.).
+- Como compor TypedDicts maiores usando herança, mantendo seu código limpo e modular.
+- O padrão avançado "Discriminated Union": como usar Literal types para criar uma "tag" que define a estrutura do dicionário, permitindo que o type checker entenda o contexto dinamicamente, especialmente em conjunto com match-case.
 
-Essa aula é fundamental para você que quer dominar tipagem avançada e entender como callbacks podem ser modelados de forma explícita e segura.
+Esta aula é um passo crucial para quem quer escrever código Python mais robusto, seguro e explícito, especialmente ao lidar com respostas de APIs e configurações.
 
-Este vídeo é parte de uma playlist, essa é a DÉCIMA TERCEIRA aula. Segue o link da playlist para acompanhar:
+Este vídeo é parte de uma playlist, essa é a DÉCIMA QUARTA aula. Segue o link da playlist para acompanhar:
 https://youtu.be/8xnIkjROj_o?si=ZayOULdLoMF74Iwg
 
 Link do repositório:
@@ -47,27 +48,27 @@ Conheça meus cursos em:
 https://www.otaviomiranda.com.br/
 
 Capítulos:
-00:00:00 - Introdução: por que Callable tem limites
-00:03:15 - Criando nosso primeiro Callback Protocol
-00:08:40 - Usando TypeVar para callbacks genéricos
-00:14:20 - Exemplos de erros de tipagem e runtime
-00:19:50 - Callback Protocol com overloads complexos
-00:28:00 - Exemplo real: um dispatcher tipado para o datetime
-00:34:15 - Conclusão: quando usar Callable e quando preferir Protocol
+00:00:00 - Introdução: a bagunça da tipagem em dicionários
+00:04:10 - Criando seu primeiro TypedDict (Required, NotRequired)
+00:09:25 - A sintaxe funcional para chaves com nomes "inválidos"
+00:13:50 - Compondo tipos com herança de TypedDict
+00:18:15 - Padrão avançado: Discriminated Unions
+00:25:30 - Juntando Discriminated Union com match-case
+00:31:00 - Conclusão: quando TypedDict é a escolha certa
 
-#Python #TypeHints #Callable #Protocols #Python3
+#Python #TypeHints #TypedDict #PythonBrasil #Programação
 
 #-------------------------------------------------------------------------------
 Até 5 hashtags
 #-------------------------------------------------------------------------------
 
-#Python #TypeHints #Callable #Protocols #Python3
+#Python #TypeHints #TypedDict #PythonBrasil #Programação
 
 #-------------------------------------------------------------------------------
 Tags invisíveis do Youtube separadas por vírgula (máx. 500 caracteres)
 #-------------------------------------------------------------------------------
 
-python callable,callable python exemplo,python callback protocol,callback protocol python,protocol python 3.13,python typing avançado,tipagem estrutural python,python overload exemplo,dispatcher python,datetime python exemplo,typing protocol python,pep 544 python,python type hints,python generics protocol,callback typing python,python callable vs protocol,typing python exemplos,Luiz Otávio Miranda
+python typeddict,typeddict python exemplo,python dict tipado,tipagem de dicionários python,python required notrequired,python readonly typeddict,python discriminated union,typeddict chaves inválidas,python typing avançado,python typing exemplos,python type hints,python 3.13 typing,python generics dict,pep 589 typeddict,tipagem estrutural python,luiz otavio miranda
 
 #-------------------------------------------------------------------------------
 Fim
