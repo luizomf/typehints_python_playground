@@ -18,6 +18,7 @@ Já gravei isso:
 - Protocol x ABC + Padrão de projeto Template Method no Python - Aula 12
 - Callback Protocols no Python: do básico ao avançado - Aula 13
 - TypedDict - CHEGA de dicionários com tipagem fraca em Python - Aula 14
+- Python NewType - Tipos Iguais Mas Diferentes? (Type Hints - Aula 15)
 
 ## O que ainda falta
 

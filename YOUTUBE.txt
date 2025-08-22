@@ -18,27 +18,31 @@ Este arquivo é TXT puro
 Título
 #-------------------------------------------------------------------------------
 
-TypedDict: o FIM dos dicionários com tipagem fraca em Python? - Aula 14
+Python NewType - Tipos Iguais Mas Diferentes? (Type Hints - Aula 15)
 
 #-------------------------------------------------------------------------------
 Descrição
 #-------------------------------------------------------------------------------
 
-Chega de usar dict como um container sem regras. Se você precisa de um mapeamento com chaves fixas e tipos de valores específicos, o TypedDict é a ferramenta definitiva para trazer segurança e clareza ao seu código Python.
+Já passou acidentalmente um product_id para uma função que esperava um user_id? Se ambos são int, o type checker não reclama, mas a sua lógica quebra de forma silenciosa e perigosa. Na Aula 15 do nosso curso de Type Hints, vamos resolver esse problema com uma das ferramentas mais elegantes e sutis do typing: o NewType.
 
-Dicionários comuns (dict) são flexíveis, mas essa flexibilidade vem com um custo: quanto mais complexa a tipagem, mais combinações e incertezas surgem, abrindo a porta para bugs que só aparecem em runtime. O TypedDict resolve isso, permitindo que você defina um contrato claro para a estrutura dos seus dados.
+Vamos descobrir como criar tipos nominais distintos que existem apenas para o type checker, garantindo que você nunca mais misture tipos primitivos com significados diferentes. E o melhor de tudo? Com praticamente zero impacto na performance do seu código em produção.
 
-Nessa aula, vamos aprender o TypedDict profundamente e explorar desde o básico até padrões avançados usados em outras linguagens como TypeScript:
+Esta é uma aula fundamental sobre como usar o sistema de tipos para prevenir bugs lógicos, e não apenas erros de sintaxe.
 
-- Por que dict falha ao modelar dados estruturados e como TypedDict resolve isso.
-- Controle fino de chaves com Required, NotRequired, ReadOnly e o parâmetro total.
-- A sintaxe funcional do TypedDict para lidar com chaves "inválidas" (com hífens, keywords do Python, etc.).
-- Como compor TypedDicts maiores usando herança, mantendo seu código limpo e modular.
-- O padrão avançado "Discriminated Union": como usar Literal types para criar uma "tag" que define a estrutura do dicionário, permitindo que o type checker entenda o contexto dinamicamente, especialmente em conjunto com match-case.
+Nesta aula da nossa playlist completa sobre Type Hints no Python, você vai aprender:
 
-Esta aula é um passo crucial para quem quer escrever código Python mais robusto, seguro e explícito, especialmente ao lidar com respostas de APIs e configurações.
+- O que é NewType e por que ele é superior a um TypeAlias para garantir a segurança entre tipos.
+- Como criar tipos distintos como UserId e PostId a partir de int e impedir que eles sejam misturados.
+- A "pegadinha" do NewType: o que ele realmente faz (ou NÃO faz) em tempo de execução (runtime).
+- Por que NewType se comporta como uma "função de identidade" e como isso afeta seu código.
+- Como usar typing.cast para fazer a "ponte" entre dados do mundo real (ex: um int vindo do banco de dados) e seus novos tipos seguros.
 
-Este vídeo é parte de uma playlist, essa é a DÉCIMA QUARTA aula. Segue o link da playlist para acompanhar:
+Se você quer adicionar uma camada extra de robustez e clareza semântica ao seu código, esta aula é essencial.
+
+E lembre-se: Type Hint é igual a Type Annotation (tipagem no Python).
+
+Este vídeo é parte de uma playlist, essa é a DÉCIMA QUINTA aula. Segue o link da playlist para acompanhar:
 https://youtu.be/8xnIkjROj_o?si=ZayOULdLoMF74Iwg
 
 Link do repositório:
@@ -47,28 +51,29 @@ https://github.com/luizomf/typehints_python
 Conheça meus cursos em:
 https://www.otaviomiranda.com.br/
 
-Capítulos:
-00:00:00 - Introdução: a bagunça da tipagem em dicionários
-00:04:10 - Criando seu primeiro TypedDict (Required, NotRequired)
-00:09:25 - A sintaxe funcional para chaves com nomes "inválidos"
-00:13:50 - Compondo tipos com herança de TypedDict
-00:18:15 - Padrão avançado: Discriminated Unions
-00:25:30 - Juntando Discriminated Union com match-case
-00:31:00 - Conclusão: quando TypedDict é a escolha certa
+Capítulos
+00:00:00 - Introdução ao NewType no Python
+00:01:10 - Quando usar NewType ou Classes?
+00:03:27 - Como usar NewType para tipos distintos?
+00:05:28 - NewType NÃO gera uma Classe ou Subclasse em Runtime
+00:05:28 - NewType NÃO gera uma Classe ou Subclasse em Runtime
+00:08:53 - O que o NewType NÃO É?
+00:13:38 - NewType não pode ser Generic, nem TypeAlias
+00:20:50 - Use cast para Type Cast do NewType para o tipo adequado
 
-#Python #TypeHints #TypedDict #PythonBrasil #Programação
+#Python #TypeHints #CleanCode #SoftwareArchitecture #PythonBrasil
 
 #-------------------------------------------------------------------------------
 Até 5 hashtags
 #-------------------------------------------------------------------------------
 
-#Python #TypeHints #TypedDict #PythonBrasil #Programação
+#Python #TypeHints #CleanCode #SoftwareArchitecture #PythonBrasil
 
 #-------------------------------------------------------------------------------
 Tags invisíveis do Youtube separadas por vírgula (máx. 500 caracteres)
 #-------------------------------------------------------------------------------
 
-python typeddict,typeddict python exemplo,python dict tipado,tipagem de dicionários python,python required notrequired,python readonly typeddict,python discriminated union,typeddict chaves inválidas,python typing avançado,python typing exemplos,python type hints,python 3.13 typing,python generics dict,pep 589 typeddict,tipagem estrutural python,luiz otavio miranda
+python newtype,typing.NewType,tipos nominais python,segurança de tipos,newtype vs typealias,typing.cast,evitar bugs lógicos,type hints avançado,curso de type hints,arquitetura de software,código limpo python,python para seniores,programação orientada a objetos,Luiz Otávio Miranda,POO com tipos,tipagem estática,python moderno,python tutorial,tipagem python,type checker
 
 #-------------------------------------------------------------------------------
 Fim
