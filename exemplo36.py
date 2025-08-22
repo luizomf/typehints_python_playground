@@ -16,7 +16,7 @@ from utils import cyan_print, sep_print
 ################################################################################
 
 
-# Essa dataclass vai servir de exemplo
+# Essa dataclass só serve para eu provar um ponto
 @dataclass
 class PostId:
     value: str
