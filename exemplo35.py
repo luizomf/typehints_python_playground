@@ -26,11 +26,10 @@ from utils import cyan_print, sep_print
 # de `posts` e `users` são `int`.
 #
 # Uma possível solução para isso seria criar uma classe à parte para cada ID.
-# Isso geraria um novo tipo, mas com muito bastante impacto em desempenho.
-# `TypeAlias` geraria o mesmo transtorno, pois ele é "só um atalho" para o tipo.
+# Isso geraria um novo tipo, mas com impacto de objeto em desempenho (tem overhead).
 
-# Solução: USAR `NewType`!! Com ele geramos um novo tipo para o Type Cheker,
-# mas só no campo do Tipo. Isso tem quase zero impacto em desempenho e para a
+# Solução: USAR `NewType`! Com ele geramos um novo tipo para o Type Cheker,
+# mas só no campo do tipo. Isso tem quase zero impacto em desempenho e para a
 # checagem de tipos, funciona como o tipo distinto.
 #
 # Vamos replicar meu exemplo em um código concreto já usando `NewType`.

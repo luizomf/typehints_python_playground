@@ -16,7 +16,7 @@ from utils import cyan_print, sep_print
 ################################################################################
 
 
-# Essa dataclass só serve para eu provar um ponto
+# Essa dataclass será para meu exemplo
 @dataclass
 class PostId:
     value: str
@@ -39,15 +39,15 @@ def get_post(post_id: StrPostId) -> StrPostId:
 if __name__ == "__main__":
     sep_print()
 
-    value1 = PostId("abcde")  # meu valor é do tipo correto (PostId)
-    post_id1 = StrPostId(value1)  # Isso é valido para o Type Checker (PostId)
+    post_id = PostId("abcde")  # meu valor é do tipo correto (PostId)
+    str_post_id = StrPostId(post_id)  # Isso é valido para o Type Checker (PostId)
 
     # Isso não é válido para o Type Checker e gera uma str no runtime
     this_is_a_string = "ABC"  # Perceba que o TIPO DO VALOR é str
     unexpected = StrPostId(this_is_a_string)  # Então isso gera uma str no runtime
 
-    cyan_print(f"{value1=}", type(value1))  # ✅ Runtime: PostId
-    cyan_print(f"{post_id1=}", type(post_id1))  # ✅ Runtime: PostId
+    cyan_print(f"{post_id=}", type(post_id))  # ✅ Runtime: PostId
+    cyan_print(f"{str_post_id=}", type(str_post_id))  # ✅ Runtime: PostId
     cyan_print(f"{unexpected=}", type(unexpected))  # ✅ Runtime: str
 
     sep_print()
