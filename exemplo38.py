@@ -1,57 +1,55 @@
-import json
-from pathlib import Path
-from typing import Any, TypedDict, TypeGuard, cast
+from collections.abc import Sequence
+from typing import TypeGuard, reveal_type
 
-from utils import cyan_print, red_print, sep_print
+from utils import sep_print
 
 ################################################################################
 #
-# TypeGuard - Precisamos de Guarda-costas?
+# TypeGuard no Python: O Fiscal de Tipos Que Você NÃO Conhece 🚨 (Aula 16)
 #
-# Obs.: PEP 742 e 647 falam de TypeIs e TypeGuard. Vamos focar em TypeGuard.
-# Depois TypeIs.
+# `TypeGuard[T]` e `TypeIs[T]` são usados para "Type Narrowing" (afunilamento de tipo)
+# no Python. Ambas fazem algo similar ao que já vimos com `isinstance()`, porém
+# diferem nos argumentos de entrada e no contexto.
+# `TypeGuard` funciona de uma forma contra intuitiva, enquanto `TypeIs` é bem
+# mais tranquilo de ser utilizado.
 #
-# Comparação: No TypeScript, funções que fazem Type Guard, são chamadas de
-# "Type Predicate" (ou Predicado de tipos). São funções especializadas em fazer
-# "Type Narrowing" (ou afunilamento de tipo), assim como `isinstance` ou
-# condicionais que afunilam tipos no Python.
+################################################################################
 #
-# TypeGuard[T] e TypeIs[T] são ambas funções de "Type Predicate" no Python.
-# As duas informam ao Type Checker que se seu retorno for verdadeiro, o tipo do
-# objeto avaliado é `T`.
+# Obs.: As PEPs 742 e 647 falam sobre `TypeIs` e `TypeGuard`. Nessa aula vamos
+# focar em `TypeGuard` e na próxima falamos sobre `TypeIs`.
 #
-# Como TypeGuard Funciona?
+################################################################################
 #
-# - TypeGuard[T], aceita um tipo e é usado para anotar o retorno de uma função.
-# - Se o retorno da função for verdadeiro, o tipo é afunilado para `T`.
-# - Se o retorno for falso, o tipo se mantem o mesmo recebido pela função.
+# Uma forma bem simples de entender o que `TypeGuard[T]` e `TypeIs[T]` fazem é
+# sempre imaginar cada um deles como `isinstance()` só que dentro da sua própria
+# função, com seus argumentos e retorno de tipo. Depois é só entender as
+# peculiaridades de cada um.
+#
+################################################################################
+#
+# Como `TypeGuard[T]` Funciona? (`T` sendo tipo target)
+#
+# - Usado para anotar o retorno de uma função de afunilamento de tipo (Type Predicate).
+# - Se o retorno da função for `True`, o tipo é afunilado para `T`.
+# - Se o retorno da função for `False`, explico mais abaixo em "IMPORTANTE".
+# - Dá para enviar muitos args para a função, mas o primeiro é para o tipo de entrada.
+# - O tipo do primeiro argumento pode não ter relação com `T`.
+# -` TypeGuard[T]` PODE ser genérico (`T` pode ser dinâmico).
+# - `TypeGuard[T]` aceita `Callable[..., T]` e Callback Protocol (que vimos antes).
+#
+################################################################################
+#
+# IMPORTANTE: `TypeGuard[T]` faz type "cast" permanente no caminho `True`. Por
+# isso, ao analisar o código após o bloco `if/else`, o type checker precisa
+# considerar as duas possibilidades que poderiam ter acontecido: o tipo original
+# (se o caminho `False` foi seguido) e o novo tipo `T` (se o caminho `True` foi
+# seguido). Por isso, ele cria uma Union para representar essa incerteza.
 #
 ################################################################################
 
 
-def is_str(value: object) -> TypeGuard[str]:
-    return isinstance(value, str)
-
-
-class UserDict(TypedDict):
-    firstname: str
-    lastname: str
-    age: int
-
-
-def is_valid_dict(item: object) -> TypeGuard[UserDict]:
-    if not isinstance(item, dict):
-        return False
-
-    item = cast("dict[str, Any]", item)  # isso é para o Pyright para de amolar
-
-    if not is_str(item.get("firstname")):
-        return False
-
-    if not isinstance(item.get("lastname"), str):
-        return False
-
-    return isinstance(item.get("age"), int)
+def is_list_str(values: Sequence[object]) -> TypeGuard[list[str]]:
+    return all(isinstance(v, str) for v in values)
 
 
 ################################################################################
@@ -60,17 +58,19 @@ def is_valid_dict(item: object) -> TypeGuard[UserDict]:
 if __name__ == "__main__":
     sep_print()
 
-    input_file = Path("exemplo38.json").resolve()
-    with input_file.open("r", encoding="utf8") as file:
-        user_data = json.load(file)  # Any
+    items1 = [22, "a"]
+    if is_list_str(items1):
+        reveal_type(items1)  # list[str] -> Comportamento esperando
+    else:
+        reveal_type(items1)  # list[str | int] -> Comportamento esperado
 
-    for user in user_data:
-        if is_valid_dict(user):
-            cyan_print("✅ VALID USER")
-            cyan_print(f"{user['firstname']} {user['lastname']} {user['age']}")
-        else:
-            red_print("❌ INVALID DATA ❌")
-            red_print(user.keys())
+    # Fora do bloco condicional, o type checker não faz ideia se seu tipo é
+    # `list[str]` ou `list[str | int]`. Para Ele agora existem dois caminhos
+    # possíveis: `list[str]` ou `list[str | int]`. Isso é porque o `TypeGuard`
+    # faz `cast` permanente após seu uso.
+
+    # Aqui o tipo é a alteração permanente do TypeGuard ou o seu tipo
+    reveal_type(items1)  # list[str] | list[str | int]
 
     sep_print()
 
