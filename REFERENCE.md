@@ -24,7 +24,6 @@ Já gravei isso:
 
 Montei essa ordem no chute, não sei se seria a melhor.
 
-- **NewType**
 - **TypeGuard & TypeIs**
 - **ParamSpec & Concatenate**
 - **TypeVarTuple & Unpack**

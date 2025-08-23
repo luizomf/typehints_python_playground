@@ -1,5 +1,5 @@
-from collections.abc import Sequence
-from typing import TypeIs
+from collections.abc import Mapping
+from typing import Any, TypedDict, TypeGuard
 
 from utils import cyan_print, sep_print
 
@@ -7,9 +7,12 @@ from utils import cyan_print, sep_print
 #
 # TypeIs e TypeGuard - Precisamos de Guarda-costas?
 #
-# Obs.: a PEP 724 menciona que devemos usar mais `TypeIs` em nosso dia a dia,
-# mas usar `TypeGuard` e ocasiões específicas. Isso por que ambas são para fazer
-# quase a mesma coisa.
+# Obs.: PEPs 484/742
+#
+# No TypeScript, funções que fazem Type Guard, são chamadas de "Type Predicate"
+# (ou Predicado de tipos). São funções especializadas em fazer "Type Narrowing"
+# (ou afunilamento de tipo), assim como `isinstance` ou condicionais que
+# afunilam tipos no Python.
 #
 # `TypeIs` é um tipo usado para Type Narrowing. Criamos uma função que recebe
 # pelo menos um argumento e retorna `bool`. O Type Hint de retorno da função
@@ -20,37 +23,42 @@ from utils import cyan_print, sep_print
 # trabalhando o tipo.
 # Na prática, `TypeIs[T]` deve ser consistente com `isinstance()`.
 #
+# Boas práticas
+#
+# - Nomeie como guard: is_*, has_*, looks_like_*.
+# - Seja sound: a função tem que garantir o tipo que promete. Nada de “achismo”.
+# - Use TypeIs para escalar/união simples; TypeGuard para refinar coleções/estruturas.
+# - Evite truques: se o retorno real é só bool, não declare TypeIs/TypeGuard.
+#
 ################################################################################
 
 
-def is_str(value: object) -> TypeIs[str]:
-    return isinstance(value, str)
+class HasFirstName(TypedDict):
+    firstname: str
 
 
-def is_number(value: object) -> TypeIs[float | int]:
-    return isinstance(value, float | int)
+class HasLastName(TypedDict):
+    lastname: str
+
+
+class HasFullName(HasFirstName, HasLastName, total=False): ...
+
+
+def has_full_name(user: Mapping[Any, Any]) -> TypeGuard[HasFullName]:
+    return bool(user.get("firstname") and user.get("lastname"))
 
 
 ################################################################################
 
 
-def make_str_upper(values: Sequence[object]) -> list[str]:
-    values_str: list[str] = []
-    for value in values:
-        if not is_str(value):
-            continue
-        value.upper()
-        values_str.append(value.upper())
-    return values_str
+def print_user_info(user: Mapping[Any, Any]) -> None:
+    if has_full_name(user):
+        # Tipo de user aqui é: HasFullName
+        cyan_print(user["firstname"], user["lastname"])
+        return
 
-
-def filter_numbers(values: Sequence[object]) -> list[float]:
-    new_values: list[float] = []
-    for value in values:
-        if not is_number(value):
-            continue
-        new_values.append(value)
-    return new_values
+    # Tipo de user aqui é: Mapping[Any, Any]
+    cyan_print("NOT A USER")
 
 
 ################################################################################
@@ -59,16 +67,24 @@ def filter_numbers(values: Sequence[object]) -> list[float]:
 if __name__ == "__main__":
     sep_print()
 
-    mixed = [1, "a", 2, 3, "b", 1.5, 4j + 1, "c", True]
+    user = {
+        "firstname": "Luiz",
+        "lastname": "Otávio",
+        "age": 18,
+    }
+    print_user_info(user)  # Luiz Otávio
 
-    mixed_upper = make_str_upper(mixed)
-    cyan_print(f"{mixed=}")
-    cyan_print(f"{mixed_upper=}")
+    # if has_full_name(user):
+    #     reveal_type(user)  # HasFullName
+
     sep_print()
 
-    mixed_upper = filter_numbers(mixed)
-    cyan_print(f"{mixed=}")
-    cyan_print(f"{mixed_upper=}")
+    any_dict = {
+        "lastname": "Otávio",
+        "age": 18,
+    }
+    print_user_info(any_dict)  # NOT A USER
+
     sep_print()
 
 ################################################################################
