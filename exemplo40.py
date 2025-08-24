@@ -1,77 +1,171 @@
-from collections.abc import Sequence
-from typing import TypeGuard, reveal_type
+import json
+from collections.abc import Iterable
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, TypedDict, TypeIs, cast
 
-from utils import sep_print
+from utils import cyan_print, sep_print
 
-################################################################################
-#
-# TypeGuard no Python: O Fiscal de Tipos Que Você NÃO Conhece 🚨 (Aula 16)
-#
-# `TypeGuard[T]` e `TypeIs[T]` são usados para "Type Narrowing" (afunilamento de tipo)
-# no Python. Ambas fazem algo similar ao que já vimos com `isinstance()`, porém
-# diferem nos argumentos de entrada e no contexto.
-# `TypeGuard` funciona de uma forma contra intuitiva, enquanto `TypeIs` é bem
-# mais tranquilo de ser utilizado.
-#
-################################################################################
-#
-# Obs.: As PEPs 742 e 647 falam sobre `TypeIs` e `TypeGuard`. Nessa aula vamos
-# focar em `TypeGuard` e na próxima falamos sobre `TypeIs`.
-#
-################################################################################
-#
-# Uma forma bem simples de entender o que `TypeGuard[T]` e `TypeIs[T]` fazem é
-# sempre imaginar cada um deles como `isinstance()` só que dentro da sua própria
-# função, com seus argumentos e retorno de tipo. Depois é só entender as
-# peculiaridades de cada um.
-#
-################################################################################
-#
-# Como `TypeGuard[T]` Funciona? (`T` sendo tipo target)
-#
-# - Usado para anotar o retorno de uma função de afunilamento de tipo (Type Predicate).
-# - Se o retorno da função for `True`, o tipo é afunilado para `T`.
-# - Se o retorno da função for `False`, explico mais abaixo em "IMPORTANTE".
-# - Dá para enviar muitos args para a função, mas o primeiro é para o tipo de entrada.
-# - O tipo do primeiro argumento pode não ter relação com `T`.
-# -` TypeGuard[T]` PODE ser genérico (`T` pode ser dinâmico).
-# - `TypeGuard[T]` aceita `Callable[..., T]` e Callback Protocol (que vimos antes).
-#
-################################################################################
-#
-# IMPORTANTE: `TypeGuard[T]` faz type "cast" permanente no caminho `True`. Por
-# isso, ao analisar o código após o bloco `if/else`, o type checker precisa
-# considerar as duas possibilidades que poderiam ter acontecido: o tipo original
-# (se o caminho `False` foi seguido) e o novo tipo `T` (se o caminho `True` foi
-# seguido). Por isso, ele cria uma Union para representar essa incerteza.
-#
 ################################################################################
 
+# Modela os dados que esperamos receber de fora
 
-def is_list_str(values: Sequence[object]) -> TypeGuard[list[str]]:
-    return all(isinstance(v, str) for v in values)
+
+class ProductDict(TypedDict, total=False):
+    name: str
+    price: float
+    stock: int
+    url: str
 
 
 ################################################################################
 
+# Objetos finais que queremos
+
+
+@dataclass
+class PhysicalProduct:
+    name: str
+    price: float
+    stock: int
+
+
+@dataclass
+class DigitalProduct:
+    name: str
+    price: float
+    url: str
+
+
+type Product = PhysicalProduct | DigitalProduct
+
+################################################################################
+
+# Carrega os dados... Simula dados vindos de fora
+
+
+def load_json_data() -> object:
+    database = Path("exemplo40.json").resolve()
+
+    with database.open("r", encoding="utf8") as file:
+        return json.load(file)
+
+
+################################################################################
+
+# Type Predicate Functions (Aqui que entra o TypeIs)
+
+
+def is_valid_dict(item: object) -> TypeIs[dict[str, Any]]:
+    return isinstance(item, dict)
+
+
+def is_physical_product(item: object) -> TypeIs[ProductDict]:
+    if not is_valid_dict(item):
+        return False
+
+    has_str_name = isinstance(
+        item.get("name"),
+        str,
+    )
+    has_numeric_price = isinstance(
+        item.get("price"),
+        int | float,
+    )
+    has_int_stock = isinstance(
+        item.get("stock"),
+        int,
+    )
+    has_no_url = not item.get("url")
+
+    return has_str_name and has_int_stock and has_numeric_price and has_no_url
+
+
+def is_digital_product(item: object) -> TypeIs[ProductDict]:
+    if not is_valid_dict(item):
+        return False
+
+    has_str_name = isinstance(
+        item.get("name"),
+        str,
+    )
+    has_numeric_price = isinstance(
+        item.get("price"),
+        int | float,
+    )
+    has_str_url = isinstance(
+        item.get("url"),
+        str,
+    )
+    has_no_stock = not item.get("stock")
+
+    return has_str_name and has_str_url and has_numeric_price and has_no_stock
+
+
+################################################################################
+
+# Vamos tentar processar os dados
+
+
+def parse_api_products(api_data: object) -> list[Product]:
+    # Só quero garantir que temos um iterável aqui
+    assert isinstance(api_data, Iterable), "Something went wrong with the API data"
+
+    # Esse cast foi para o Pyright parar de amolar com coisas `Unknown`,
+    # eu VOU checar.
+    api_data = cast("Iterable[dict[str, Any]]", api_data)
+    parsed_products: list[PhysicalProduct | DigitalProduct] = []
+
+    for item in api_data:
+        if is_physical_product(item):
+            product = PhysicalProduct(
+                name=item["name"],
+                price=item["price"],
+                stock=item["stock"],
+            )
+            parsed_products.append(product)
+            continue  # Guard clause: continua para o próximo loop
+
+        # COMPORTAMENTO DO PYRIGHT:
+        # O Pyright mostra intersection como mostro abaixo.
+        # Intersection (& ou E) significa tudo que tem em um tipo & no outro
+        # Lembrando que isso não é possível em Python, então PhysicalProduct
+        # Pyright: <subclass of dict[str, Any] and PhysicalProduct>
+        if is_digital_product(item):
+            product = DigitalProduct(
+                name=item["name"],
+                price=item["price"],
+                url=item["url"],
+            )
+            parsed_products.append(product)
+            continue  # Guard clause: continua para o próximo loop
+
+        # Só pra gente ver o que não entrou na lista
+        cyan_print("Not a valid product")
+        cyan_print(item)
+
+    return parsed_products
+
+
+################################################################################
+
+# Podemos testar
 
 if __name__ == "__main__":
     sep_print()
 
-    items1 = [22, "a"]
-    if is_list_str(items1):
-        reveal_type(items1)  # list[str] -> Comportamento esperando
-    else:
-        reveal_type(items1)  # list[str | int] -> Comportamento esperado
+    data = load_json_data()  # object
+    parsed_products = parse_api_products(data)  # list[Product]
 
-    # Test Change
-    # Fora do bloco condicional, o type checker não faz ideia se seu tipo é
-    # `list[str]` ou `list[str | int]`. Para Ele agora existem dois caminhos
-    # possíveis: `list[str]` ou `list[str | int]`. Isso é porque o `TypeGuard`
-    # faz `cast` permanente após seu uso.
+    sep_print()
 
-    # Aqui o tipo é a alteração permanente do TypeGuard ou o seu tipo
-    reveal_type(items1)  # list[str] | list[str | int]
+    for product in parsed_products:
+        # Ainda quer garantia?
+        if isinstance(product, PhysicalProduct):
+            cyan_print("Físico:", product.name, product.price, product.stock)
+
+        if isinstance(product, DigitalProduct):
+            cyan_print("Digital:", product.name, product.price, product.url)
 
     sep_print()
 

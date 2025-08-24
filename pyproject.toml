@@ -52,6 +52,7 @@ ignore = [
   'S101',
   'DOC201',
   'DTZ',
+  'RUF003',
 ]
 fixable = ["ALL"]
 unfixable = ['D']
