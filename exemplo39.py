@@ -8,12 +8,17 @@ from utils import cyan_print, red_print, sep_print
 #
 # TypeGuard vs TypeIs - Quando usar cada um?
 #
+# A PEP 742 afirma explicitamente (tradução livre):
+#
+# "TypeIs é o sucessor espiritual da especificação original do TypeGuard, e nós
+# esperamos que ele seja a escolha correta para a vasta maioria dos casos de uso."
+#
 ################################################################################
 #
-# - Se só me importa o happy path → TypeGuard.
-# - Se quero narrowing confiável nos dois lados → TypeIs.
-# - Se o predicado pode transformar “um nada a ver” em outro tipo → TypeGuard.
-# - Se quero consistência entre input/output → TypeIs.
+# - Se só me importa o happy path -> TypeGuard.
+# - Se quero narrowing confiável nos dois lados -> TypeIs.
+# - Se o predicado pode transformar "um nada a ver" em outro tipo -> TypeGuard.
+# - Se quero consistência entre input/output -> TypeIs.
 #
 ################################################################################
 #

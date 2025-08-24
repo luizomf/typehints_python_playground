@@ -29,26 +29,25 @@ from utils import sep_print
 # - Pode trabalhar com Callable e Callback Protocol se quiser.
 # - Pode ser usado como método de classe, basta incluir `self` (o resto é igual).
 # - NÃO LIGA COM A CONSISTÊNCIA ENTRE O TIPO DO RETORNO E O TIPO DO PRIMEIRO ARGUMENTO.
-# - SÓ FUNCIONA PARA O IF POSITIVO (VERDADEIRO). ISSO PODE SER CONTRA INTUITIVO.
+# - SÓ INFERE PARA O CAMINHO POSITIVO (VERDADEIRO).
+# - NO CAMINHO NEGATIVO (FALSO) NÃO INFERE NADA.
+# - NÃO USA INFORMAÇÕES JÁ INFERIDAS, USA O TIPO EXATO.
 #
 ################################################################################
 #
 # Como `TypeIs[T]` Funciona?
 #
-# - Anota o retorno de uma função de afunilamento de tipo (Type Narrowing Function)
+# - Anota o retorno de uma função de afunilamento de tipo (Type Narrowing Function).
 # - Deve retornar `bool` em todos os caminhos condicionais.
 # - Permite múltiplos argumentos na função; mas o primeiro é o tipo de entrada.
 # - Pode ser genérico (receber tipos parametrizados).
 # - Pode trabalhar com Callable e Callback Protocol se quiser.
 # - Pode ser usado como método de classe, basta incluir `self` (o resto é igual).
 # - O TIPO DO RETORNO DEVE SER CONSISTENTE COM O TIPO DO PRIMEIRO ARGUMENTO.
-# - FUNCIONA TANTO PARA O CAMINHO POSITIVO QUANDO PARA O NEGATIVO (if e else)
-#
-# Relaxa que vou te explicar isso, só teoria rapidinho (você não vai nem sentir):
-# - No caminho positivo, o tipo deve afunilado para A∧R (interseção entre A e R)
-# - No caminho negativo, o tipo deve afunilado para A∧¬R (A e não R)
-#
-# Na teoria dos tipos isso é MUITO USADO (é a base da tipagem):
+# - FUNCIONA TANTO PARA O CAMINHO POSITIVO QUANDO PARA O NEGATIVO (if e else).
+# - USA INFORMAÇÕES JÁ INFERIDAS PARA UM TIPO MAIS PRECISO.
+
+# Na teoria dos tipos isso é MUITO USADO (então só lembrando conjuntos):
 #
 # A∨R ou A | R - Union (Significa "OU")
 # - Representa todos os valores que pertencem a A ou a R (ou a ambos).
@@ -56,6 +55,11 @@ from utils import sep_print
 # - Representa todos os valores que pertencem a A e também a R.
 # A∧¬R ou A & !R - Interseção com complemento (Significa "E NÃO")
 # - Representa os valores que estão em A mas não em R (tipo .difference() dos sets).
+#
+# Relaxa que vou te explicar isso, só teoria rapidinho (você não vai nem sentir):
+#
+# - No caminho positivo, o tipo deve afunilado para A∧R (interseção entre A e R)
+# - No caminho negativo, o tipo deve afunilado para A∧¬R (A e não R, ou A)
 #
 ################################################################################
 
