@@ -7,6 +7,10 @@ from typing import Any, TypedDict, TypeIs, cast
 from utils import cyan_print, sep_print
 
 ################################################################################
+#
+# TypeIs - Outro exemplo mais complexo
+#
+################################################################################
 
 # Modela os dados que esperamos receber de fora
 

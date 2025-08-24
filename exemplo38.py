@@ -4,7 +4,9 @@ from utils import sep_print
 
 ################################################################################
 #
-# TypeGuard e TypeIs no Python: Você PRECISA Aprender Urgente! (Aula 16)
+# TypeGuard vs TypeIs no Python: Você PRECISA Aprender Urgente! (Aula 16)
+#
+################################################################################
 #
 # `TypeGuard[T]` e `TypeIs[T]` são utilitários de tipo do Python usados para
 # gerar funções de "Type Narrowing" definidas pelo próprio desenvolvedor.
@@ -24,7 +26,7 @@ from utils import sep_print
 # - Deve retornar `bool` em todos os caminhos condicionais.
 # - Permite múltiplos argumentos na função; mas o primeiro é o tipo de entrada.
 # - Pode ser genérico (receber tipos parametrizados).
-# - Pode trabalhar com ir no retorno de Callable e Callback Protocol se quiser.
+# - Pode trabalhar com Callable e Callback Protocol se quiser.
 # - Pode ser usado como método de classe, basta incluir `self` (o resto é igual).
 # - NÃO LIGA COM A CONSISTÊNCIA ENTRE O TIPO DO RETORNO E O TIPO DO PRIMEIRO ARGUMENTO.
 # - SÓ FUNCIONA PARA O IF POSITIVO (VERDADEIRO). ISSO PODE SER CONTRA INTUITIVO.
@@ -37,14 +39,23 @@ from utils import sep_print
 # - Deve retornar `bool` em todos os caminhos condicionais.
 # - Permite múltiplos argumentos na função; mas o primeiro é o tipo de entrada.
 # - Pode ser genérico (receber tipos parametrizados).
-# - Pode trabalhar com ir no retorno de Callable e Callback Protocol se quiser.
+# - Pode trabalhar com Callable e Callback Protocol se quiser.
 # - Pode ser usado como método de classe, basta incluir `self` (o resto é igual).
 # - O TIPO DO RETORNO DEVE SER CONSISTENTE COM O TIPO DO PRIMEIRO ARGUMENTO.
 # - FUNCIONA TANTO PARA O CAMINHO POSITIVO QUANDO PARA O NEGATIVO (if e else)
 #
-# A∨R ou até A | R - Union (Significa "OU")
-# A∧R ou até A & R - Intersection (Significa "E")
-# A∧¬R ou até A & !R -
+# Relaxa que vou te explicar isso, só teoria rapidinho (você não vai nem sentir):
+# - No caminho positivo, o tipo deve afunilado para A∧R (interseção entre A e R)
+# - No caminho negativo, o tipo deve afunilado para A∧¬R (A e não R)
+#
+# Na teoria dos tipos isso é MUITO USADO (é a base da tipagem):
+#
+# A∨R ou A | R - Union (Significa "OU")
+# - Representa todos os valores que pertencem a A ou a R (ou a ambos).
+# A∧R ou A & R - Intersection (Significa "E")
+# - Representa todos os valores que pertencem a A e também a R.
+# A∧¬R ou A & !R - Interseção com complemento (Significa "E NÃO")
+# - Representa os valores que estão em A mas não em R (tipo .difference() dos sets).
 #
 ################################################################################
 
