@@ -118,7 +118,7 @@ def parse_api_products(api_data: object) -> list[Product]:
     # Esse cast foi para o Pyright parar de amolar com coisas `Unknown`,
     # eu VOU checar.
     api_data = cast("Iterable[dict[str, Any]]", api_data)
-    parsed_products: list[PhysicalProduct | DigitalProduct] = []
+    parsed_products: list[Product] = []
 
     for item in api_data:
         if is_physical_product(item):

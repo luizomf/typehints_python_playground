@@ -1,10 +1,15 @@
-from typing import Any, TypeGuard, TypeIs, reveal_type
+from collections.abc import Sequence
+from typing import TypeGuard, TypeIs, reveal_type
 
 from utils import sep_print
 
 ################################################################################
 #
 # TypeGuard vs TypeIs no Python: Você PRECISA Aprender Urgente! (Aula 16)
+#
+# Exemplo REAL em TypeScript:
+# https://www.youtube.com/watch?v=TaMvD9UmYVI
+# https://github.com/luizomf/tests-nextjs-vitest-playwright/blob/main/src/env/configs.ts
 #
 ################################################################################
 #
@@ -64,24 +69,14 @@ from utils import sep_print
 ################################################################################
 
 
-def is_list_str_guard(values: list[object]) -> TypeGuard[list[str]]:
+def is_list_str_guard(values: Sequence[object]) -> TypeGuard[list[str]]:
     has_str_only = [isinstance(v, str) for v in values]
     return all(has_str_only)  # all retorna `True` se tudo no iterável for `Truthy`
 
 
-def is_list_str_is(values: list[object]) -> TypeIs[list[str]]:
+def is_list_str_is(values: Sequence[object]) -> TypeIs[list[str]]:
     has_str_only = [isinstance(v, str) for v in values]
     return all(has_str_only)
-
-
-def is_str_list(val: list[object], allow_empty: bool) -> TypeGuard[list[str]]:
-    if len(val) == 0:
-        return allow_empty
-    return all(isinstance(x, str) for x in val)
-
-
-def is_set_of[T](val: set[Any], type: type[T]) -> TypeGuard[set[T]]:
-    return all(isinstance(x, type) for x in val)
 
 
 ################################################################################
@@ -127,7 +122,6 @@ if __name__ == "__main__":
         # MyPy: builtins.list[builtins.str].
         reveal_type(items_is)
     else:
-        # ESTE CAMINHO NÃO É AFETADO PELO TYPEGUARD.
         # Pyright: list[str | int] - Eu gosto desse comportamento (é o mesmo tipo)
         # MyPy: Nem falou nada disso aqui
         reveal_type(items_is)
