@@ -20,37 +20,32 @@ Este arquivo é TXT puro
 Título
 #-------------------------------------------------------------------------------
 
-TypeGuard vs TypeIs no Python: Você PRECISA Aprender Urgente! (Aula 16)
+ParamSpec e Concatenate no Python: Você PRECISA DISSO Para Closures! (Aula 17)
 
 #-------------------------------------------------------------------------------
 Descrição
 #-------------------------------------------------------------------------------
 
-Você já percebeu que o isinstance() resolve muita coisa em Python, mas não ensina nada para o type checker? Pois é, chegou a hora de conhecer os verdadeiros fiscais do sistema de tipos: TypeGuard e TypeIs.
+Você já criou um decorador em Python e, de repente, percebeu que ele "engoliu" toda a tipagem da sua função original? O autocomplete para de funcionar, o type checker fica cego, e a segurança que você tinha se foi. Na Aula 17, vamos resolver esse problema de uma vez por todas com a "arma secreta" da tipagem: ParamSpec.
 
-Na Aula 16 do nosso curso de Type Hints no Python, vamos comparar lado a lado essas duas ferramentas avançadas de tipagem. Você vai entender quando usar cada uma, como funcionam em tempo de análise estática, e por que o TypeIs é considerado o sucessor natural do TypeGuard pela própria PEP 742.
+Neste vídeo, vamos mergulhar fundo no Parameter Specification (PEP 612) e na nova sintaxe da PEP 695. Você vai aprender a criar decoradores que preservam 100% da assinatura da função decorada, parâmetros, nomes, tipos, argumentos posicionais e nomeados, como se fossem um "envelope transparente".
 
-Primeiro, vamos ver como o TypeGuard permite criar funções de narrowing personalizadas, mas só no caminho positivo — o famoso “happy path” — e por que isso pode ser contraintuitivo e até perigoso fora do bloco condicional. Depois, vamos explorar o TypeIs, que traz mais segurança e consistência, funcionando nos dois caminhos (if e else) e aproveitando informações já inferidas para gerar tipos mais precisos.
-
-Nesta aula você vai ver exemplos reais com listas, JSONs e até um mini parser de produtos que transforma dados externos em objetos tipados (PhysicalProduct e DigitalProduct).
+Vamos do básico, entendendo como o ParamSpec captura uma assinatura, até o avançado, usando Concatenate para adicionar novos parâmetros e construindo um Decorator Factory do zero: um validador de tipos em runtime que funciona como um "mini Pydantic pobre" haha.
 
 Nesta aula da nossa playlist completa sobre Type Hints no Python, você vai aprender:
 
-O que são funções de Type Predicate e como criá-las.
+- O problema fundamental dos decoradores que "apagam" os tipos.
+- O que é ParamSpec e como ele "fotografa" a assinatura de uma função.
+- A receita completa para criar um decorador que preserva os tipos usando ParamSpec e TypeVar.
+- Como usar Concatenate para criar decoradores que injetam argumentos em uma função.
+- O padrão "Decorator Factory": como criar decoradores que aceitam argumentos.
+- Um exemplo prático e real: um decorador @validate_types que checa os tipos dos argumentos em runtime.
 
-Como o TypeGuard faz um narrowing parcial e pode “chutar” o tipo no else.
-
-Por que o TypeIs é mais seguro e recomendado para a maioria dos casos.
-
-Diferenças práticas no comportamento do Pyright e do MyPy.
-
-Um exemplo real validando dados de uma API e convertendo para classes dataclass seguras.
-
-Se você quer entender a fundo o que diferencia um mero isinstance() de ferramentas de tipagem avançada, essa aula é essencial.
+Se você quer parar de lutar com Callable[..., Any] e aprender a criar decoradores robustos e com tipagem perfeita, esta aula é o seu guia definitivo.
 
 E lembre-se: Type Hint é igual a Type Annotation (tipagem no Python).
 
-Este vídeo é parte de uma playlist, essa é a DÉCIMA SEXTA aula. Segue o link da playlist para acompanhar:
+Este vídeo é parte de uma playlist, essa é a DÉCIMA SÉTIMA aula. Segue o link da playlist para acompanhar:
 https://www.youtube.com/playlist?list=PLbIBj8vQhvm04EuddtleOAoEmfU9vwQlN
 
 Link do repositório:
@@ -60,28 +55,28 @@ Conheça meus cursos em:
 https://www.otaviomiranda.com.br/
 
 Capítulos
-00:00:00 - Introdução: Por que não basta isinstance()?
-00:04:10 - O que é TypeGuard e como ele funciona
-00:15:32 - O “cast permanente” e os problemas no else
-00:28:45 - O que é TypeIs e por que a PEP 742 recomenda
-00:41:00 - Diferenças práticas entre TypeGuard e TypeIs
-00:54:25 - Exemplo real: Validando JSON com TypedDict
-01:03:40 - Exemplo avançado: Parseando produtos físicos e digitais
-01:10:00 - Conclusão: Quando usar TypeGuard e quando usar TypeIs
+00:00:00 - Introdução: Por que Callable[..., R] não basta?
+00:06:10 - O que é ParamSpec e como ele funciona
+00:14:55 - Decorator ruim vs decorator bom
+00:26:20 - Preservando assinaturas com ParamSpec
+00:38:40 - O que é Concatenate e como usar em decorators
+00:50:30 - Injetando parâmetros extras com Concatenate
+01:02:15 - Criando um micro “Pydantic pobre” com Decorator Factory
+01:10:00 - Conclusão: ParamSpec e Concatenate no dia a dia
 
-#Python #TypeHints #TypeGuard #TypeIs #PythonBrasil
+#Python #TypeHints #Decorators #DesignPatterns #PythonBrasil
 
 #-------------------------------------------------------------------------------
 Até 5 hashtags
 #-------------------------------------------------------------------------------
 
-#Python #TypeHints #TypeGuard #TypeIs #PythonBrasil
+#Python #TypeHints #Decorators #DesignPatterns #PythonBrasil
 
 #-------------------------------------------------------------------------------
 Tags invisíveis do Youtube separadas por vírgula (máx. 500 caracteres)
 #-------------------------------------------------------------------------------
 
-python typeguard,typeguard,python typeis,typeis,typing.TypeGuard,typing.TypeIs,type narrowing python,type checker python,refinamento de tipo python,curso de type hints,python avançado,python typing tutorial,evitar bugs com typeguard,typeguard vs typeis,pep 647,pep 742,python moderno,luiz otavio miranda,type hints python,arquitetura limpa python
+python paramspec,typing.ParamSpec,python concatenate,typing.Concatenate,paramspec python example,decorators com tipagem,paramspec vs typevar,curso de type hints,python typing tutorial,python moderno,luiz otavio miranda,tipagem estática avançada,closures python,arquitetura limpa python,pep 612,paramspec concatenate exemplo,paramspec com decorators
 
 #-------------------------------------------------------------------------------
 Fim

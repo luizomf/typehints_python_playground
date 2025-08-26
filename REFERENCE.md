@@ -19,13 +19,13 @@ Já gravei isso:
 - Callback Protocols no Python: do básico ao avançado - Aula 13
 - TypedDict - CHEGA de dicionários com tipagem fraca em Python - Aula 14
 - Python NewType - Tipos Iguais Mas Diferentes? (Type Hints - Aula 15)
+- TypeGuard vs TypeIs no Python: Você PRECISA Aprender Urgente! (Aula 16)
+- ParamSpec e Concatenate no Python: Você PRECISA DISSO Para Closures! (Aula17)
 
 ## O que ainda falta
 
 Montei essa ordem no chute, não sei se seria a melhor.
 
-- **TypeGuard & TypeIs**
-- **ParamSpec & Concatenate**
 - **TypeVarTuple & Unpack**
 - **Callback Protocols + ParamSpec (avanço)**
 - **Never & NoReturn**
