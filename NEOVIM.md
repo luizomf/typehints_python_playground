@@ -57,7 +57,7 @@ Você sabe que dá para combinar um operador (`v`, `y`, `c`, `d`, ...) com um n�
 né? Tipo `d2l` ou `d2h`.
 
 É disso que eu estou falando, `d` (operador para deletar), `2` quantidade, `l` e `h` (sem
-comentários, estou limpo a 5 minutos).
+comentários, estou limpo já fazem 5 minutos).
 
 Mais exemplos pra gente ficar ninja juntos:
 
