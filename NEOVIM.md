@@ -136,14 +136,14 @@ Se não entendeu, a intenção era mostrar que eu selecionei a palavra "selecion
 
 Mas agora, se eu quero selecionar "Estou", não daria.
 
-Entra a Mitsuri Kanroji (o `o` se você se esqueceu). Ao pressionar `o` no modo VISUAL, o cursor
+Entra a `Mitsuri Kanroji` (o `o` se você se esqueceu). Ao pressionar `o` no modo VISUAL, o cursor
 inverte a posição permitindo que você vá na direção oposta.
 
 Outra sacada inteligente: às vezes eu seleciono algo só para inverter o cursor de posição (isso
 não é zoeira). Após inverter, desativo o modo VISUAL e ganho um cursor no outro lado do texto.
-Quero voltar do outro lado de novo? Digita `gv` para refazer a última seleção, aperta a Mitsuri
-Kanroji e você sai do outro lado. Dá para fazer um ping-pong com o cursor indo de um lado para
-outro em trechos grandes de código.
+Quero voltar do outro lado de novo? Digita `gv` para refazer a última seleção, aperta a
+`Mitsuri Kanroji` e você sai do outro lado. Dá para fazer um ping-pong com o cursor indo de um
+lado para outro em trechos grandes de código.
 
 De nada! Não precisa me agradecer, isso é só preguiça mesmo...
 
@@ -156,14 +156,16 @@ Se você não sabe disso, provavelmente vai viciar nos comandos que vou te mostr
 O `vim` tem o conceito de "Text Objects". Todo mundo fala desse termo como se fosse óbvio, mas não
 é (tanto que eu tô pesquisando agora pra fingir que sei também).
 
-A real é que "Text Object" descreve uma região do texto definida pela **lógica do texto** em vez
-de só "pra frente" ou "pra trás". (Ficou bonito? Nem eu entendi a frase, mas tá boa der ler então
-deixa aí.)
+O fato é que "Text Object" descreve uma região do texto definida pela **lógica do texto** em vez
+de só "pra frente" ou "pra trás". (Nem eu entendi essa frase, mas parece inteligente então deixa
+ela quieta aí.)
 
 Brincadeiras à parte: Text Object é basicamente um **movimento bidirecional**. Diferente de
-`hjkl`, `w`, `b`, `e`... que só andam pra um lado, os text objects entendem o contexto todo.
+`hjkl`, `w`, `b`, `e`... que só andam pra um lado, os text objects entendem o contexto todo e vão
+para os dois lados dependendo de onde está o cursor.
 
-Calma, calma, relaxa, respira... vou te explicar isso... Vamos lá...
+Calma, calma, relaxa, respira... vou te explicar isso... Você anda com pressa demais... Vamos
+lá...
 
 ---
 
@@ -176,8 +178,8 @@ Você já viu isso antes! Eu até mostrei lá em cima com `viw`.
 
 A diferença é simples:
 
-- `i` pega só o **dentro**.
-- `a` pega o **dentro e o que envolve** (espaço, aspas, parênteses).
+- `i` pega só o **dentro** (inner).
+- `a` pega o **dentro e o que envolve** ou melhor ainda **por volta** (espaço, aspas, parênteses).
 
 Nada como um exemplo pra você entender perfeitamente. Veja o texto:
 
@@ -185,16 +187,21 @@ Nada como um exemplo pra você entender perfeitamente. Veja o texto:
 Otávio Miranda "NÃO SABE" muito de VIM.
 ```
 
-Se o cursor estiver **antes das aspas** e você digitar `vi"`, ele seleciona só **NÃO SABE**. Por
-quê? Porque `i"` = `Inner "` (o que está dentro de aspas duplas).
+Se o cursor estiver **antes das aspas** e você digitar `vi"`, ele seleciona só **NÃO SABE**. Isso
+não acontece sempre, o melhor mesmo é você estar com o cursor dentro das aspas ou até sobre uma
+delas.
 
-Se usar `va"`, aí sim ele seleciona **"NÃO SABE"** com aspas e tudo. `a` = `Around` (por volta).
+Mas por quê selecionou **NÃO SABE**? Porque `i"` = `Inner "` (o que está dentro de aspas duplas).
 
-E o negócio do bidirecional? Faz um teste aí, coloca o cursor **no meio das palavras** e manda
+Se usar `va"`, aí sim ele seleciona **"NÃO SABE"** com aspas e tudo. `a` = `Around` - Ou por
+volta... o que está por volta? Tá parei...
+
+E o negócio do bidirecional? Faz o teste aí, coloca o cursor **no meio das palavras** e manda
 `vi"`. Ele não só vai pra frente como também pra trás, fechando a seleção completa.
 
-Quem faz essa mágica são justamente essas duas letras: `i` e `a`. Eles funcionam com vários
-objetos diferentes do texto:
+Quem faz essa mágica são justamente essas duas letras: `i` e `a`.
+
+Eles funcionam com vários objetos diferentes do texto:
 
 - `w` - palavra
 - `s` - sentença
@@ -206,7 +213,7 @@ objetos diferentes do texto:
 - `'` - aspas simples
 - `"` - aspas duplas
 
-Pode brincar com qualquer um desses.
+Pode brincar com qualquer um desses. Deixa eu te mostrar alguns.
 
 ---
 
@@ -230,16 +237,17 @@ Mesma ideia pras chaves. Em qualquer lugar dentro de uma delas:
 - `vi{` - só o conteúdo.
 - `va{` - conteúdo e `{}`.
 
-Testa aí e vê como a seleção fica certinha sem precisar ficar caçando caractere.
+Testa aí e vê como a seleção fica certinha sem precisar ficar caçando caractere ou contando
+palavras.
 
 ---
 
 ### Mas e o `v`? Nunca muda?
 
-Muda sim, eu só não queria te fazer apagar sem querer nada importante, então o `v` é a opção mais
-segura, entra no modo VISUAL, você enxerga o que tá fazendo e não faz nenhuma burrada.
+Muda sim. O `v` é um operador. Eu só não queria te fazer apagar nada importante, então o `v` é a
+opção mais segura. Ele só entra no modo VISUAL, seleciona e você enxerga o que tá fazendo.
 
-Mas já que você fica insistindo, pode usar qualquer um desses (tem outros também):
+Mas já que você fica aí insistindo, vou te dar alguns exemplos:
 
 - `c` - change (apaga e já entra no INSERT)
 - `d` - delete (apaga)
@@ -250,8 +258,9 @@ Mas já que você fica insistindo, pode usar qualquer um desses (tem outros tamb
 - `gU` - transforma em MAIÚSCULO
 - `zf` - define um trecho pra fold (fechar código)
 
-Tá bom, tá bom... mais exemplos, né? Bora usar o JSON de novo. Dessa vez quero fazer ele ficar
-tudo em maiúsculo.
+Tá bom, tá bom... mais exemplos, foi isso que você falou?
+
+Bora usar o JSON de novo. Dessa vez quero fazer ele GRITAR.
 
 ```json
 [
@@ -261,7 +270,9 @@ tudo em maiúsculo.
 ]
 ```
 
-Posiciona o cursor dentro dos colchetes e digita: `gUi[` E... Voilà. Aprecie O GRITO DO MEU JSON:
+Posiciona o cursor dentro dos colchetes e digita: `gUi[` E... Voilà.
+
+Aprecie O GRITO DO MEU JSON:
 
 ```json
 [
@@ -271,7 +282,7 @@ Posiciona o cursor dentro dos colchetes e digita: `gUi[` E... Voilà. Aprecie O 
 ]
 ```
 
-Eu não tenho mais brincadeirinha não, vai para o próximo trecho que to com pressa.
+Eu não tenho mais brincadeirinha não, vai para o próximo trecho que estou com pressa.
 
 ---
 
@@ -280,7 +291,7 @@ Eu não tenho mais brincadeirinha não, vai para o próximo trecho que to com pr
 Eu sei, o texto tá enorme e eu já estou ficando aflito. Mas calma, essa é a última cartada. Depois
 eu faço outro com mais comandos geniais.
 
-Às vezes, em vez de ficar jogando pac-man 🕹️ com o cursor, você quer ir **direto** naquele
+Às vezes, em vez de ficar jogando pac-man 🕹️ no seu editor, você quer ir **direto** naquele
 caractere.
 
 Pra isso você pode usar os comandos inline:
@@ -320,7 +331,9 @@ Ou seja: **seleciona tudo do começo da linha até a primeira aspa**. Faz o test
 
 ## Movendo na linha e no arquivo
 
-Promessa é dívida: último trecho. Tá acabando... estamos nos acréscimos.
+Promessa é dívida: último trecho. Tá acabando... estamos nos acréscimos e eu
+[já estou preparando as músicas](https://youtu.be/Kzuz9ihJEmM?si=AjhmIvbOEj1upjUJ) para eu voltar
+para meu código. Vamos acabar com isso:
 
 Só os básicos de navegação e "teleporte" do cursor:
 
@@ -333,14 +346,17 @@ Só os básicos de navegação e "teleporte" do cursor:
 
 Agora meu último combo genial pra você. Digita aí: `VggoGd`
 
-Me conta o que achou nos comentários.
+Foi o Gran Finale dos comandos. Me conta o que achou nos comentários.
 
 ---
 
 ## Acabouuuuuuu! Acabouuuuuu!!! Chora Galvão!!!
 
-É isso. Não tenho conclusão, não tenho call-to-action, não vendo nada, não tenho reflexão final.
-Só o silêncio constrangedor do pós-artigo.
+É isso... se você gostou desse texto,
+[da uma olhada nesse](https://youtu.be/dQw4w9WgXcQ?si=1tWQ93hqmgChsiAm) outro conteúdo gratuito.
+
+Não tenho conclusão, não tenho call-to-action, não vendo nada, não tenho reflexão final. Só o
+silêncio constrangedor deste pós-artigo.
 
 Beijos, me liga!
 
