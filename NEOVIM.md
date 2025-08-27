@@ -1,19 +1,22 @@
 # Cadê a eficiência? Pare URGENTE de usar `hjkl` no NeoVim!
 
-Esse texto não é pra você, é pra mim mesmo. Sou eu tentando ver se aprendo a parar de ficar
-jogando pac-man no NeoVim e começo a usar uns comandos mais eficientes do que `hjkl`.
+Esse texto não é pra você, é para o eu do futuro (presente, sei lá). Sou eu tentando ver se
+aprendo a parar de ficar jogando pac-man no NeoVim e começo a usar uns comandos mais eficientes do
+que `hjkl`.
 
-Você também tá jogando né? To te vendo, hein!!!
+Você também tá jogando né? To te vendo, hein!
 
 ---
 
 ## Vamos combinar, não somos mais iniciantes
 
 Se você caiu aqui sem saber nem abrir o `nvim`, parabéns, você clicou errado. Aqui eu vou assumir
-que você já não troca mais o `j` com o `k`. Só lembrando, `j` vai para cima e o `k` vai para
-baixo, OK 🤔?
+que você já não troca mais o `j` com o `k`.
 
-Mas pra não dizer que não ajudo, segue uns vídeos que podem salvar tua vida digital em algum
+**Lembrete:** Só para te lembrar, `j` vai para cima e o `k` vai para baixo, OK 🤔? Isso... faz
+isso mesmo... volta e lê de novo para não esquecer!
+
+E pra não dizer que não ajudo, segue uns vídeos que podem salvar tua vida digital em algum
 momento:
 
 - [Ambiente de Desenvolvimento Dev 2025](https://youtu.be/mhudacg8f_A?si=3EvlUS0SsOrLGmUZ)
@@ -30,10 +33,12 @@ Eu também viciei nisso aí, mas estou tentando ficar limpo graças a Deus. Já 
 usar `hjkl` porque eu estou no modo `INSERT` digitando isso... Um passo de cada vez (aí meu Deus,
 eu vou ter que salvar agora).
 
-Ahhhh, usei `o` e `Enter` (mais 30 segundos sem `hjkl`).
+`:w`, `Enter`, `o` e `Enter` e estamos nessa linha que você está lendo (mais 30 segundos sem
+`hjkl`).
 
 Vamos falar sério agora. Olha aí abaixo alguns comandos que não são nada complicados de usar e vão
-acelerar o teu pac-man para navegar no código.
+acelerar o seu pac-man para navegar no código (me conta quem você tá achando que é o pac-man que
+eu falo toda hora?).
 
 E outra, você só vai saber se eu estou zoando se testar isso aí:
 
@@ -47,14 +52,15 @@ E outra, você só vai saber se eu estou zoando se testar isso aí:
 - `gE` - final da palavra anterior ignorando pontuação
 
 Sozinho isso não parece nada demais, né não? Mas isso é por que você ainda não entrou no modo
-normal e segurou o `w` enquanto tentava ler seguindo o cursor.
+normal e segurou o `w` enquanto tentava ler o código seguindo o cursor. Se ainda não fez, faz o
+teste aí.
 
 ---
 
 ### Combinações - Vamos juntar seus dois neurônios
 
 Você sabe que dá para combinar um operador (`v`, `y`, `c`, `d`, ...) com um número para fazer algo
-né? Tipo `d2l` ou `d2h`.
+útil, né? Tipo: `d2l` ou `d2h`.
 
 É disso que eu estou falando, `d` (operador para deletar), `2` quantidade, `l` e `h` (sem
 comentários, estou limpo já fazem 5 minutos).
@@ -65,67 +71,79 @@ Mais exemplos pra gente ficar ninja juntos:
 - Quero selecionar a palavra atual e mais 3 pra trás: `viwo3b` (o que qui foi isso?)
 
 Bora entender... No primeiro, `v` abre o modo VISUAL, `4` é a contagem e `e` é o movimento.
-Simples. O ruim desse comando é que pode cortar no meio da palavra dependendo de seu cursor está.
-Se você está no meio da palavra, vai a metade da primeira palavra e o resto bonitinho.
+
+Simples, mas o ruim desse comando é que pode cortar o meio da palavra dependendo de onde seu
+cursor estiver. Se você está no meio da palavra, vai a metade da primeira palavra. O resto vai
+certinho. Isso me dá uma certa ansiedade.
 
 Mas... _"você pode sentar aqui e conversar com nós só um pouquinho,
-[meu preciosssso](https://www.valinor.com.br/6377)"_, eu te explico a magia do segundo comando:
+[meu preciosssso](https://www.valinor.com.br/6377)"_. Deixa que eu te explico a magia do segundo
+comando:
 
-- `viw` pega a palavra inteira onde o cursor está (guarda essa informação que
+- `viw` - pega a palavra inteira onde o cursor está (guarda essa informação que
   [ela vai voltar](youtube.com/watch?v=KgAZWXqK7Ac))
-- `o` inverte a posição do cursor na seleção (isso aqui é genial)
-- `3b` volta 3 palavras
+- `o` - inverte a posição do cursor na seleção (isso aqui é genial)
+- `3b` - volta 3 palavras
 
 Pronto, seleção feita. E seleção no Vim vai te permitir fazer um milhão de outras coisas, como:
 
-- `y` copia
-- `d` apaga
-- `c` apaga e já te joga no modo INSERT
+- `y` - copia
+- `d` - apaga
+- `c` - apaga e já te joga no modo INSERT
 
-Exemplo: `viwo3bd` - **apaga 4 palavras pra trás de onde o cursor está.**
+Exemplo: `viwo3bd` - isso apaga 4 palavras pra trás de onde o cursor está.
 
 Vamos ver se você está é "bão memo", digita `viwo3bd` sem olhar no teclado.
 
-Show!! tá esperando parabéns? Parabéns então...
+Show! Tá esperando os parabéns? Parabéns então...
 
 ---
 
 ### Quer precisão? Tem também
 
-Se você gosta das coisas contadinhas, onde o número bate certinho com a quantidade de palavras, a
-fórmula pode mudar. Exemplo:
+Se você gosta das coisas certinhas, onde o número bate bonitinho com a quantidade de palavras, a
+fórmula pode mudar (cadê aqueles neurônios que a gente adora?).
+
+Um exemplo:
 
 `veo3b`
 
-Explicando:
+A explicando:
 
-- `v` entra no VISUAL.
-- `e` vai pro final da palavra atual.
-- `o` inverte a seleção (já falei que isso é genial né?).
-- `3b` volta 3 palavras.
+- `v` - entra no VISUAL.
+- `e` - vai pro final da palavra atual.
+- `o` - inverte a seleção (já falei que isso é genial né?).
+- `3b` - volta 3 palavras.
 
-Em resumo da ópera, o comando seleciona 3 palavras pra trás, mesmo que você comece do meio de uma
+Em resumo, este comando seleciona 3 palavras pra trás, mesmo que você comece do meio de uma
 palavra.
 
-**`o` no modo VISUAL é lindo**
+**`o` no modo VISUAL é tipo a Mitsuri Kanroji**
 
-Sobre o `o`, você pode usar ele para tudo. A função dele é inverter o cursor da seleção.
+Eu já falei umas 3 vezes que o `o` no modo VISUAL é lindo demais, não é? A função dele é inverter
+o cursor da seleção. Entenda...
 
-Qualquer seleção que você faz o cursor vai na direção que você começou, olha a seta que desenhei
-tentando imitar uma seleção:
+Qualquer seleção que você faz, o cursor vai na direção que você começou. Olha a seta que desenhei
+tentando imitar uma seleção (ficou ó 👌):
 
 ```text
 Estou selecionando isso.
       ----------->
 ```
 
-Se eu selecionei "selecionando" começando pelo "s" e indo até o "o", e agora eu quero selecionar
-"Estou", não daria. Mas se você pressionar `o`, o cursor inverte a posição permitindo que você vá
-na direção oposta.
+Se não entendeu, a intenção era mostrar que eu selecionei a palavra "selecionando". Comecei pelo
+"s" e fui até o "o".
 
-Além disso, você também pode usar a seleção de um modo inteligente. Por exemplo, às vezes eu
-seleciono algo só para inverter o cursor de posição. Após inverter, desativo o modo visual e ganho
-um cursor no outro lado do texto.
+Mas agora, se eu quero selecionar "Estou", não daria.
+
+Entra a Mitsuri Kanroji (o `o` se você se esqueceu). Ao pressionar `o` no modo VISUAL, o cursor
+inverte a posição permitindo que você vá na direção oposta.
+
+Outra sacada inteligente: às vezes eu seleciono algo só para inverter o cursor de posição (isso
+não é zoeira). Após inverter, desativo o modo VISUAL e ganho um cursor no outro lado do texto.
+Quero voltar do outro lado de novo? Digita `gv` para refazer a última seleção, aperta a Mitsuri
+Kanroji e você sai do outro lado. Dá para fazer um ping-pong com o cursor indo de um lado para
+outro em trechos grandes de código.
 
 De nada! Não precisa me agradecer, isso é só preguiça mesmo...
 
