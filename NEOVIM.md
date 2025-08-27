@@ -1,184 +1,197 @@
-# Por que eu migrei para o NeoVim
+# TODO: CRIAR TÍTULO
 
-Resolvi anotar aqui os motivos que me fizeram trocar tantas vezes de editor até acabar no NeoVim.
-E, sinceramente, acho difícil sair daqui de novo.
-
----
-
-## Minha trajetória até o NeoVim
-
-Eu não tinha a menor intenção de voltar para o NeoVim. E digo "voltar" porque já tinha me
-aventurado com **vi** e **vim** quando trabalhava com administração de redes.
-
-Depois disso, passei a usar o **PyCharm da JetBrains**, na época em que estava escrevendo muitos
-scripts em Python. A quantidade de recursos me encantou. O PyCharm já criava o ambiente virtual,
-apontava violações da **PEP 8**, mostrava erros antes mesmo de rodar o código... Muita coisa que
-aprendi no início com Python veio direto das mensagens do PyCharm.
+TODO: Digitar uma pequena introdução para o artigo.
 
 ---
 
-### O Django apareceu, e junto vieram HTML, CSS e JS
+## Este texto não é para iniciantes com NeoVim
 
-Um belo dia, a empresa em que eu trabalhava decidiu usar **Django** para um serviço interno. Nós,
-da área de redes (no caso, eu), tivemos que aprender na marra.
+Neste tutorial, vou assumir que você já tem algum conhecimento sobre o `nvim`. Porém, vou deixar
+alguns vídeos que podem ser úteis para você sobre meu ambiente Dev e comandos Unix que são muito
+usados em conjunto com o `nvim`:
 
-Depois de algumas leituras na documentação, percebi que era mais simples do que parecia. Eu já
-estava confortável com Python, escrevendo scripts para gerenciamento de servidores, então a curva
-de aprendizado não foi tão dolorosa.
-
-Com o tempo, o projeto cresceu e comecei a usar bastante o **VS Code** para editar **JavaScript,
-HTML e CSS** (na época o jQuery reinava). Eu não pagava o PyCharm, que também não tinha suporte
-decente para HTML e CSS (se não me falha a memória). Resultado: usar dois editores pesados ao
-mesmo tempo era uma péssima ideia. Além de consumir muitos recursos, era chato ficar alternando
-entre ferramentas para montar o código.
+- [Ambiente de Desenvolvimento Dev 2025](https://youtu.be/mhudacg8f_A?si=3EvlUS0SsOrLGmUZ)
+- [Comandos Unix que todo programador deveria saber](https://youtu.be/UQBAytRBNiM?si=pOfQNmAeGxvv3vgP)
 
 ---
 
-### VS Code only
+## Pare de usar tanto `hjkl`
 
-Depois de muito apanhar tentando usar dois editores, aprendi a configurar o **VS Code** de um
-jeito que ele ficou praticamente um **PyCharm turbinado**, e até melhor em alguns pontos graças às
-extensões.
+Eu sei que você já deve saber disso, mas não existem apenas os comandos `hjkl` para mover o cursor
+no `vim` (ou `nvim` tanto faz). Eu também sofro desse mal e estou tentando mudando aos poucos.
 
-A partir daí, tudo passou para o VS Code: linguagens, testes automatizados, Code Runner com o
-botãozinho de play para rodar código... tudo mesmo. Inclusive criei um **tema próprio** para o VS
-Code que acabou bombando, já passou dos **200 mil downloads**.
+Por exemplo:
 
-### VS Code fica "pesadão"
+- `w` - move para o início da próxima palavra
+- `W` - move para o início da próxima palavra pulando pontuações
+- `b` - move para o início da palavra anterior
+- `B` - move para o início da palavra anterior pulando pontuações
+- `e` - move para o final da próxima palavra
+- `E` - move para o final da próxima palavra pulando pontuações
+- `ge` - move para o final da palavra anterior
+- `gE` - move para o final da palavra anterior pulando pontuações
 
-O problema é que o VS Code devora memória. Teve um dia em que percebi ele consumindo **10GB de
-RAM** só por estar com duas instâncias abertas (uma em cada monitor), várias abas e ainda gravando
-aula.
-
-Isso não seria tão grave se eu não precisasse rodar, ao mesmo tempo:
-
-- **Parallels** com Windows (para dar suporte aos alunos),
-- **OBS** gravando a tela,
-- e claro, o próprio VS Code.
-
-Com 32GB de RAM, a máquina simplesmente não aguentava. O mouse ficava picotando, a digitação tinha
-aquele **delay irritante de milissegundos**, e programar assim era tortura.
-
-Se você já passou por isso, sabe: é como ter alguém arranhando seu cérebro com unhas de aço. Dói
-na alma, e eu percebia esse incômodo até nas aulas que gravava.
-
-### Conheça o Zed (escrito em Rust)
-
-Você sabe como é: quando alguém fala que algo é feito em **Rust**, no fundo tá dizendo "isso aqui
-é rápido e seguro pra caramba, irmão" Pois é, pensei a mesma coisa.
-
-Na tentativa de resolver o problema do VS Code consumindo tudo, acabei caindo em algum Reddit onde
-citaram o **Zed**. Nunca tinha ouvido falar, achei que era furada, mas fui ver no YouTube o que a
-galera dizia. Adivinha? "É escrito em Rust, então é rápido e seguro". Resolvi testar.
-
-Para minha surpresa, eu estava desenvolvendo uma aplicação com **Next.js + TypeScript**, e tudo
-que precisei fazer foi instalar o Zed. Nada de caçar extensão, nada de configuração chata.
-Funcionou de primeira.
-
-O consumo? Uns **400MB de RAM** com tudo rodando. Comentei até em vídeo no meu canal que não
-usaria o Zed em tempo integral, que ficaria no VS Code fora das gravações...
-
-Mas a história começou a se repetir (PyCharm e VS Code, agora VS Code e Zed). No fim, optei pelo
-**Zed** e segui desenvolvendo nele.
+Isso não é tão impressionante, mas já aumenta MUITO a velocidade que você se move dentro do
+buffer.
 
 ---
 
-### Use Vim Motions, sem tirar as mãos do teclado
+### Combinações
 
-No fim de um dia de trabalho eu sempre sentia dores no ombro direito. Já desconfiava que era por
-ficar indo e voltando do teclado para o mouse (spoiler: era exatamente isso). Quando descobri que
-o **Zed** já vinha com **Vim Motions** por padrão, resolvi testar.
+Agora, se o trecho anterior ainda não te impressionou, vamos combinar o que vimos com outras
+coisas.
 
-Configurei, comecei a usar e… **MEU DEUS, SOCORRO!**
+- Quero selecionar 4 palavras para frente: `v4e`
+- Quero selecionar a palavra abaixo do cursor mais 3 palavras para trás: `viwo3b`
 
-No primeiro dia eu parecia alguém que nunca tinha visto um teclado. Tentava digitar no _NORMAL
-MODE_, confundia seta pra cima com seta pra baixo, usava o mouse o tempo todo... mas insisti.
+No primeiro comando, `v` entra no modo `VISUAL`, `4` conta o que vier na frente, no caso `e` (da
+lista anterior). O problema desse comando é que o ponto de partida é onde o cursor está, isso pode
+pegar metade de palavras.
 
-A primeira aula que tentei gravar com Vim Motions foi um desastre. Eu não conseguia **falar e
-digitar ao mesmo tempo**. Antes, era natural: eu escrevia o código e já ia explicando. Mas agora
-ficava pensando: "pra copiar isso eu uso `dd`, `yip` ou `cc`?". Preciso raciocinar antes de cada
-comando.
+O segundo comando já une um monte de coisa. O `viw` entra no modo visual e seleciona a palavra
+abaixo do cursor de ponta a ponta. Já o `o` inverte a posição do cursor na seleção, se está no
+final vai para o início e vice versa. Por fim, `3b` move o cursor para o início da palavra
+anterior 3 vezes (3 palavras para trás).
 
-Com o tempo fui melhorando, mas a memória muscular me sabotava. Bastava alguns segundos de
-distração e lá iam os dedinhos para as teclas erradas, a mão para o mouse, e eu me perguntando por
-que nada aparecia na tela.
+O mais interessante desses comandos é que ambos te deixam com uma seleção, então `y` (yank) copia,
+`d` apaga, `c` apaga e entra no modo de edição... Enfim, permite você fazer o que quiser com a
+seleção. Por exemplo, `viwo3bd` apaga 4 palavras para trás (a que está abaixo do cursor e 3 para
+trás).
 
-Isso durou pelo menos um mês. Mas nesse meio tempo aconteceu algo estranho: **eu queria digitar
-mais!** Comecei a ver tutoriais de Vim Motions no YouTube e toda vez que alguém digitava eu sentia
-vontade de praticar também.
+Se você quer mais precisão, onde o número bate certinho com a quantidade de palavras, é só mudar a
+fórmula. Olha lá na lista anterior e veja o que isso aqui faz: `veo3b`?
 
-Solução? Voltei a escrever no meu blog em **Markdown** usando Zed + Vim Motions. Isso me ajudou a
-ganhar precisão.
-
-Com o tempo fiquei confortável. Só que percebi uma coisa: quase todos os tutoriais que eu assistia
-eram de **NeoVim**. Eu só replicava no Zed o que via os outros fazendo no NeoVim.
-
----
-
-### Já sei Vim Motions, que venha o NeoVim! Só que não...
-
-Aqui caberia um meme:
-
-**Expectativa**: "Dominei hjkl, tô pronto pro NeoVim". **Realidade**: "NeoVim é um editor de
-terminal, fio!".
-
-E sim, o NeoVim é como o **Nano**, **Vi** ou **Vim**: roda direto no terminal. Isso significa:
-nada de explorador de arquivos, botõezinhos ou interface bonitinha. O que você tem são buffers e
-um monte de `~` na tela.
-
-Na primeira vez que instalei o NeoVim, nem consegui abrir. Eu não sabia que ele era um editor de
-terminal, fiquei procurando ícone no menu de aplicativos do sistema. Quando percebi, desisti na
-hora. Achei que seria só instalar, abrir e configurar. Mágica.
-
-Voltei correndo pro Zed, de rabo entre as pernas.
+Se você está no meio de uma palavra, `v` entra no `VISUAL`, `e` vai para o final da palavra atual,
+`o` inverte o cursor da seleção, `3b` vai para o início das 3 palavras anteriores (atual mais
+duas). Em resumo, `veo3b` seleciona 3 palavras para trás a partir do meio a palavra atual.
 
 ---
 
-### Segunda tentativa: agora vai! (Só que não…)
+## Text Objects? Como uso isso?
 
-Na segunda tentativa fui atrás de tutoriais para configurar. Achei um vídeo e comecei a seguir.
-Mas logo vi a realidade: para colocar um **LSP** funcionando, precisava escrever dezenas de linhas
-de Lua, baixar meio mundo de repositórios no GitHub... e mesmo assim não havia garantia de ficar
-igual ao tutorial, porque cada pessoa gosta de uma configuração diferente.
+Se você não sabe disso, provavelmente vai viciar nos comandos que vou te mostrar nessa parte. Bora
+lá!
 
-Resultado: pensei comigo mesmo: _"se for assim para cada linguagem, vou viver configurando o
-editor e meu código nunca vai sair do papel"_.
+O `vim` tem o conceito de "Text Objects". Todo mundo lança esse termo como se fosse algo
+extremamente óbvio, e claramente não é (já que estou pesquisando isso nesse exato momento para te
+falar).
 
-E desisti de novo.
+O fato é que "Text Object" é um conceito que descreve uma região do texto definida de acordo com a
+lógica do texto em questão! (pareceu que sei do que estou falando? Nem eu entendi a frase!)
 
----
-
-### Terceira vez: aqui foi um charme!
-
-O problema das minhas primeiras tentativas é que eu queria configurar tudo na mão, e isso só
-funciona se você já entende bem o que está fazendo.
-
-Um belo dia, vagando pela internet, encontrei um projeto chamado **lazy.nvim**, do Folke. É um
-**gerenciador de plugins para NeoVim**. Resolvi instalar e testar. Pelo nome "lazy", já parecia
-exatamente o que eu precisava.
-
-O que me encantou foi a simplicidade: uma configuração mínima no `init.lua`, e a partir daí basta
-criar arquivos `.lua` separados para cada coisa. No meu primeiro teste, criei um `personal.lua` e
-coloquei minhas configs antigas, alguns keymaps, até um `print` em Lua só pra brincar. Fechei,
-abri o NeoVim e... **BOOM!** Tudo funcionando de primeira, sem erros.
-
-Isso me animou demais. Desde então, fui montando minha própria configuração do NeoVim com o
-**lazy.nvim**, e sigo assim até hoje.
+Brincadeiras à parte, no meu entendimento, Text Object indica uma ação que pode ser feita de forma
+bidirecional ao invés de apenas em uma direção, como é o caso de `hjkl` ou até os `w`, `b`, `e`
+... que vimos antes. Calma, calma... Antes de me xingar, eu já vou fazer você entender isso,
+continua lendo que estamos indo há algum lugar com isso...
 
 ---
 
-## Resumo da ópera
+### Inner (`i`) ou Around (`a`)?
 
-Minha chegada ao NeoVim não foi das melhores, mas também não foi forçada. Acho que foi destino: um
-editor pesado e uma dor no ombro me empurraram direto para ele, e aqui estou.
+Você já viu isso antes! Eu até te mostrei um exemplo na parte anterior, com `viw`.
 
-Aliás, este texto está sendo escrito em **Markdown no NeoVim**. Inclusive, de acordo com o
-contador de palavras que eu mesmo programei em Lua só porque sim, já estamos em torno de 1300
-palavras (agora um pouco mais).
+O `iw` é um Text Object e significa `Inner Word`, mas também poderia ser `vaw`. Nesse caso, o `aw`
+também é um Text Object que significa `Around Word`. A diferença entre `i` e `a` está na forma de
+seleção. O `i` envolve o que está **DENTRO** e o `a` também envolve o que está **POR VOLTA**.
 
-Se você quiser usar o NeoVim por algum motivo específico, já aviso: o começo é difícil. Mas se
-acontecer com você o que aconteceu comigo, logo vai perceber que programar (ou até escrever
-textos) nele é uma experiência viciante. Faz o teste.
+Nada como um exemplo para tirar essa sua dúvida... Eu te falei que ia fazer você entender,
+confia...
 
-Obs.: eu não sei absolutamente tudo sobre NeoVim. Mas sei que gosto de usar. E isso, pra mim, já
-basta.
+Considere o texto:
+
+```text
+Otávio Miranda "NÃO SABE" muito de VIM.
+```
+
+Se eu colocar o meu cursor em qualquer lugar dessa frase ANTES das aspas duplas, posso pressionar
+`vi"` e ele vai selecionar as palavras **NÃO SABE**. Como eu estava te explicando antes, o `iw`
+significa `Inner Word`, consequentemente o `i"` significa `Inner "` (dentro de aspas duplas).
+
+Quando digitei `vi"` ele simplesmente tentou encontrar o primeiro par de aspas duplas para frente
+do meu cursor e selecionou o que estava dentro delas.
+
+Se eu usar `va"`, o que vai acontecer é que ele vai selecionar `Around "` e isso indica que as
+aspas também devem ser incluídas, não apenas o que está dentro delas. As aspas estão **POR VOLTA**
+do que você está selecionando. Entendeu?
+
+E o negócio de bidirecional? Bom, coloque seu cursor entre as duas palavras e pressione `vi"`.
+Viu? Seleção para trás e para frente!
+
+Quem faz a mágica aqui são essas duas letras: `i` e `a`. Elas podem ser combinadas com várias
+coisas para fazer movimentos bidirecionais no texto. Isso significa que eu posso estar em qualquer
+lugar do texto que estou tentando selecionar que o `nvim` vai usar tudo para trás e para frente do
+meu cursor para fazer a seleção completa. É por isso que `viw` seleciona uma palavra inteira
+independente de onde estiver seu cursor naquela palavra.
+
+Alguns exemplos que podem ser combinados com `i` ou `a` são:
+
+- `w` - Word (palavra)
+- `s` - Sentence (frase)
+- `p` - Paragraph (Parágrafo)
+- `t` - Tags
+- `(` ou `b` - Dentro de parênteses
+- `[` - Dentro de colchetes
+- `{` - Dentro de chaves
+- `'` - Dentro de aspas simples
+- `"` - Dentro de aspas duplas
+
+Pode escolher qualquer um dos caracteres acima e fazer o teste.
+
+Por exemplo, olha esse `JSON`:
+
+```json
+[
+  { "nome": "Otávio", "sobrenome": "Miranda" },
+  { "nome": "Ana", "sobrenome": "Maria" },
+  { "nome": "Xuxa", "sobrenome": "Silva" }
+]
+```
+
+Com o seu cursor em QUALQUER lugar dentro dos colchetes, ao pressionar `vi[`, o conteúdo inteiro
+**DENTRO** deles será selecionado. Se pressionar `va[`, além do conteúdo, ambos `[` e `]` também
+serão incluídos na seleção.
+
+Também temos as chaves no JSON. E é a mesma ideia, de qualquer lugar por dentro de qualquer chave,
+ao digitar `vi{`, on conteúdo inteiro daquela chave específica será selecionado. Enfim, testa
+aí... Acho que já entendemos isso!
+
+---
+
+### Mas e o `v`? Nunca muda?
+
+Muda sim, é que eu não queria te fazer editar ou apagar algum texto, então a opção mais segura é
+`v`, que trabalha na seleção. Além disso é mais fácil de ver o que está acontecendo.
+
+Mas já que você fica insistindo aí, você pode usar qualquer um desses:
+
+- `c` - change (apaga e entra no modo de edição)
+- `d` - delete (apaga)
+- `y` - yank (copia o texto para o registro)
+- `~` - Faz toggle entre maiúsculo e minúsculo
+- `g~` - Faz toggle entre maiúsculo e minúsculo
+- `gu` - Transforma em minúsculo
+- `gU` - Transforma em maiúsculo
+- `zf` - Define um trecho para fazer fold
+
+Ok, ok... mais exemplos... Vamos usar o JSON e dessa vez faz aí comigo. Vamos tentar com `gU`.
+Quero tudo dentro dos colchetes em maiúsculo.
+
+```json
+[
+  { "nome": "Otávio", "sobrenome": "Miranda" },
+  { "nome": "Ana", "sobrenome": "Maria" },
+  { "nome": "Xuxa", "sobrenome": "Silva" }
+]
+```
+
+Posicione seu cursor entre os colchetes e pressione `gUi[`, e... Voilà...
+
+```json
+[
+  { "NOME": "OTÁVIO", "SOBRENOME": "MIRANDA" },
+  { "NOME": "ANA", "SOBRENOME": "MARIA" },
+  { "NOME": "XUXA", "SOBRENOME": "SILVA" }
+]
+```
+
+---
