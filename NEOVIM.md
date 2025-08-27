@@ -46,7 +46,7 @@ E outra, você só vai saber se eu estou zoando se testar isso aí:
 - `ge` - final da palavra anterior
 - `gE` - final da palavra anterior ignorando pontuação
 
-Sozinho isso não parece nada demais, né não? Mas isso é por que você ainda não estou no modo
+Sozinho isso não parece nada demais, né não? Mas isso é por que você ainda não entrou no modo
 normal e segurou o `w` enquanto tentava ler seguindo o cursor.
 
 ---
