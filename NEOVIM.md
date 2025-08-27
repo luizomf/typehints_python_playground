@@ -1,14 +1,20 @@
-# TODO: CRIAR TÍTULO
+# Cadê a eficiência? Pare URGENTE de usar `hjkl` no NeoVim!
 
-TODO: Digitar uma pequena introdução para o artigo.
+Esse texto não é pra você, é pra mim mesmo. Sou eu tentando ver se aprendo a parar de ficar
+jogando pac-man no NeoVim e começo a usar uns comandos mais eficientes do que `hjkl`.
+
+Você também tá jogando né? To te vendo, hein!!!
 
 ---
 
-## Este texto não é para iniciantes com NeoVim
+## Vamos combinar, não somos mais iniciantes
 
-Neste tutorial, vou assumir que você já tem algum conhecimento sobre o `nvim`. Porém, vou deixar
-alguns vídeos que podem ser úteis para você sobre meu ambiente Dev e comandos Unix que são muito
-usados em conjunto com o `nvim`:
+Se você caiu aqui sem saber nem abrir o `nvim`, parabéns, você clicou errado. Aqui eu vou assumir
+que você já não troca mais o `j` com o `k`. Só lembrando, `j` vai para cima e o `k` vai para
+baixo, OK 🤔?
+
+Mas pra não dizer que não ajudo, segue uns vídeos que podem salvar tua vida digital em algum
+momento:
 
 - [Ambiente de Desenvolvimento Dev 2025](https://youtu.be/mhudacg8f_A?si=3EvlUS0SsOrLGmUZ)
 - [Comandos Unix que todo programador deveria saber](https://youtu.be/UQBAytRBNiM?si=pOfQNmAeGxvv3vgP)
@@ -17,127 +23,178 @@ usados em conjunto com o `nvim`:
 
 ## Pare de usar tanto `hjkl`
 
-Eu sei que você já deve saber disso, mas não existem apenas os comandos `hjkl` para mover o cursor
-no `vim` (ou `nvim` tanto faz). Eu também sofro desse mal e estou tentando mudando aos poucos.
+Sim, eu sei. Você já ouviu isso, mas precisa entrar na tua cabeça: **não existem só `hjkl` no
+Vim.**
 
-Por exemplo:
+Eu também viciei nisso aí, mas estou tentando ficar limpo graças a Deus. Já foram 2 segundos sem
+usar `hjkl` porque eu estou no modo `INSERT` digitando isso... Um passo de cada vez (aí meu Deus,
+eu vou ter que salvar agora).
 
-- `w` - move para o início da próxima palavra
-- `W` - move para o início da próxima palavra pulando pontuações
-- `b` - move para o início da palavra anterior
-- `B` - move para o início da palavra anterior pulando pontuações
-- `e` - move para o final da próxima palavra
-- `E` - move para o final da próxima palavra pulando pontuações
-- `ge` - move para o final da palavra anterior
-- `gE` - move para o final da palavra anterior pulando pontuações
+Ahhhh, usei `o` e `Enter` (mais 30 segundos sem `hjkl`).
 
-Isso não é tão impressionante, mas já aumenta MUITO a velocidade que você se move dentro do
-buffer.
+Vamos falar sério agora. Olha aí abaixo alguns comandos que não são nada complicados de usar e vão
+acelerar o teu pac-man para navegar no código.
+
+E outra, você só vai saber se eu estou zoando se testar isso aí:
+
+- `w` - vai pro início da próxima palavra
+- `W` - vai pro início da próxima palavra ignorando pontuação
+- `b` - volta pro início da palavra anterior
+- `B` - idem, mas ignorando pontuação
+- `e` - vai pro final da próxima palavra
+- `E` - idem, mas ignorando pontuação
+- `ge` - final da palavra anterior
+- `gE` - final da palavra anterior ignorando pontuação
+
+Sozinho isso não parece nada demais, né não? Mas isso é por que você ainda não estou no modo
+normal e segurou o `w` enquanto tentava ler seguindo o cursor.
 
 ---
 
-### Combinações
+### Combinações - Vamos juntar seus dois neurônios
 
-Agora, se o trecho anterior ainda não te impressionou, vamos combinar o que vimos com outras
-coisas.
+Você sabe que dá para combinar um operador (`v`, `y`, `c`, `d`, ...) com um número para fazer algo
+né? Tipo `d2l` ou `d2h`.
 
-- Quero selecionar 4 palavras para frente: `v4e`
-- Quero selecionar a palavra abaixo do cursor mais 3 palavras para trás: `viwo3b`
+É disso que eu estou falando, `d` (operador para deletar), `2` quantidade, `l` e `h` (sem
+comentários, estou limpo a 5 minutos).
 
-No primeiro comando, `v` entra no modo `VISUAL`, `4` conta o que vier na frente, no caso `e` (da
-lista anterior). O problema desse comando é que o ponto de partida é onde o cursor está, isso pode
-pegar metade de palavras.
+Mais exemplos pra gente ficar ninja juntos:
 
-O segundo comando já une um monte de coisa. O `viw` entra no modo visual e seleciona a palavra
-abaixo do cursor de ponta a ponta. Já o `o` inverte a posição do cursor na seleção, se está no
-final vai para o início e vice versa. Por fim, `3b` move o cursor para o início da palavra
-anterior 3 vezes (3 palavras para trás).
+- Quero selecionar 4 palavras pra frente: `v4e` (simples, fala verdade?)
+- Quero selecionar a palavra atual e mais 3 pra trás: `viwo3b` (o que qui foi isso?)
 
-O mais interessante desses comandos é que ambos te deixam com uma seleção, então `y` (yank) copia,
-`d` apaga, `c` apaga e entra no modo de edição... Enfim, permite você fazer o que quiser com a
-seleção. Por exemplo, `viwo3bd` apaga 4 palavras para trás (a que está abaixo do cursor e 3 para
-trás).
+Bora entender... No primeiro, `v` abre o modo VISUAL, `4` é a contagem e `e` é o movimento.
+Simples. O ruim desse comando é que pode cortar no meio da palavra dependendo de seu cursor está.
+Se você está no meio da palavra, vai a metade da primeira palavra e o resto bonitinho.
 
-Se você quer mais precisão, onde o número bate certinho com a quantidade de palavras, é só mudar a
-fórmula. Olha lá na lista anterior e veja o que isso aqui faz: `veo3b`?
+Mas... _"você pode sentar aqui e conversar com nós só um pouquinho,
+[meu preciosssso](https://www.valinor.com.br/6377)"_, eu te explico a magia do segundo comando:
 
-Se você está no meio de uma palavra, `v` entra no `VISUAL`, `e` vai para o final da palavra atual,
-`o` inverte o cursor da seleção, `3b` vai para o início das 3 palavras anteriores (atual mais
-duas). Em resumo, `veo3b` seleciona 3 palavras para trás a partir do meio a palavra atual.
+- `viw` pega a palavra inteira onde o cursor está (guarda essa informação que
+  [ela vai voltar](youtube.com/watch?v=KgAZWXqK7Ac))
+- `o` inverte a posição do cursor na seleção (isso aqui é genial)
+- `3b` volta 3 palavras
+
+Pronto, seleção feita. E seleção no Vim vai te permitir fazer um milhão de outras coisas, como:
+
+- `y` copia
+- `d` apaga
+- `c` apaga e já te joga no modo INSERT
+
+Exemplo: `viwo3bd` - **apaga 4 palavras pra trás de onde o cursor está.**
+
+Vamos ver se você está é "bão memo", digita `viwo3bd` sem olhar no teclado.
+
+Show!! tá esperando parabéns? Parabéns então...
+
+---
+
+### Quer precisão? Tem também
+
+Se você gosta das coisas contadinhas, onde o número bate certinho com a quantidade de palavras, a
+fórmula pode mudar. Exemplo:
+
+`veo3b`
+
+Explicando:
+
+- `v` entra no VISUAL.
+- `e` vai pro final da palavra atual.
+- `o` inverte a seleção (já falei que isso é genial né?).
+- `3b` volta 3 palavras.
+
+Em resumo da ópera, o comando seleciona 3 palavras pra trás, mesmo que você comece do meio de uma
+palavra.
+
+**`o` no modo VISUAL é lindo**
+
+Sobre o `o`, você pode usar ele para tudo. A função dele é inverter o cursor da seleção.
+
+Qualquer seleção que você faz o cursor vai na direção que você começou, olha a seta que desenhei
+tentando imitar uma seleção:
+
+```text
+Estou selecionando isso.
+      ----------->
+```
+
+Se eu selecionei "selecionando" começando pelo "s" e indo até o "o", e agora eu quero selecionar
+"Estou", não daria. Mas se você pressionar `o`, o cursor inverte a posição permitindo que você vá
+na direção oposta.
+
+Além disso, você também pode usar a seleção de um modo inteligente. Por exemplo, às vezes eu
+seleciono algo só para inverter o cursor de posição. Após inverter, desativo o modo visual e ganho
+um cursor no outro lado do texto.
+
+De nada! Não precisa me agradecer, isso é só preguiça mesmo...
 
 ---
 
 ## Text Objects? Como uso isso?
 
-Se você não sabe disso, provavelmente vai viciar nos comandos que vou te mostrar nessa parte. Bora
-lá!
+Se você não sabe disso, provavelmente vai viciar nos comandos que vou te mostrar agora. Bora lá!
 
-O `vim` tem o conceito de "Text Objects". Todo mundo lança esse termo como se fosse algo
-extremamente óbvio, e claramente não é (já que estou pesquisando isso nesse exato momento para te
-falar).
+O `vim` tem o conceito de "Text Objects". Todo mundo fala desse termo como se fosse óbvio, mas não
+é (tanto que eu tô pesquisando agora pra fingir que sei também).
 
-O fato é que "Text Object" é um conceito que descreve uma região do texto definida de acordo com a
-lógica do texto em questão! (pareceu que sei do que estou falando? Nem eu entendi a frase!)
+A real é que "Text Object" descreve uma região do texto definida pela **lógica do texto** em vez
+de só "pra frente" ou "pra trás". (Ficou bonito? Nem eu entendi a frase, mas tá boa der ler então
+deixa aí.)
 
-Brincadeiras à parte, no meu entendimento, Text Object indica uma ação que pode ser feita de forma
-bidirecional ao invés de apenas em uma direção, como é o caso de `hjkl` ou até os `w`, `b`, `e`
-... que vimos antes. Calma, calma... Antes de me xingar, eu já vou fazer você entender isso,
-continua lendo que estamos indo há algum lugar com isso...
+Brincadeiras à parte: Text Object é basicamente um **movimento bidirecional**. Diferente de
+`hjkl`, `w`, `b`, `e`... que só andam pra um lado, os text objects entendem o contexto todo.
+
+Calma, calma, relaxa, respira... vou te explicar isso... Vamos lá...
 
 ---
 
 ### Inner (`i`) ou Around (`a`)?
 
-Você já viu isso antes! Eu até te mostrei um exemplo na parte anterior, com `viw`.
+Você já viu isso antes! Eu até mostrei lá em cima com `viw`.
 
-O `iw` é um Text Object e significa `Inner Word`, mas também poderia ser `vaw`. Nesse caso, o `aw`
-também é um Text Object que significa `Around Word`. A diferença entre `i` e `a` está na forma de
-seleção. O `i` envolve o que está **DENTRO** e o `a` também envolve o que está **POR VOLTA**.
+- `iw` = **Inner Word**
+- `aw` = **Around Word**
 
-Nada como um exemplo para tirar essa sua dúvida... Eu te falei que ia fazer você entender,
-confia...
+A diferença é simples:
 
-Considere o texto:
+- `i` pega só o **dentro**.
+- `a` pega o **dentro e o que envolve** (espaço, aspas, parênteses).
+
+Nada como um exemplo pra você entender perfeitamente. Veja o texto:
 
 ```text
 Otávio Miranda "NÃO SABE" muito de VIM.
 ```
 
-Se eu colocar o meu cursor em qualquer lugar dessa frase ANTES das aspas duplas, posso pressionar
-`vi"` e ele vai selecionar as palavras **NÃO SABE**. Como eu estava te explicando antes, o `iw`
-significa `Inner Word`, consequentemente o `i"` significa `Inner "` (dentro de aspas duplas).
+Se o cursor estiver **antes das aspas** e você digitar `vi"`, ele seleciona só **NÃO SABE**. Por
+quê? Porque `i"` = `Inner "` (o que está dentro de aspas duplas).
 
-Quando digitei `vi"` ele simplesmente tentou encontrar o primeiro par de aspas duplas para frente
-do meu cursor e selecionou o que estava dentro delas.
+Se usar `va"`, aí sim ele seleciona **"NÃO SABE"** com aspas e tudo. `a` = `Around` (por volta).
 
-Se eu usar `va"`, o que vai acontecer é que ele vai selecionar `Around "` e isso indica que as
-aspas também devem ser incluídas, não apenas o que está dentro delas. As aspas estão **POR VOLTA**
-do que você está selecionando. Entendeu?
+E o negócio do bidirecional? Faz um teste aí, coloca o cursor **no meio das palavras** e manda
+`vi"`. Ele não só vai pra frente como também pra trás, fechando a seleção completa.
 
-E o negócio de bidirecional? Bom, coloque seu cursor entre as duas palavras e pressione `vi"`.
-Viu? Seleção para trás e para frente!
+Quem faz essa mágica são justamente essas duas letras: `i` e `a`. Eles funcionam com vários
+objetos diferentes do texto:
 
-Quem faz a mágica aqui são essas duas letras: `i` e `a`. Elas podem ser combinadas com várias
-coisas para fazer movimentos bidirecionais no texto. Isso significa que eu posso estar em qualquer
-lugar do texto que estou tentando selecionar que o `nvim` vai usar tudo para trás e para frente do
-meu cursor para fazer a seleção completa. É por isso que `viw` seleciona uma palavra inteira
-independente de onde estiver seu cursor naquela palavra.
+- `w` - palavra
+- `s` - sentença
+- `p` - parágrafo
+- `t` - tags
+- `(` ou `b` - parênteses
+- `[` - colchetes
+- `{` - chaves
+- `'` - aspas simples
+- `"` - aspas duplas
 
-Alguns exemplos que podem ser combinados com `i` ou `a` são:
+Pode brincar com qualquer um desses.
 
-- `w` - Word (palavra)
-- `s` - Sentence (frase)
-- `p` - Paragraph (Parágrafo)
-- `t` - Tags
-- `(` ou `b` - Dentro de parênteses
-- `[` - Dentro de colchetes
-- `{` - Dentro de chaves
-- `'` - Dentro de aspas simples
-- `"` - Dentro de aspas duplas
+---
 
-Pode escolher qualquer um dos caracteres acima e fazer o teste.
+### Exemplo Prático com JSON
 
-Por exemplo, olha esse `JSON`:
+Da uma boa olhada nesse JSON:
 
 ```json
 [
@@ -147,34 +204,36 @@ Por exemplo, olha esse `JSON`:
 ]
 ```
 
-Com o seu cursor em QUALQUER lugar dentro dos colchetes, ao pressionar `vi[`, o conteúdo inteiro
-**DENTRO** deles será selecionado. Se pressionar `va[`, além do conteúdo, ambos `[` e `]` também
-serão incluídos na seleção.
+Se o cursor estiver **dentro dos colchetes**, digita `vi[` e ele seleciona só o conteúdo entre `[`
+e `]`. Já com `va[`, ele seleciona conteúdo e os colchetes.
 
-Também temos as chaves no JSON. E é a mesma ideia, de qualquer lugar por dentro de qualquer chave,
-ao digitar `vi{`, on conteúdo inteiro daquela chave específica será selecionado. Enfim, testa
-aí... Acho que já entendemos isso!
+Mesma ideia pras chaves. Em qualquer lugar dentro de uma delas:
+
+- `vi{` - só o conteúdo.
+- `va{` - conteúdo e `{}`.
+
+Testa aí e vê como a seleção fica certinha sem precisar ficar caçando caractere.
 
 ---
 
 ### Mas e o `v`? Nunca muda?
 
-Muda sim, é que eu não queria te fazer editar ou apagar algum texto, então a opção mais segura é
-`v`, que trabalha na seleção. Além disso é mais fácil de ver o que está acontecendo.
+Muda sim, eu só não queria te fazer apagar sem querer nada importante, então o `v` é a opção mais
+segura, entra no modo VISUAL, você enxerga o que tá fazendo e não faz nenhuma burrada.
 
-Mas já que você fica insistindo aí, você pode usar qualquer um desses:
+Mas já que você fica insistindo, pode usar qualquer um desses (tem outros também):
 
-- `c` - change (apaga e entra no modo de edição)
+- `c` - change (apaga e já entra no INSERT)
 - `d` - delete (apaga)
-- `y` - yank (copia o texto para o registro)
-- `~` - Faz toggle entre maiúsculo e minúsculo
-- `g~` - Faz toggle entre maiúsculo e minúsculo
-- `gu` - Transforma em minúsculo
-- `gU` - Transforma em maiúsculo
-- `zf` - Define um trecho para fazer fold
+- `y` - yank (copia pro registro)
+- `~` - alterna maiúsculo/minúsculo
+- `g~` - idem acima, mas mais nerd
+- `gu` - transforma em minúsculo
+- `gU` - transforma em MAIÚSCULO
+- `zf` - define um trecho pra fold (fechar código)
 
-Ok, ok... mais exemplos... Vamos usar o JSON e dessa vez faz aí comigo. Vamos tentar com `gU`.
-Quero tudo dentro dos colchetes em maiúsculo.
+Tá bom, tá bom... mais exemplos, né? Bora usar o JSON de novo. Dessa vez quero fazer ele ficar
+tudo em maiúsculo.
 
 ```json
 [
@@ -184,7 +243,7 @@ Quero tudo dentro dos colchetes em maiúsculo.
 ]
 ```
 
-Posicione seu cursor entre os colchetes e pressione `gUi[`, e... Voilà...
+Posiciona o cursor dentro dos colchetes e digita: `gUi[` E... Voilà. Aprecie O GRITO DO MEU JSON:
 
 ```json
 [
@@ -193,5 +252,78 @@ Posicione seu cursor entre os colchetes e pressione `gUi[`, e... Voilà...
   { "NOME": "XUXA", "SOBRENOME": "SILVA" }
 ]
 ```
+
+Eu não tenho mais brincadeirinha não, vai para o próximo trecho que to com pressa.
+
+---
+
+## Buscas com `f`, `F`, `t`, `T`, `/` e `?`
+
+Eu sei, o texto tá enorme e eu já estou ficando aflito. Mas calma, essa é a última cartada. Depois
+eu faço outro com mais comandos geniais.
+
+Às vezes, em vez de ficar jogando pac-man 🕹️ com o cursor, você quer ir **direto** naquele
+caractere.
+
+Pra isso você pode usar os comandos inline:
+
+- `f` - busca caractere pra frente na linha
+- `F` - busca caractere pra trás na linha
+- `t` - igual ao `f`, mas para um caractere ANTES do encontrado
+- `T` - igual ao `F`, mas para um caractere DEPOIS do encontrado
+- `;` - repete última busca pra frente
+- `,` - repete última busca pra trás
+
+Exemplo:
+
+```text
+O Cavaleiro Branco - "Até meus ossos estão enregelados", comentou Gimli...
+```
+
+- Do começo da linha, digita `f-` - o cursor pula para o traço.
+- Agora `f"` - pula pra primeira aspa.
+- Agora `;` - repete e vai pra próxima aspa.
+- Agora `,` - volta pra anterior.
+
+Simples, genial e viciante.
+
+Quer algo útil? `"_vf"`
+
+Explicando:
+
+- `_` - vai para o primeiro caractere da linha
+- `v` - VISUAL mode
+- `f"` - busca a primeira aspa
+
+Ou seja: **seleciona tudo do começo da linha até a primeira aspa**. Faz o teste depois com `F`,
+`t` e `T` pra sentir a diferença.
+
+---
+
+## Movendo na linha e no arquivo
+
+Promessa é dívida: último trecho. Tá acabando... estamos nos acréscimos.
+
+Só os básicos de navegação e "teleporte" do cursor:
+
+- `gg` - topo do arquivo
+- `G` - final do arquivo
+- `^` - início da linha
+- `$` - final da linha
+- `_` - primeiro caractere não-vazio da linha
+- `g_` - último caractere não-vazio da linha
+
+Agora meu último combo genial pra você. Digita aí: `VggoGd`
+
+Me conta o que achou nos comentários.
+
+---
+
+## Acabouuuuuuu! Acabouuuuuu!!! Chora Galvão!!!
+
+É isso. Não tenho conclusão, não tenho call-to-action, não vendo nada, não tenho reflexão final.
+Só o silêncio constrangedor do pós-artigo.
+
+Beijos, me liga!
 
 ---
