@@ -1,4 +1,4 @@
-# Cadê a eficiência? Pare URGENTE de usar `hjkl` no NeoVim!
+# Você PRECISA Saber Esses Comandos no NeoVim
 
 Esse texto não é pra você, é para o eu do futuro (presente, sei lá). Sou eu tentando ver se
 aprendo a parar de ficar jogando pac-man no NeoVim e começo a usar uns comandos mais eficientes do
