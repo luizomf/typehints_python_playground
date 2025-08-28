@@ -27,6 +27,8 @@
 
 ## Operadores
 
+Lembrete: operadores precisa de movimento
+
 - `d` - delete (apaga)
 - `v` - visual (seleção)
 - `c` - change (apaga e já entra no INSERT)
@@ -36,6 +38,16 @@
 - `gu` - transforma em minúsculo
 - `gU` - transforma em MAIÚSCULO
 - `zf` - define um trecho pra fold (fechar código)
+
+## Não operadores
+
+- `p` ou `P` - colar depois ou antes
+- `x` ou `X` - apagar caractere abaixo do cursor para frente ou para trás
+- `r` ou `R` alterar caractere ou vários caracteres abaixo do cursor
+- `o` ou `O` - nova linha depois ou antes
+- `J` - Juntar linhas
+
+`r` e `R` você consegue repetir.
 
 ---
 
@@ -49,6 +61,8 @@ Ao combinar comandos, é possível especificar a quantidade com um número:
 - `^vg_` - Vai para o primeiro caractere da linha e seleciona até o último
 - `0v3g_` - Vai para o início da linha e seleciona 3 linhas até o último caractere
 - `veo3b` - Seleciona três palavra para trás
+- `gU3w` - Faz as 3 próximas palavras ficarem com letra maiúscula
+- `gU3w` - Faz as 3 próximas palavras ficarem com letra maiúscula
 
 ---
 
