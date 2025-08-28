@@ -27,11 +27,6 @@ def simple_decorator[R, **P](func: Callable[P, R]) -> Callable[Concatenate[str, 
     return wrapper
 
 
-################################################################################
-
-# Funções toscas de exemplo
-
-
 @simple_decorator
 def add(x: int, y: int, /) -> int:
     return x + y
