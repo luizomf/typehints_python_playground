@@ -18,11 +18,22 @@ def hhmmss_to_seconds(hhmmss: str) -> float:
 
 
 if __name__ == "__main__":
-    seconds = 86399
-    hhmmss = seconds_to_hhmmss(seconds)
+    # ida
+    assert seconds_to_hhmmss(1) == "00:00:01"
+    assert seconds_to_hhmmss(10) == "00:00:10"
+    assert seconds_to_hhmmss(60) == "00:01:00"
+    assert seconds_to_hhmmss(70) == "00:01:10"
+    assert seconds_to_hhmmss(3600) == "01:00:00"
+    assert seconds_to_hhmmss(3599) == "00:59:59"
 
-    seconds_from_hhmmss = hhmmss_to_seconds(hhmmss)
-    hhmmss_from_seconds = seconds_to_hhmmss(seconds_from_hhmmss)
+    # volta
+    assert hhmmss_to_seconds("00:00:01") == 1
+    assert hhmmss_to_seconds("00:01:10") == 70
+    assert hhmmss_to_seconds("01:00:00") == 3600
+    assert hhmmss_to_seconds("00:59:59") == 3599
 
-    print(f"{seconds_from_hhmmss=}")
-    print(f"{hhmmss_from_seconds=}")
+    # limite de 24h (versão datetime zera)
+    assert seconds_to_hhmmss(86399) == "23:59:59"
+    assert seconds_to_hhmmss(86400) == "00:00:00"
+
+    print("Tudo certo! ✅")
