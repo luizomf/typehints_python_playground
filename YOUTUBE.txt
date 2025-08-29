@@ -26,27 +26,21 @@ ParamSpec e Concatenate no Python: Você PRECISA DISSO Para Closures! (Aula 17)
 Descrição
 #-------------------------------------------------------------------------------
 
-Você já criou um decorador em Python e, de repente, percebeu que ele "engoliu" toda a tipagem da sua função original? O autocomplete para de funcionar, o type checker fica cego, e a segurança que você tinha se foi. Na Aula 17, vamos resolver esse problema de uma vez por todas com a "arma secreta" da tipagem: ParamSpec.
+Cansado de jogar Pac-Man com o cursor e fazer tic tic tic com o teclado dentro do seu VIM? Nesse vídeo, vamos te libertar do vício em hjkl e te ensinar a voar pelo código como um verdadeiro ninja do NeoVim!
 
-Neste vídeo, vamos mergulhar fundo no Parameter Specification (PEP 612) e na nova sintaxe da PEP 695. Você vai aprender a criar decoradores que preservam 100% da assinatura da função decorada, parâmetros, nomes, tipos, argumentos posicionais e nomeados, como se fossem um "envelope transparente".
+Você vai aprender os comandos que realmente importam para uma navegação horizontal eficiente, usando atalhos como w, b, e, f e t para saltar por palavras e caracteres.
 
-Vamos do básico, entendendo como o ParamSpec captura uma assinatura, até o avançado, usando Concatenate para adicionar novos parâmetros e construindo um Decorator Factory do zero: um validador de tipos em runtime que funciona como um "mini Pydantic pobre" haha.
+Mas o grande segredo, o que realmente vai explodir a sua mente, são os Text Objects! Esqueça a seleção manual. Comandos como ciw, dip e vit vão te permitir editar, apagar e copiar trechos de código inteiros (palavras, parágrafos, blocos, tags) de forma mágica e ultra-rápida.
 
-Nesta aula da nossa playlist completa sobre Type Hints no Python, você vai aprender:
+Vamos cobrir também:
 
-- O problema fundamental dos decoradores que "apagam" os tipos.
-- O que é ParamSpec e como ele "fotografa" a assinatura de uma função.
-- A receita completa para criar um decorador que preserva os tipos usando ParamSpec e TypeVar.
-- Como usar Concatenate para criar decoradores que injetam argumentos em uma função.
-- O padrão "Decorator Factory": como criar decoradores que aceitam argumentos.
-- Um exemplo prático e real: um decorador @validate_types que checa os tipos dos argumentos em runtime.
+- Modos Visuais Avançados: A diferença entre v, V e Ctrl+v (seleção em bloco).
+- Operadores de Edição: d (delete), c (change), y (yank), r (replace) e como combiná-los.
+- Buscas Inteligentes: O poder do *, #, g* e g# para encontrar o que você precisa em segundos.
+- Comandos de Repetição: O ponto final . que vai multiplicar sua produtividade.
+- Marcadores (Marks): Crie atalhos no seu arquivo para pular entre pontos importantes.
 
-Se você quer parar de lutar com Callable[..., Any] e aprender a criar decoradores robustos e com tipagem perfeita, esta aula é o seu guia definitivo.
-
-E lembre-se: Type Hint é igual a Type Annotation (tipagem no Python).
-
-Este vídeo é parte de uma playlist, essa é a DÉCIMA SÉTIMA aula. Segue o link da playlist para acompanhar:
-https://www.youtube.com/playlist?list=PLbIBj8vQhvm04EuddtleOAoEmfU9vwQlN
+Se você quer parar de lutar com o NeoVim e começar a dominar o editor mais poderoso que existe, essa é a aula que você precisa. Prepare-se para aposentar o hjkl e elevar seu nível de programação.
 
 Link do repositório:
 https://github.com/luizomf/typehints_python
@@ -54,29 +48,19 @@ https://github.com/luizomf/typehints_python
 Conheça meus cursos em:
 https://www.otaviomiranda.com.br/
 
-Capítulos
-00:00:00 - Introdução: Por que Callable[..., R] não basta?
-00:06:10 - O que é ParamSpec e como ele funciona
-00:14:55 - Decorator ruim vs decorator bom
-00:26:20 - Preservando assinaturas com ParamSpec
-00:38:40 - O que é Concatenate e como usar em decorators
-00:50:30 - Injetando parâmetros extras com Concatenate
-01:02:15 - Criando um micro “Pydantic pobre” com Decorator Factory
-01:10:00 - Conclusão: ParamSpec e Concatenate no dia a dia
-
-#Python #TypeHints #Decorators #DesignPatterns #PythonBrasil
+#NeoVim #Vim #Programação #Produtividade #Desenvolvedor
 
 #-------------------------------------------------------------------------------
 Até 5 hashtags
 #-------------------------------------------------------------------------------
 
-#Python #TypeHints #Decorators #DesignPatterns #PythonBrasil
+#NeoVim #Vim #Programação #Produtividade #Desenvolvedor
 
 #-------------------------------------------------------------------------------
 Tags invisíveis do Youtube separadas por vírgula (máx. 500 caracteres)
 #-------------------------------------------------------------------------------
 
-python paramspec,typing.ParamSpec,python concatenate,typing.Concatenate,paramspec python example,decorators com tipagem,paramspec vs typevar,curso de type hints,python typing tutorial,python moderno,luiz otavio miranda,tipagem estática avançada,closures python,arquitetura limpa python,pep 612,paramspec concatenate exemplo,paramspec com decorators
+neovim para iniciantes,comandos neovim,atalhos neovim,vim tutorial,vim productivity,vim navigation,hjkl,text objects neovim,vim text objects,vim advanced,neovim tips and tricks,neovim pt-br,neovim tutorial portugues,vim for developers,vim for vs code users,vim macros,vim visual mode,vim visual block,vim for beginners
 
 #-------------------------------------------------------------------------------
 Fim
