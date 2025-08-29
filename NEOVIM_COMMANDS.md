@@ -33,17 +33,17 @@ Lembrete: operadores precisa de movimento
 - `v` - visual (seleção)
 - `c` - change (apaga e já entra no INSERT)
 - `y` - yank (copia pro registro)
-- `~` - ALTERNA MAIÚSCULO/MINÚSCULO
+- `~` - Alterna maiúsculo/minúsculo
 - `g~` - idem acima, mas mais nerd
 - `gu` - transforma em minúsculo
-- `gU` - transforma em MAIÚSCULO
+- `gU` - transforma em maiúsculo
 - `zf` - define um trecho pra fold (fechar código)
 
 ## Não operadores
 
 - `p` ou `P` - colar depois ou antes
 - `x` ou `X` - apagar caractere abaixo do cursor para frente ou para trás
-- `r` ou `R` alterar caractere ou vários caracteres abaixo do cursor
+- `r` ou `R` - alterar caractere ou vários caracteres abaixo do cursor
 - `o` ou `O` - nova linha depois ou antes
 - `J` - Juntar linhas
 
@@ -51,7 +51,7 @@ Lembrete: operadores precisa de movimento
 
 ---
 
-## Combinações:
+## Combinando comandos:
 
 Ao combinar comandos, é possível especificar a quantidade com um número:
 
@@ -60,8 +60,7 @@ Ao combinar comandos, é possível especificar a quantidade com um número:
 - `elyb` - Copia uma palavra inteira sem text objects (depende muito de onde está o cursor)
 - `^vg_` - Vai para o primeiro caractere da linha e seleciona até o último
 - `0v3g_` - Vai para o início da linha e seleciona 3 linhas até o último caractere
-- `veo3b` - Seleciona três palavra para trás
-- `gU3w` - Faz as 3 próximas palavras ficarem com letra maiúscula
+- `veo3b` - Seleciona três palavras para trás
 - `gU3w` - Faz as 3 próximas palavras ficarem com letra maiúscula
 
 ---
@@ -132,7 +131,7 @@ const items = [
 
 ---
 
-## Buscas mais complicadas
+## Buscas mais
 
 - `*` - Encontra a próxima ocorrência da palavra sob o cursor
 - `#` - Encontra a ocorrência anterior da palavra sob o cursor
