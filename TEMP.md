@@ -1,75 +1,125 @@
-Title: Codex CLI aprovado: revisando legendas SRT do Whisper com precisão (relatório + SEO)
+# Gemini vs. Codex: A Batalha das IAs no Terminal para Corrigir Legendas
 
-Subtitle: Um workflow prático com prompt em Markdown, comparação rápida com Gemini/Claude e
-entrega de arquivos prontos (SRT corrigido, log detalhado e SEO para YouTube)
+Recentemente, decidi fazer um experimento um pouco diferente: colocar duas das mais poderosas
+ferramentas de IA para desenvolvedores, o Gemini da Google e o Codex da OpenAI, em uma batalha
+direta no meu terminal. O objetivo? Ver qual delas se sairia melhor em uma tarefa que, para mim, é
+comum e um tanto desafiadora: a revisão técnica de legendas geradas automaticamente.
 
-Hoje eu coloquei o Codex CLI (OpenAI) à prova em uma tarefa que costuma desafiar várias LLMs:
-revisar tecnicamente uma legenda SRT gerada automaticamente pelo Whisper — mantendo timestamps,
-quebras de linha e estilo do texto. O objetivo foi corrigir termos de programação e nomes de
-ferramentas que o Whisper frequentemente erra, sem reescrever frases inteiras.
+A ideia não é apenas declarar um vencedor, mas compartilhar um método que tenho aprimorado para
+extrair os melhores resultados possíveis dessas ferramentas, usando prompts detalhados em Markdown
+para guiar a IA.
 
-Contexto e por que isso importa
+## O Desafio: Corrigindo a Fúria do Whisper
 
-- Whisper é excelente para transcrever, mas tropeça em termos técnicos (nomes de ferramentas,
-  modelos, siglas).
-- Em workflows reais, eu preciso de uma legenda pronta para publicar: corrigida, com estrutura SRT
-  intacta e sem “criatividade” adicional.
-- Já fiz isso antes com Gemini via API (quebrando em chunks) e também testei com outras LLMs;
-  agora quis ver se o Codex CLI segurava essa bronca.
+Se você já usou ferramentas de transcrição automática como o Whisper da OpenAI, sabe que elas são
+fantásticas, mas nem sempre perfeitas, especialmente com jargões técnicos. Em um dos meus vídeos,
+a transcrição estava cheia de pequenas pérolas, como:
 
-O que eu pedi para o Codex fazer Montei um prompt em Markdown (CODEX.md) descrevendo exatamente o
-trabalho:
+- **"Jungle"** em vez de **"Django"**
+- **"Salary"** em vez de **"Celery"**
+- **"SQL Alchemy"** (separado) em vez de **"SQLAlchemy"**
 
-- Corrigir termos técnicos e ortografia com base no contexto do vídeo.
-- Preservar estrutura SRT: timestamps, numeração e quebras de linha.
-- Não reformular frases inteiras; apenas ajustes necessários.
-- Gerar três saídas:
-  - Transcrição corrigida: 04_FINAL_fixed.srt
-  - Relatório de correções: CODEX_LOG.md
-  - SEO para YouTube: YOUTUBE.md (título e descrição)
+Corrigir isso manualmente em um arquivo de quase 2.000 linhas e mais de 7.500 palavras é um
+trabalho tedioso. Além disso, é crucial não quebrar a estrutura do arquivo `.srt`, com seus
+timestamps e sequências numéricas. Qualquer alteração errada pode dessincronizar toda a legenda.
 
-Resultados e destaques
+Este é um desafio perfeito para uma IA: requer compreensão de contexto técnico, atenção aos
+detalhes e a capacidade de seguir instruções rígidas de formatação.
 
-- Precisão técnica: corrigiu nomes como “Claude” (onde estava “Cloud”), padronizou “Neovim” (em
-  vez de “Neovin/NeoVim”), normalizou “ChatGPT” (em vez de “chat e pt”) e trocou “underline” por
-  “underscore” quando o contexto era o caractere “\_”.
-- Estrutura mantida: timestamps, numeração e quebras preservados — do jeito que um editor de vídeo
-  espera.
-- Tempo de execução: semelhante ao que vejo com outras LLMs em tarefas desse porte (na casa de
-  minutos, variando com tamanho e complexidade).
-- Entrega pronta: além do SRT corrigido, já sai o relatório com o que mudou e um SEO básico para
-  publicar o vídeo rapidamente.
+## Minha Estratégia: O Prompt Detalhado em Markdown
 
-Mini‑tutorial (para você reproduzir)
+Em vez de simplesmente pedir "corrija este arquivo", eu criei um "template de trabalho" em um
+arquivo Markdown. Essa abordagem permite que eu seja extremamente específico sobre o que a IA deve
+e, mais importante, não deve fazer.
 
-- Instale o Codex CLI e faça login.
-- Escreva um arquivo CODEX.md com regras claras (o que pode e o que não pode alterar).
-- Aponte para o SRT original e peça:
-  - Correções técnicas sem alterar a estrutura SRT.
-  - Geração do arquivo corrigido, relatório e SEO.
-- Valide a saída:
-  - Abra o vídeo no VLC e carregue a legenda corrigida (04_FINAL_fixed.srt).
-  - Faça um spot‑check em termos técnicos e formatação.
-- Publique:
-  - Vídeo + 04_FINAL_fixed.srt no YouTube.
-  - Use YOUTUBE.md como base de título/descrição.
-  - Envie este artigo no Substack com os links.
+A estrutura do meu prompt se parece com isto:
 
-O que eu aprendi no processo
+```markdown
+# Você é um revisor técnico de legendas SRT geradas automaticamente.
 
-- Prompts melhoram muito quando viram “contratos” em Markdown (regras explícitas e nomes de
-  arquivos de saída).
-- Pedir um relatório (CODEX_LOG.md) é ouro: documenta as decisões e vira contexto para iterações
-  futuras.
-- Para tarefas longas, o gargalo costuma ser tokens e latência — nada fora do usual aqui.
+A legenda foi transcrita por uma IA (Whisper) e pode conter **erros em termos técnicos de
+programação**.
 
-Assista e baixe (links definitivos)
+---
 
-- Vídeo: [INSERIR_LINK_YOUTUBE]
-- Legenda corrigida (SRT): 04_FINAL_fixed.srt
-- Relatório de correções: CODEX_LOG.md
-- SEO (título/descrição YouTube): YOUTUBE.md
+### Seu trabalho principal é:
 
-Call to action Se curtir esse tipo de conteúdo (LLMs aplicadas a workflows reais, automação para
-criadores e devs), me diga! Estou considerando rodar uma LLM local para explorarmos mais cenários.
-Seu feedback decide os próximos vídeos e artigos.
+- Corrigir palavras erradas com base no **contexto técnico e geral**.
+- **Preservar o estilo e estrutura original** do texto.
+- **Preservar sequência, timestamps e quebras de linha**.
+- Gerar um relatório final detalhando o que foi feito.
+
+---
+
+### O que você não pode fazer:
+
+- Alterar o bloco SRT.
+- Alterar o timestamp.
+- Adicionar notas, observações ou qualquer texto que não seja o SRT corrigido.
+- Gerar imagens. Sua resposta deve ser em texto.
+```
+
+Essa clareza é fundamental. Eu instruo a IA a gerar não apenas o arquivo corrigido, mas também um
+relatório (`.log`) de tudo o que foi alterado. Esse log é meu controle de qualidade e me ajuda a
+entender os padrões de erro da transcrição, além de manter o contexto para futuras interações.
+
+## A Batalha no Terminal
+
+Com os prompts `gemini.md` e `codex.md` prontos, preparei o campo de batalha no meu terminal
+usando `tmux` com duas sessões lado a lado.
+
+Para quem quiser replicar, a instalação é simples:
+
+**Codex (OpenAI):**
+
+```bash
+npm i -g @openai/codex
+```
+
+**Gemini (Google):** Eu rodo diretamente com `npx` para ter sempre a versão mais recente.
+
+```bash
+npx @google/gemini-cli
+```
+
+Com ambos os CLIs prontos, enviei o mesmo comando para cada um, referenciando seu respectivo
+arquivo de prompt e o arquivo de legenda.
+
+## Os Resultados: Quem se Saiu Melhor?
+
+Ambos foram incrivelmente rápidos. Em poucos minutos, cada IA concluiu a tarefa, gerando o arquivo
+`_fixed.srt` e o relatório de alterações, exatamente como eu pedi.
+
+Os relatórios mostraram que ambos identificaram e corrigiram os principais erros:
+
+- `Neovim`
+- `Django`
+- `Celery`
+- `SQLAlchemy`
+- `FastAPI`
+
+Fiquei impressionado com a capacidade do Codex de até mesmo diferenciar quando eu falava "Vim" (o
+editor) de "vi" (o comando de Text Object no Neovim). O Gemini, por sua vez, forneceu um relatório
+mais verboso e detalhado, categorizando os tipos de erro do Whisper.
+
+Mas, ao fazer um `diff` entre os dois arquivos corrigidos, a história ficou mais interessante. Não
+houve um vencedor claro.
+
+- Em alguns trechos, o **Codex** foi mais fiel ao que eu realmente falei, enquanto o Gemini tentou
+  "corrigir" uma repetição minha.
+- Em outros, o **Gemini** acertou a capitalização de um termo (`Cyan`) que o Codex errou.
+
+Cada um cometeu pequenos deslizes em lugares diferentes.
+
+## Conclusão: O Vencedor é o Método
+
+No final, a maior lição não foi sobre qual IA é superior, mas sobre o poder da metodologia. Ao
+fornecer um prompt claro, detalhado e estruturado em um arquivo Markdown, consegui resultados de
+alta qualidade de _ambas_ as ferramentas.
+
+Essa abordagem transforma a IA de um assistente imprevisível em um parceiro de trabalho confiável
+e consistente. O segredo não está em apenas pedir, mas em como pedir.
+
+Se você trabalha com IAs no seu dia a dia, recomendo fortemente que experimente essa técnica. Crie
+seus próprios templates de prompt para tarefas repetitivas. A precisão e a consistência dos
+resultados podem te surpreender.
