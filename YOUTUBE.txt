@@ -4,7 +4,307 @@ ABAIXO OS CÓDIGOS E CONCEITOS QUE CRIAMOS NA AULA
 
 ---
 
-[CODIGO]
+File: exemplo46.py
+from dataclasses import dataclass
+from typing import Annotated, get_args, get_origin, get_type_hints
+
+from utils import cyan_print, sep_print
+
+p = cyan_print
+s = sep_print
+
+################################################################################
+#
+# Python Annotated: O Que é Tão Especial Nele? (Type Hints - Aula 19)
+#
+# Annotated é um tipo parametrizado especial do Python usado para adicionar
+# metadados em outros tipos. Ele recebe um tipo para o primeiro argumento e pelo
+# menos um valor para o segundo.
+#
+# Inteiro = Annotated[int, "Um número inteiro"] # int para o type checker
+#
+# Você pode passar o que preferir do segundo argumento em diante, incluindo
+# funções, classes, valores escalares, etc.
+#
+# O Type Checker considera o primeiro argumento como tipo, o restante
+# pode ser usado para várias situações, como: documentação, validação,
+# informações em geral, modificação, enfim... Depende do que a sua imaginação
+# conseguir produzir.
+#
+# A parte mais interessante de Annotated é que você consegue usar os metadados
+# em runtime, por isso você vê várias libs e frameworks abusando do seu usado
+# (você também deveria usar). Pydantic, FastAPI, Langchain e Langgraph são
+# algumas das ferramentas que usam bastante Annotated para tipagem e metadados
+# em runtime.
+#
+# Com o que usar Annotated? classes, funções, módulos e objetos.
+#
+# Funções que acompanham Annotated:
+#
+# - get_type_hints - Retorna os dados de tipagem para função, método, objeto ou módulo.
+# - get_args - Retorna os argumentos internos do tipo parametrizado ou composto.
+# - get_origin - Retorna o tipo "externo". Ex. Se o tipo é X[A, B, ...], retorna X.
+# - e outras...
+#
+################################################################################
+
+
+def simple_annotation(
+    annotated: Annotated[object, "I have annotation"],
+) -> Annotated[object, "I have annotation"]:
+    return annotated
+
+
+s()
+
+type_hints = get_type_hints(simple_annotation, include_extras=True)
+type_args = get_args(type_hints["annotated"])
+type_return = get_args(type_hints["return"])
+type_origin = get_origin(type_hints["annotated"])
+
+p(f"{type_hints=!r}")
+p(f"{type_args=!r}")
+p(f"{type_return=!r}")
+p(f"{type_origin=!r}")
+
+s()
+
+
+################################################################################
+
+# Exemplo de classe com atributos anotados
+
+
+@dataclass
+class Person:
+    """A person object"""
+
+    name: Annotated[str, "O nome completo da pessoa"]
+    age: Annotated[int | None, "A idade"] = None
+
+
+################################################################################
+
+#
+# Exemplo para verificar os metadados em runtime (prints para simplicidade)
+#
+# Observação: não fiz todos os testes possíveis nessa função. Isso vai depender
+# do que você for fazer.
+#
+
+
+def print_annotated[T: object](obj: T) -> T:
+    # Pegamos a classe do objeto
+    obj_class = obj.__class__
+    # Tentamos obter o __name__ se tiver um
+    obj_name = getattr(obj, "__name__", "")
+
+    if not obj_name:
+        # Se não tiver nome, vamos pegar o nome da classe.
+        # Geralmente isso vai ser instância da classe (tem que checar)
+        obj_name = obj_class.__name__
+
+    # Pega os dados das annotations
+    # get_type_hints retorna um dicionário com chave e tipo anotado
+    # o include_extras=True é para vir os metadados (padrão False)
+    hints = get_type_hints(obj, include_extras=True)
+
+    if not hints:
+        # Se não tem hints, nada a fazer
+        return obj
+
+    # Agora é só exibir tudo
+    p("🧐 Verificando a tipagem de:", obj_name)
+    p(f"🎲 Objeto Real: {obj!r}")
+    for key, value in hints.items():
+        # IMPORTANTE: podemos receber uma instância de classe, uma classe,
+        # um método ou função. Em termos de classe, funções, métodos e módulos,
+        # não temos nenhum valor disponível.
+        val = getattr(obj, key, "NO VALUE")
+
+        # get_args vai trazer o tipo e o resto que estiver dentro de Annotated
+        type_, *metadata = get_args(value)
+        p(
+            f"🔑 Key={key!r} 📋 Type={type_!r} 📝 Meta={metadata!r} Value={val!r}",
+        )
+    p()
+    s()
+
+    return obj
+
+
+################################################################################
+
+
+if __name__ == "__main__":
+    print_annotated(simple_annotation)
+
+    person = Person("Luiz", 30)
+    print_annotated(person)
+
+    print_annotated(Person)
+
+
+################################################################################
+
+File: exemplo47.py
+import inspect
+from abc import ABC, abstractmethod
+from collections.abc import Callable
+from functools import wraps
+from typing import Annotated, get_args, get_type_hints
+
+from utils import cyan_print, sep_print
+
+p = cyan_print
+s = sep_print
+
+################################################################################
+#
+# Python Annotated: Exemplo simples!
+#
+# Dica: se vai fazer uma coisa complexa que outra lib já faz, usa ela. Isso
+# pode se tornar muito complexo muito rápido.
+#
+################################################################################
+
+
+def validate_annotated[**P, R](func: Callable[P, R]) -> Callable[P, R]:
+    """Decorator que valida o que for anotado com Annotated e Validator"""
+
+    # Obtemos as annotations da função
+    hints = get_type_hints(func, include_extras=True)
+    # Isso vai nos ajudar a inspecionar a função
+    signature = inspect.signature(func)
+
+    @wraps(func)  # Boa prática 👍
+    def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+        # Agora podemos pegar os argumentos e seus valores
+        bound_arguments = signature.bind(*args, **kwargs)
+        bound_arguments.apply_defaults()
+
+        # Se não encontrarmos nenhuma annotation, retornamos
+        if not hints:
+            return func(*args, **kwargs)
+
+        # Loop nos nomes dos argumentos da função
+        for arg_name in bound_arguments.arguments:
+            # Se o nome que eu recebi aqui não está anotado, próximo...
+            if arg_name not in hints:
+                continue
+
+            # Pego o valor do argumento
+            value = bound_arguments.arguments[arg_name]
+            # Pego os dados do argumento
+            metadata = get_args(hints[arg_name])
+
+            # Só vou conferir algo que tenha mais de um valor
+            # o segundo valor pode ser um ou mais validadores
+            if len(metadata) <= 1:
+                continue
+
+            # Pegamos o tipo e os possíveis validadores
+            type_, *validators = metadata
+
+            # Vamos passar em todos checando se são mesmo validadores
+            for validator in validators:
+                if not isinstance(validator, Validator):
+                    continue
+
+                # Se são, quero garantir que o tipo também está correto
+                if not isinstance(value, type_):
+                    msg = (
+                        f"Argument {arg_name!r} should be of type {type_!r} "
+                        f"in {func.__name__!r}. Got {type(value)!r}."
+                    )
+                    raise TypeError(msg)
+
+                # E agora é só validar
+                # Obs.: Já chequei o tipo, pyright não reconheceu
+                validator.validate(value)  # pyright: ignore[reportUnknownMemberType]
+
+        # Executamos a função original com os argumentos bonitinhos
+        return func(*args, **kwargs)
+
+    # Te dou uma nova função
+    return wrapper
+
+
+################################################################################
+
+
+# Exemplo de uma hierarquia de validadores
+
+
+class ValidationError(Exception):
+    """Uma exceção com nome mais semântico"""
+
+
+class Validator[T](ABC):
+    """Contrato que os validadores prometem cumprir"""
+
+    @abstractmethod
+    def validate(self, value: T) -> T: ...
+
+
+class IntRange(Validator[int]):
+    """Valida um range de números"""
+
+    def __init__(self, min_: int, max_: int) -> None:
+        self.min = min_
+        self.max = max_
+
+    def validate(self, value: int) -> int:
+        if value < self.min or value > self.max:
+            msg = f"{value} is out of range ({self.min}, {self.max})"
+            raise ValidationError(msg)
+
+        return value
+
+
+class StrMaxLength(Validator[str]):
+    """Valida uma string com tamanho máximo"""
+
+    def __init__(self, max_: int) -> None:
+        self.max = max_
+
+    @validate_annotated
+    def validate(self, value: str) -> str:
+        if len(value) > self.max:
+            msg = f"{value!r} has more than {self.max} characters"
+            raise ValidationError(msg)
+
+        return value
+
+
+################################################################################
+
+
+@validate_annotated
+def set_height(height: Annotated[int, IntRange(1, 100)]) -> int:
+    """Set the widget height"""
+    p(f"Height is set to {height}")
+    return height
+
+
+@validate_annotated
+def set_app_name(
+    name: Annotated[str, StrMaxLength(10)],
+) -> str:
+    """Change app name"""
+    p(f"App name is now {name!r}")
+    return name
+
+
+################################################################################
+
+
+if __name__ == "__main__":
+    new_app_name = set_app_name(name="My App")
+    new_height = set_height(height=1)
+
+
+################################################################################
 
 ---
 
@@ -20,35 +320,49 @@ Este arquivo é TXT puro
 Título
 #-------------------------------------------------------------------------------
 
-ParamSpec e Concatenate no Python: Você PRECISA DISSO Para Closures! (Aula 17)
+ParamSpec e Concatenate no Python: Você PRECISA DISSO Para Closures! (Aula 18)
 
 #-------------------------------------------------------------------------------
 Descrição
 #-------------------------------------------------------------------------------
 
-Cansado de jogar Pac-Man com o cursor e fazer tic tic tic com o teclado dentro do seu VIM? Nesse vídeo, vamos te libertar do vício em hjkl e te ensinar a voar pelo código como um verdadeiro ninja do NeoVim!
+Você já criou um decorador em Python e, de repente, percebeu que ele "engoliu" toda a tipagem da sua função original? O autocomplete para de funcionar, o type checker fica cego, e a segurança que você tinha se foi. Na Aula 18, vamos resolver esse problema de uma vez por todas com a "arma secreta" da tipagem: ParamSpec.
 
-Você vai aprender os comandos que realmente importam para uma navegação horizontal eficiente, usando atalhos como w, b, e, f e t para saltar por palavras e caracteres.
+Neste vídeo, vamos mergulhar fundo no Parameter Specification (PEP 612) e na nova sintaxe da PEP 695. Você vai aprender a criar decoradores que preservam 100% da assinatura da função decorada, parâmetros, nomes, tipos, argumentos posicionais e nomeados, como se fossem um "envelope transparente".
 
-Mas o grande segredo, o que realmente vai explodir a sua mente, são os Text Objects! Esqueça a seleção manual. Comandos como ciw, dip e vit vão te permitir editar, apagar e copiar trechos de código inteiros (palavras, parágrafos, blocos, tags) de forma mágica e ultra-rápida.
+Vamos do básico, entendendo como o ParamSpec captura uma assinatura, até o avançado, usando Concatenate para adicionar novos parâmetros e construindo um Decorator Factory do zero: um validador de tipos em runtime que funciona como um "mini Pydantic pobre" haha.
 
-Vamos cobrir também:
+Nesta aula da nossa playlist completa sobre Type Hints no Python, você vai aprender:
 
-- Modos Visuais Avançados: A diferença entre v, V e Ctrl+v (seleção em bloco).
-- Operadores de Edição: d (delete), c (change), y (yank), r (replace) e como combiná-los.
-- Buscas Inteligentes: O poder do *, #, g* e g# para encontrar o que você precisa em segundos.
-- Comandos de Repetição: O ponto final . que vai multiplicar sua produtividade.
-- Marcadores (Marks): Crie atalhos no seu arquivo para pular entre pontos importantes.
+- O problema fundamental dos decoradores que "apagam" os tipos.
+- O que é ParamSpec e como ele "fotografa" a assinatura de uma função.
+- A receita completa para criar um decorador que preserva os tipos usando ParamSpec e TypeVar.
+- Como usar Concatenate para criar decoradores que injetam argumentos em uma função.
+- O padrão "Decorator Factory": como criar decoradores que aceitam argumentos.
+- Um exemplo prático e real: um decorador @validate_types que checa os tipos dos argumentos em runtime.
 
-Se você quer parar de lutar com o NeoVim e começar a dominar o editor mais poderoso que existe, essa é a aula que você precisa. Prepare-se para aposentar o hjkl e elevar seu nível de programação.
+Se você quer parar de lutar com Callable[..., Any] e aprender a criar decoradores robustos e com tipagem perfeita, esta aula é o seu guia definitivo.
+
+E lembre-se: Type Hint é igual a Type Annotation (tipagem no Python).
+
+Este vídeo é parte de uma playlist, essa é a DÉCIMA SÉTIMA aula. Segue o link da playlist para acompanhar:
+https://www.youtube.com/playlist?list=PLbIBj8vQhvm04EuddtleOAoEmfU9vwQlN
 
 Link do repositório:
 https://github.com/luizomf/typehints_python
 
-Conheça meus cursos em:
-https://www.otaviomiranda.com.br/
+Meus Cursos: https://www.otaviomiranda.com.br/
+Newsletter: https://luizomf.substack.com/
 
-#NeoVim #Vim #Programação #Produtividade #Desenvolvedor
+Capítulos
+00:00:00 - Introdução ao ParamSpec no Python
+00:02:20 - Qual o problema Parameter Specification Resolve?
+00:06:36 - ParamSpec, a solução dinâmica para parâmetros de funções
+00:08:15 - ParamSpec, closures, decorators, args e kwargs
+00:18:40 - ParamSpec com Concatenate para parâmetros adicionais
+00:23:10 - Simulando o Pydantic com Decorator Factory e ParamSpec
+
+#Python #TypeHints #Decorators #DesignPatterns #PythonBrasil
 
 #-------------------------------------------------------------------------------
 Até 5 hashtags
