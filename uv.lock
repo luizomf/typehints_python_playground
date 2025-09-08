@@ -557,6 +557,7 @@ dependencies = [
     { name = "pillow" },
     { name = "pyautogui" },
     { name = "rich" },
+    { name = "typing-extensions" },
 ]
 
 [package.optional-dependencies]
@@ -580,6 +581,7 @@ requires-dist = [
     { name = "pytest-xdist", marker = "extra == 'dev'" },
     { name = "rich", specifier = ">=14.1.0" },
     { name = "ruff", marker = "extra == 'dev'" },
+    { name = "typing-extensions", specifier = ">=4.14.1" },
 ]
 provides-extras = ["dev"]
 
